@@ -1,0 +1,36 @@
+#define PROPULSION OUT_A+OUT_C
+#define LIGHT_SENSOR SENSOR_2
+#define LEFT_TOUCH SENSOR_1
+#define RIGHT_TOUCH SENSOR_3
+#define THRESHOLD 40
+
+
+task main(){
+
+    SetSensor(LEFT_TOUCH, SENSOR_TOUCH);
+    SetSensor(RIGHT_TOUCH, SENSOR_TOUCH);
+    SetSensor(LIGHT_SENSOR, SENSOR_LIGHT);
+    SetPower(PROPULSION, 5);
+    OnFwd(PROPULSION);
+
+    while(true){
+
+        if(LEFT_TOUCH == 1){
+            OnRev(PROPULSION);
+            Wait(30);
+            OnFwd(OUT_A);
+            Wait(30);
+            OnFwd(PROPULSION);
+        }
+        if(RIGHT_TOUCH == 1){
+            OnRev(PROPULSION);
+            Wait(30);
+            OnFwd(OUT_C);
+            Wait(30);
+            OnFwd(PROPULSION);
+        }
+    }
+
+}
+
+
