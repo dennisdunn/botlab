@@ -1,9 +1,9 @@
 #include <Wire.h>
 #include <NewPing.h>
 
+#define RANGE_THRESHOLD 10
 #define MAX_DISTANCE 250
 #define INVALID_DATA -1
-#define RANGE_THRESHOLD 10
 #define LED13 13
 
 #define SONAR_NUM 4
@@ -58,7 +58,7 @@ void loop() {
   for (int i = 0; i < SONAR_NUM; i++) {
     if (isEnabled()) {
       ranges[i] = ping(i);
-      if (INVALID_DATA < ranges[i] <= RANGE_THRESHOLD) {
+      if (INVALID_DATA < ranges[i] && ranges[i] <= RANGE_THRESHOLD) {
         digitalWrite(IRQ[i], HIGH);
       } else {
         digitalWrite(IRQ[i], LOW);
