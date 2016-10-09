@@ -1,13 +1,13 @@
 #include <Wire.h>
 #include <NewPing.h>
 
-#define MAX_DISTANCE 500
+#define MAX_DISTANCE 250
 #define INVALID_DATA -1
-#define RANGE_HIGH 50
-#define RANGE_LOW 5
+#define RANGE_THRESHOLD 10
+#define LED13 13
 
 #define SONAR_NUM 4
-#define MEDIAN 8
+#define MEDIAN 7
 
 #define ADDR_SELECT 4
 #define ENABLE 2
@@ -51,23 +51,22 @@ void setup() {
   Wire.onRequest(requestEvent);
 }
 
+int loopCount = 0;
+
 void loop() {
+  digitalWrite(LED13, loopCount % 2);
   for (int i = 0; i < SONAR_NUM; i++) {
-    digitalWrite(IRQ[i], LOW);
     if (isEnabled()) {
       ranges[i] = ping(i);
-      if (i % 2) {
-        if (ranges[i] < RANGE_LOW) {
-          digitalWrite(IRQ[i], HIGH);
-        }
+      if (INVALID_DATA < ranges[i] <= RANGE_THRESHOLD) {
+        digitalWrite(IRQ[i], HIGH);
       } else {
-        if (ranges[i] > RANGE_HIGH) {
-          digitalWrite(IRQ[i], HIGH);
-        }
+        digitalWrite(IRQ[i], LOW);
       }
       report();
     }
   }
+  loopCount++;
 }
 
 void report() {
@@ -93,7 +92,7 @@ bool isEnabled() {
   return digitalRead(ENABLE);
 }
 
-void requestEvent(){
+void requestEvent() {
   byte buffer[SONAR_NUM * 2];
   memcpy(ranges, buffer, sizeof(buffer));
   Wire.write(buffer, sizeof(buffer));
