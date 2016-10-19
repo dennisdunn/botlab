@@ -2,11 +2,14 @@
 # swap
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
+
 # session
 Session.vim
+
 # temporary
 .netrwhist
 *~
+
 # auto-generated tag files
 tags
 
@@ -16,10 +19,10 @@ tags
 !.vscode/tasks.json
 !.vscode/launch.json
 
-# Bricx Command Center IDE
-# http://bricxcc.sourceforge.net
+# NQC
 .bak
 .sym
+.rcx
 
 # Python
 .pyc
