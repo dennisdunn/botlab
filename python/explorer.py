@@ -41,10 +41,18 @@ class Motors:
         Motors.__running = True
 
     @staticmethod
-    def backward(speed):
+    def reverse(speed):
         if Motors.__running:
             Motors.stop()
         Motors.__motor_a.ccw(speed)
         Motors.__motor_b.ccw(speed)
         Motors.__running = True
+
+    @staticmethod
+    def left(offset):
+        Motors.__motor_b.delta(offset)
+
+    @staticmethod
+    def right(offset):
+        Motors.__motor_a.delta(offset)
 
