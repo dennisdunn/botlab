@@ -21,12 +21,12 @@ class Motor:
 
     def setDirection(self,direction):
         self.setSpeed(0)
-         self.__direction=direction
-         if direction == "cw":
-             self.__gpio_current = self.__gpio_cw
+        self.__direction=direction
+        if direction == "cw":
+            self.__gpio_current = self.__gpio_cw
         else:
-             self.__gpio_current = self.__gpio_ccw
-         self.setSpeed(self.__speed)
+            self.__gpio_current = self.__gpio_ccw
+            self.setSpeed(self.__speed)
 
     def getSpeed(self):
         return self.__speed

@@ -22,14 +22,12 @@ class Output:
 class Motors:
     __motor_a = pi.Motor(19, 20)
     __motor_b = pi.Motor(21, 26)
-    Motors.setDirection("fwd")
-    Motors.setSpeed(0)
+    __speed = 0
+    __direction = "fwd" 
 
     @staticmethod
     def stop():
-        __speed = 0
-        Motors.__motor_a.setSpeed(0)
-        Motors.__motor_b.setSpeed(0)
+        Motors.setSpeed(0)
 
     @staticmethod
     def forward(speed):
@@ -50,15 +48,15 @@ class Motors:
         Motors.__motor_a.setSpeed(Motors.getSpeed() - rate)
 
     @staticmethod
-    def setSpeed(self, speed):
+    def setSpeed(speed):
         Motors.__speed=speed
         Motors.__motor_a.setSpeed(speed)
         Motors.__motor_b.setSpeed(speed)
 
     @staticmethod
-    def setDirection(self,direction):
-         Motors.__direction=direction
-         if direction == "fwd":
+    def setDirection(direction):
+        Motors.__direction=direction
+        if direction == "fwd":
             Motors.__motor_a.setDirection("cw")
             Motors.__motor_b.setDirection("cw")
         else:

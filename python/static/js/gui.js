@@ -17,7 +17,7 @@ $(document).ready(function () {
         var dir = rate < 0 ? "left" : "right";
         rate = Math.abs(rate);
 
-        $.get(url + "motors/" + dir + "?rate=" + rate);
+        $.get(url + "motors/turn/" + dir + "?rate=" + rate);
     });
 
     $("#reset-speed").on("click", function (e) {
