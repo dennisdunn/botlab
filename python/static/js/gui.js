@@ -29,5 +29,6 @@ $(document).ready(function () {
     $("#reset-turn-rate").on("click", function (e) {
         $("#turn-rate-slider").val(0);
         $("#turn-rate-slider").slider("refresh");
+        $.get(url + "motors/turn/cancel");
     });
 });

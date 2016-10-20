@@ -36,11 +36,16 @@ def motors(cmd):
         Motors.reverse(request.values["speed"])
     elif cmd == "stop":
         Motors.stop()
-    elif cmd == "left":
+    return cmd
+
+@app.route("/api/motors/turn/<cmd>")
+def motors(cmd):
+    if cmd == "left":
         Motors.left(request.values["rate"])
     elif cmd == "right":
         Motors.right(request.values["rate"])
-
+    elif cmd == "cancel":
+        Motors.setSpeed(Motors.getSpeed())
     return cmd
 
 if __name__ == "__main__":

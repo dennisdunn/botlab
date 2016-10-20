@@ -22,37 +22,54 @@ class Output:
 class Motors:
     __motor_a = pi.Motor(19, 20)
     __motor_b = pi.Motor(21, 26)
-    __running = False
+    Motors.setDirection("fwd")
+    Motors.setSpeed(0)
 
     @staticmethod
     def stop():
-        Motors.__motor_a.cw(0)
-        Motors.__motor_a.cw(0)
-        Motors.__motor_b.ccw(0)
-        Motors.__motor_b.ccw(0)
-        Motors.__running = False
+        __speed = 0
+        Motors.__motor_a.setSpeed(0)
+        Motors.__motor_b.setSpeed(0)
 
     @staticmethod
     def forward(speed):
-        if Motors.__running:
-            Motors.stop()
-        Motors.__motor_a.cw(speed)
-        Motors.__motor_b.cw(speed)
-        Motors.__running = True
+        Motors.setDirection("fwd")
+        Motors.setSpeed(speed)
 
     @staticmethod
     def reverse(speed):
-        if Motors.__running:
-            Motors.stop()
-        Motors.__motor_a.ccw(speed)
-        Motors.__motor_b.ccw(speed)
-        Motors.__running = True
+        Motors.setDirection("rev")
+        Motors.setSpeed(speed)
 
     @staticmethod
-    def left(offset):
-        Motors.__motor_b.delta(offset)
+    def left(rate):
+        Motors.__motor_b.setSpeed(Motors.getSpeed() - rate)
 
     @staticmethod
-    def right(offset):
-        Motors.__motor_a.delta(offset)
+    def right(rate):
+        Motors.__motor_a.setSpeed(Motors.getSpeed() - rate)
+
+    @staticmethod
+    def setSpeed(self, speed):
+        Motors.__speed=speed
+        Motors.__motor_a.setSpeed(speed)
+        Motors.__motor_b.setSpeed(speed)
+
+    @staticmethod
+    def setDirection(self,direction):
+         Motors.__direction=direction
+         if direction == "fwd":
+            Motors.__motor_a.setDirection("cw")
+            Motors.__motor_b.setDirection("cw")
+        else:
+            Motors.__motor_a.setDirection("ccw")
+            Motors.__motor_b.setDirection("ccw")
+
+    @staticmethod    
+    def getSpeed(self):
+        return Motors.__speed
+
+    @staticmethod
+    def getDirection(self):
+        return Motors.__direction
 

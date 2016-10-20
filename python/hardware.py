@@ -7,41 +7,30 @@ class Motor:
     def __init__(self, gpio_cw, gpio_ccw):
         self.__gpio_cw = gpio_cw
         self.__gpio_ccw = gpio_ccw
+        self.__gpio_current = gpio_cw
         self.__speed = 0
-        self.__offset = 0
-        self.__direction = "stop"
+        self.__direction = "cw"
 
-    def cw(self, speed):
-        self.__speed = speed
-        self.__offset = 0
-        if speed == 0:
-            self.__direction = "stop"
+    def reset(self):
+        self.setSpeed(0)
+        self.setDirection("cw")
+
+    def setSpeed(self, speed):
+        self.__speed=speed
+        pi.set_PWM_dutycyle(self.__gpio_current, speed)
+
+    def setDirection(self,direction):
+        self.setSpeed(0)
+         self.__direction=direction
+         if direction == "cw":
+             self.__gpio_current = self.__gpio_cw
         else:
-            self.__direction = "cw"
-        pi.set_PWM_dutycycle(self.__gpio_cw, self.__speed)
-        pi.set_PWM_dutycycle(self.__gpio_ccw, 0)
-
-    def ccw(self, speed):
-        self.__speed = speed
-        self.__offset = 0
-        if speed == 0:
-            self.__direction = "stop"
-        else:
-            self.__direction = "ccw"
-        pi.set_PWM_dutycycle(self.__gpio_cw, 0)
-        pi.set_PWM_dutycycle(self.__gpio_ccw, self.__speed)
-
-    def delta(offset):
-        if self.__offset != offset:
-            self.__offset = offset
-            if self.__direction == "cw":
-                pi.set_PWM_dutycycle(self.__gpio_cw, self.__speed - offset)
-            elif self.__direction == "ccw":
-                pi.set_PWM_dutycycle(self.__gpio_ccw, self.__speed - offset)
+             self.__gpio_current = self.__gpio_ccw
+         self.setSpeed(self.__speed)
 
     def getSpeed(self):
         return self.__speed
-        
+
     def getDirection(self):
         return self.__direction
 
