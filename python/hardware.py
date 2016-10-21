@@ -17,7 +17,7 @@ class Motor:
 
     def setSpeed(self, speed):
         self.__speed=speed
-        pi.set_PWM_dutycyle(self.__gpio_current, speed)
+        pi.set_PWM_dutycycle(self.__gpio_current, speed)
 
     def setDirection(self,direction):
         self.setSpeed(0)
@@ -26,7 +26,7 @@ class Motor:
             self.__gpio_current = self.__gpio_cw
         else:
             self.__gpio_current = self.__gpio_ccw
-            self.setSpeed(self.__speed)
+        self.setSpeed(self.__speed)
 
     def getSpeed(self):
         return self.__speed

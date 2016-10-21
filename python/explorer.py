@@ -41,14 +41,21 @@ class Motors:
 
     @staticmethod
     def left(rate):
-        Motors.__motor_b.setSpeed(Motors.getSpeed() - rate)
+        turn_speed = int(Motors.getSpeed()) - int(rate)
+        turn_speed = 0 if turn_speed < 0 else 255 if turn_speed > 255 else turn_speed
+        Motors.__motor_a.setSpeed(turn_speed)
+        Motors.__motor_b.setSpeed(Motors.getSpeed())   
 
     @staticmethod
     def right(rate):
-        Motors.__motor_a.setSpeed(Motors.getSpeed() - rate)
+        turn_speed = int(Motors.getSpeed()) - int(rate)        
+        turn_speed = 0 if turn_speed < 0 else 255 if turn_speed > 255 else turn_speed
+        Motors.__motor_a.setSpeed(Motors.getSpeed())        
+        Motors.__motor_b.setSpeed(turn_speed)
 
     @staticmethod
     def setSpeed(speed):
+        speed = 0 if speed < 0 else 255 if speed > 255 else speed
         Motors.__speed=speed
         Motors.__motor_a.setSpeed(speed)
         Motors.__motor_b.setSpeed(speed)
@@ -64,10 +71,10 @@ class Motors:
             Motors.__motor_b.setDirection("ccw")
 
     @staticmethod    
-    def getSpeed(self):
+    def getSpeed():
         return Motors.__speed
 
     @staticmethod
-    def getDirection(self):
+    def getDirection():
         return Motors.__direction
 
