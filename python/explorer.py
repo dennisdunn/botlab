@@ -23,46 +23,56 @@ class Motors:
     __motor_a = pi.Motor(19, 20)
     __motor_b = pi.Motor(21, 26)
     __power = 0
+    __minPower = 0
+    __maxPower = 255
     __direction = "fwd"
-    MaxPower = 255
 
     @staticmethod
     def stop():
         Motors.setPower(0)
 
     @staticmethod
-    def forward(power):
+    def forward(delta):
+        delta = int(delta)
         Motors.setDirection("fwd")
-        Motors.setPower(power)
+        Motors.setPower(Motors.__minPower + delta)
 
     @staticmethod
-    def reverse(power):
+    def reverse(delta):
+        delta = int(delta)
         Motors.setDirection("rev")
-        Motors.setPower(power)
+        Motors.setPower(Motors.__minPower + delta)
 
     @staticmethod
     def left(rate):
         rate = int(rate)
-        turn_speed = Motors.getPower() - rate
-        turn_speed = 0 if turn_speed < 0 else Motors.MaxPower if turn_speed > Motors.MaxPower else turn_speed
+        turn_speed = Motors.__power - rate
         Motors.__motor_a.setPower(turn_speed)
-        Motors.__motor_b.setPower(Motors.getPower())   
+        Motors.__motor_b.setPower(Motors.__power)   
 
     @staticmethod
     def right(rate):
         rate = int(rate)
-        turn_speed = Motors.getPower() - rate        
-        turn_speed = 0 if turn_speed < 0 else Motors.MaxPower if turn_speed > Motors.MaxPower else turn_speed
-        Motors.__motor_a.setPower(Motors.getPower())        
+        turn_speed = Motors.getPower() - rate 
+        Motors.__motor_a.setPower(Motors.__power)        
         Motors.__motor_b.setPower(turn_speed)
 
     @staticmethod
     def setPower(power):
         power = int(power)
-        power = 0 if power < 0 else Motors.MaxPower if power > Motors.MaxPower else power
         Motors.__power = power
         Motors.__motor_a.setPower(power)
         Motors.__motor_b.setPower(power)
+
+    @staticmethod
+    def setMinPower(power):
+        power = int(power)
+        Motors.__minPower = power
+
+    @staticmethod
+    def setMaxPower(power):
+        power = int(power)
+        Motors.__maxPower = power
 
     @staticmethod
     def setDirection(direction):
@@ -77,6 +87,14 @@ class Motors:
     @staticmethod    
     def getPower():
         return int(Motors.__power)
+        
+    @staticmethod    
+    def getMinPower():
+        return int(Motors.__minPower)
+        
+    @staticmethod    
+    def getMaxPower():
+        return int(Motors.__maxPower)
 
     @staticmethod
     def getDirection():

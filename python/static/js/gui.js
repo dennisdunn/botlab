@@ -9,7 +9,7 @@ $(document).ready(function () {
     });
 
     $("#power-slider").on("change", function (e) {
-        $.get(url + "motors/forward?power=" + $(this).val());
+        $.get(url + "motors/forward?delta=" + $(this).val());
     });
 
     $("#turn-rate-slider").on("change", function (e) {
@@ -32,18 +32,30 @@ $(document).ready(function () {
         $.get(url + "motors/turn/cancel");
     });
 
-    $("#maxPowerInput").on("change", function (e) {
-        var val = $("#maxPowerInput").val();
-        $.get(url + "options/maxpower?value=" + val);
-        setPowerBounds(val);
+    $("#minPower").on("change", function (e) {
+        var val = $("#minPower").val();
+        $.get(url + "options/minpower?value=" + val);
+        setPowerBounds();
     });
 
-    var val = $("#maxPowerInput").val();
-    setPowerBounds(val);
-});
+    $("#maxPower").on("change", function (e) {
+        var val = $("#maxPower").val();
+        $.get(url + "options/maxpower?value=" + val);
+        setPowerBounds();
+    });
 
-function setPowerBounds(val) {
-    $("#power-slider").attr("max", val);
-    $("#turn-rate-slider").attr("min", -1 * val);
-    $("#turn-rate-slider").attr("max", val);
-}
+    setPowerBounds();
+
+    function setPowerBounds() {
+        var min = $("#minPower").val();
+        var max = $("#maxPower").val();
+        var range = max - min
+
+        $("#power-slider").attr("max", range);
+        $("#turn-rate-slider").attr("min", -1 * range);
+        $("#turn-rate-slider").attr("max", range);
+
+        $.get(url + "options/minpower?value=" + min);
+        $.get(url + "options/maxpower?value=" + max);
+    }
+});

@@ -16,7 +16,9 @@ class Motor:
         self.setDirection("cw")
 
     def setPower(self, power):
-        self.__power = int(power)
+        power = int(power)
+        power = 0 if power < 0 else 255 if power > 255 else power
+        self.__power = power
         pi.set_PWM_dutycycle(self.__gpio_current, power)
 
     def setDirection(self, direction):

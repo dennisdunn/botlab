@@ -29,8 +29,12 @@
 					<input type="checkbox" class="led" data-led="red" data-role="flipswitch" name="flip-checkbox-2" id="flip-checkbox-2">
 					<input type="checkbox" class="led" data-led="green" data-role="flipswitch" name="flip-checkbox-3" id="flip-checkbox-3">
 					<div data-role="fieldcontain">
-						<label for="maxPowerInput">Max Power</label>
-						<input type="number" id="maxPowerInput" max="255" value="10" style="width:20;">
+						<label for="minPower">Min Power</label>
+						<input type="number" id="minPower" max="255" value="100">
+					</div>
+					<div data-role="fieldcontain">
+						<label for="maxPower">Max Power</label>
+						<input type="number" id="maxPower" max="255" value="150">
 					</div>
 				</form>
 			</div>
@@ -39,14 +43,14 @@
 
 			<div class="ui-body">
 				<form>
+					<a data-role="button" data-inline="true" data-icon="delete" data-mini="true" id="reset-speed">Stop</a>
+					<a data-role="button" data-inline="true" data-icon="refresh" data-mini="true" id="reset-turn-rate">Reset</a>
 					<div class="ui-field-contain">
 						<label for="slider-1">Power</label>
-						<a data-role="button" data-inline="true" data-icon="delete" data-mini="true" id="reset-speed">Stop</a>
 						<input type="range" name="slider-1" id="power-slider" min="0" max="255" value="0" step="1">
 					</div>
 					<div class="ui-field-contain">
 						<label for="slider-1">Turn Rate</label>
-						<a data-role="button" data-inline="true" data-icon="refresh" data-mini="true" id="reset-turn-rate" />Reset</a>
 						<input type="range" name="slider-2" id="turn-rate-slider" min="-255" max="255" value="0" step="1">
 					</div>
 				</form>

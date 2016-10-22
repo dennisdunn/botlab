@@ -41,19 +41,30 @@ def turn(cmd):
 @app.route("/api/motors/<cmd>")
 def motors(cmd):
     if cmd == "forward":
-        Motors.forward(request.values["power"])
+        Motors.forward(request.values["delta"])
     elif cmd == "reverse":
-        Motors.reverse(request.values["power"])
+        Motors.reverse(request.values["delta"])
     elif cmd == "stop":
         Motors.stop()
     return cmd
 
-@app.route("/api/options/maxpower")
-def maxPower():
-    try:
-        Motors.MaxPower = int(int(request.values["value"]))
-    except:
-        return Motors.MaxPower
+@app.route("/api/options/<option>")
+def setOptions(option):
+    if(option == "maxpower"):
+        try:
+            val = request.values["value"]
+            Motors.setMaxPower(val)
+            return val
+        except:
+            return Motors.getMaxPower()
+    elif(option == "minpower"):
+        try:
+            val = request.values["value"]
+            Motors.setMinPower(val)
+            return val
+        except:
+            return Motors.getMinPower()          
+    return option
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
