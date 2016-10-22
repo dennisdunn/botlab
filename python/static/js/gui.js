@@ -8,11 +8,11 @@ $(document).ready(function () {
         $.get(url + "led/" + $(this).data("led") + "?state=" + state);
     });
 
-    $("#speed-slider").on("slidestop", function (e) {
-        $.get(url + "motors/forward?speed=" + $(this).val());
+    $("#power-slider").on("change", function (e) {
+        $.get(url + "motors/forward?power=" + $(this).val());
     });
 
-    $("#turn-rate-slider").on("slidestop", function (e) {
+    $("#turn-rate-slider").on("change", function (e) {
         var rate = $(this).val();
         var dir = rate < 0 ? "left" : "right";
         rate = Math.abs(rate);
@@ -21,8 +21,8 @@ $(document).ready(function () {
     });
 
     $("#reset-speed").on("click", function (e) {
-        $("#speed-slider").val(0);
-        $("#speed-slider").slider("refresh");
+        $("#power-slider").val(0);
+        $("#power-slider").slider("refresh");
         $.get(url + "motors/stop");
     });
 
@@ -31,4 +31,19 @@ $(document).ready(function () {
         $("#turn-rate-slider").slider("refresh");
         $.get(url + "motors/turn/cancel");
     });
+
+    $("#maxPowerInput").on("change", function (e) {
+        var val = $("#maxPowerInput").val();
+        $.get(url + "options/maxpower?value=" + val);
+        setPowerBounds(val);
+    });
+
+    var val = $("#maxPowerInput").val();
+    setPowerBounds(val);
 });
+
+function setPowerBounds(val) {
+    $("#power-slider").attr("max", val);
+    $("#turn-rate-slider").attr("min", -1 * val);
+    $("#turn-rate-slider").attr("max", val);
+}

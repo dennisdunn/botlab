@@ -35,18 +35,25 @@ def turn(cmd):
     elif cmd == "right":
         Motors.right(request.values["rate"])
     elif cmd == "cancel":
-        Motors.setSpeed(Motors.getSpeed())
+        Motors.setPower(Motors.getPower())
     return cmd
 
 @app.route("/api/motors/<cmd>")
 def motors(cmd):
     if cmd == "forward":
-        Motors.forward(request.values["speed"])
+        Motors.forward(request.values["power"])
     elif cmd == "reverse":
-        Motors.reverse(request.values["speed"])
+        Motors.reverse(request.values["power"])
     elif cmd == "stop":
         Motors.stop()
     return cmd
+
+@app.route("/api/options/maxpower")
+def maxPower():
+    try:
+        Motors.MaxPower = int(int(request.values["value"]))
+    except:
+        return Motors.MaxPower
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

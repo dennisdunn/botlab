@@ -22,47 +22,51 @@ class Output:
 class Motors:
     __motor_a = pi.Motor(19, 20)
     __motor_b = pi.Motor(21, 26)
-    __speed = 0
-    __direction = "fwd" 
+    __power = 0
+    __direction = "fwd"
+    MaxPower = 255
 
     @staticmethod
     def stop():
-        Motors.setSpeed(0)
+        Motors.setPower(0)
 
     @staticmethod
-    def forward(speed):
+    def forward(power):
         Motors.setDirection("fwd")
-        Motors.setSpeed(speed)
+        Motors.setPower(power)
 
     @staticmethod
-    def reverse(speed):
+    def reverse(power):
         Motors.setDirection("rev")
-        Motors.setSpeed(speed)
+        Motors.setPower(power)
 
     @staticmethod
     def left(rate):
-        turn_speed = int(Motors.getSpeed()) - int(rate)
-        turn_speed = 0 if turn_speed < 0 else 255 if turn_speed > 255 else turn_speed
-        Motors.__motor_a.setSpeed(turn_speed)
-        Motors.__motor_b.setSpeed(Motors.getSpeed())   
+        rate = int(rate)
+        turn_speed = Motors.getPower() - rate
+        turn_speed = 0 if turn_speed < 0 else Motors.MaxPower if turn_speed > Motors.MaxPower else turn_speed
+        Motors.__motor_a.setPower(turn_speed)
+        Motors.__motor_b.setPower(Motors.getPower())   
 
     @staticmethod
     def right(rate):
-        turn_speed = int(Motors.getSpeed()) - int(rate)        
-        turn_speed = 0 if turn_speed < 0 else 255 if turn_speed > 255 else turn_speed
-        Motors.__motor_a.setSpeed(Motors.getSpeed())        
-        Motors.__motor_b.setSpeed(turn_speed)
+        rate = int(rate)
+        turn_speed = Motors.getPower() - rate        
+        turn_speed = 0 if turn_speed < 0 else Motors.MaxPower if turn_speed > Motors.MaxPower else turn_speed
+        Motors.__motor_a.setPower(Motors.getPower())        
+        Motors.__motor_b.setPower(turn_speed)
 
     @staticmethod
-    def setSpeed(speed):
-        speed = 0 if speed < 0 else 255 if speed > 255 else speed
-        Motors.__speed=speed
-        Motors.__motor_a.setSpeed(speed)
-        Motors.__motor_b.setSpeed(speed)
+    def setPower(power):
+        power = int(power)
+        power = 0 if power < 0 else Motors.MaxPower if power > Motors.MaxPower else power
+        Motors.__power = power
+        Motors.__motor_a.setPower(power)
+        Motors.__motor_b.setPower(power)
 
     @staticmethod
     def setDirection(direction):
-        Motors.__direction=direction
+        Motors.__direction = direction
         if direction == "fwd":
             Motors.__motor_a.setDirection("cw")
             Motors.__motor_b.setDirection("cw")
@@ -71,8 +75,8 @@ class Motors:
             Motors.__motor_b.setDirection("ccw")
 
     @staticmethod    
-    def getSpeed():
-        return Motors.__speed
+    def getPower():
+        return int(Motors.__power)
 
     @staticmethod
     def getDirection():

@@ -8,28 +8,28 @@ class Motor:
         self.__gpio_cw = gpio_cw
         self.__gpio_ccw = gpio_ccw
         self.__gpio_current = gpio_cw
-        self.__speed = 0
+        self.__power = 0
         self.__direction = "cw"
 
     def reset(self):
-        self.setSpeed(0)
+        self.setPower(0)
         self.setDirection("cw")
 
-    def setSpeed(self, speed):
-        self.__speed=speed
-        pi.set_PWM_dutycycle(self.__gpio_current, speed)
+    def setPower(self, power):
+        self.__power = int(power)
+        pi.set_PWM_dutycycle(self.__gpio_current, power)
 
-    def setDirection(self,direction):
-        self.setSpeed(0)
-        self.__direction=direction
+    def setDirection(self, direction):
+        self.setPower(0)
+        self.__direction = direction
         if direction == "cw":
             self.__gpio_current = self.__gpio_cw
         else:
             self.__gpio_current = self.__gpio_ccw
-        self.setSpeed(self.__speed)
+        self.setPower(self.__power)
 
-    def getSpeed(self):
-        return self.__speed
+    def getPower(self):
+        return self.__power
 
     def getDirection(self):
         return self.__direction
