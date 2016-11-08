@@ -20,6 +20,7 @@ class MotorControlLoop(threading.Thread):
         while !self.__stopRequested:
             pass
         self.__encoder.stop()
+        self.__motor.reset()
 
     def stop(self):
         self.__stopRequested = true
