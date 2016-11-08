@@ -13,12 +13,14 @@ class Pid:
         self.kd = 0 
         self.ki = 0
 
-    def calculate(self, processVariable):
-        self._error = self.setpoint - processVariable
-        self._diff = self._prevError - self._error
-        self._prevError = self._error
+    def calculate(self, process_variable):
+        self._error = self.setpoint - process_variable
+        self._diff = self._prev_error - self._error
+        self._prev_error = self._error
         self._integral = self._integral + self._error
-        self.controlSignal += self.kp * self._error + self.kd * self._diff + self.ki * self._integral
-        print("signal={0}".format(self.control_signal))
+        
+        self.process_variable = process_variable
+        self.control_signal += self.kp * self._error + self.kd * self._diff + self.ki * self._integral
+        
         self._callback(self.control_signal)
     

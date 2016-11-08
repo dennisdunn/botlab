@@ -15,7 +15,6 @@ class RotaryEncoder(threading.Thread):
     def _timerHandler(self):
         count = self._sensor_handler.tally()
         self._sensor_handler.reset_tally()
-        print("count={0}".format(count))
         self._callback(count)
 
     def run(self):
