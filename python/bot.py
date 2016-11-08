@@ -17,3 +17,9 @@ class Bot:
     def setSpeed(self, target):
         self.__leftMotor.setTarget(target)
         # self.__rightMotor.setTarget(target)
+
+
+b = Bot()
+b.start()
+b.setSpeed(255)
+

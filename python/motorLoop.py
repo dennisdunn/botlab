@@ -23,7 +23,8 @@ class MotorControlLoop(threading.Thread):
         self.__motor.reset()
 
     def stop(self):
-        self.__stopRequested = true
+        self.__stopRequested = True
 
     def setTarget(self, setpoint):
+        print("setpoint={0}".format(setpoint))
         self.__pid.setpoint = setpoint

@@ -19,5 +19,6 @@ class Pid:
         self.__prevError = self.__error
         self.__integral = self.__integral + self.__error
         self.controlSignal += self.Kp * self.__error + self.Kd * self.__diff + self.Ki * self.__integral
+        print("signal={0}".format(self.controlSignal))
         self.__controlSignalCallback(self.controlSignal)
     
