@@ -5,12 +5,12 @@ pi = pigpio.pi()
 
 class RotaryEncoder:
     def __init__(self, signal, callback):
-        self.__gpio =sig # signal
+        self.__gpio = signal
         self.period = 0.1 # 100 ms
         self.onTrigger = callback
         
     def __del__(self):
-        self.stop():
+        self.stop()
 
     def __timerHandler(self):
         count = self.__sensorHandler.tally()
@@ -24,5 +24,5 @@ class RotaryEncoder:
         self.__timer.start()
 
     def stop(self):        
-        self.__timer.stop():
+        self.__timer.stop()
         self.__sensorHandler.cancel()
