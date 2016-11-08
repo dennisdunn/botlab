@@ -4,27 +4,24 @@ from pid import Pid
 from motor import Motor
 
 class MotorControlLoop(threading.Thread):
-    def __init__(self, signal, cw, ccw):
+    def __init__(self, period, signal, cw, ccw):
         threading.Thread.__init__(self)
-        self.__motor = Motor(cw,ccw)
-        self.__pid = Pid(self.__motor.setPower)
-        self.__encoder = RotaryEncoder(signal, self.__pid.calculate)
-        self.__stopRequested = False
+        self._motor = Motor(cw,ccw)
+        self._pid = Pid(self.__motor.setPower)
+        self._encoder = RotaryEncoder(signal, period, self._pid.calculate)
+        self._stop_requested = Event()
         self.setDaemon(True)
     
-    def __del__(self):
-        self.__encoder.stop()
-
     def run(self):
-        self.__encoder.start()
-        while not self.__stopRequested:
+        self._encoder.start()
+        while not self._stopRequested:
             pass
-        self.__encoder.stop()
-        self.__motor.reset()
+        self._encoder.stop()
+        self._motor.reset()
 
     def stop(self):
-        self.__stopRequested = True
+        self._stopRequested = True
 
-    def setTarget(self, setpoint):
+    def set_setpoint(self, setpoint):
         print("setpoint={0}".format(setpoint))
-        self.__pid.setpoint = setpoint
+        self._pid.setpoint = setpoint

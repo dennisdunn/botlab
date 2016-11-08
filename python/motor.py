@@ -5,11 +5,11 @@ pi = pigpio.pi()
 
 class Motor:
     def __init__(self, gpio_cw, gpio_ccw):
-        self.__gpio_cw = gpio_cw
-        self.__gpio_ccw = gpio_ccw
-        self.__gpio_current = gpio_cw
-        self.__power = 0
-        self.__direction = "cw"
+        self._gpio_cw = gpio_cw
+        self._gpio_ccw = gpio_ccw
+        self._gpio_current = gpio_cw
+        self.power = 0
+        self.direction = "cw"
 
     def reset(self):
         self.setPower(0)
@@ -18,21 +18,15 @@ class Motor:
     def setPower(self, power):
         power = int(power)
         power = 0 if power < 0 else 255 if power > 255 else power
-        self.__power = power
-        pi.set_PWM_dutycycle(self.__gpio_current, power)
+        self.power = power
+        pi.set_PWM_dutycycle(self._gpio_current, power)
 
     def setDirection(self, direction):
-        power = self.getPower()
+        power = self.power
         self.setPower(0)
-        self.__direction = direction
+        self.direction = direction
         if direction == "cw":
-            self.__gpio_current = self.__gpio_cw
+            self._gpio_current = self._gpio_cw
         else:
-            self.__gpio_current = self.__gpio_ccw
+            self._gpio_current = self._gpio_ccw
         self.setPower(power)
-
-    def getPower(self):
-        return self.__power
-
-    def getDirection(self):
-        return self.__direction
