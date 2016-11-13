@@ -9,6 +9,7 @@ class Pid:
         self._callback = callback
         self.setpoint = 0
         self.control_signal = 0
+        self.process_variable = 0
         self.kp= 1
         self.kd = 0 
         self.ki = 0

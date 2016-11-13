@@ -9,7 +9,7 @@ class ControlLoop(threading.Thread):
         self._motor = Motor(fwd, rev)
         self._pid = Pid(self._motor.set_power)
         self._encoder = RotaryEncoder(signal, period, self._pid.calculate)
-        self._stop_requested = Event()
+        self._stop_requested = threading.Event()
         self.setDaemon(True)
     
     def run(self):
