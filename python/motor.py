@@ -11,6 +11,12 @@ class Motor:
         self.power = 0
         self.direction = "fwd"
 
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exec_type, exec_value, traceback):
+        self.reset()
+
     def reset(self):
         self.set_power(0)
         self.set_direction("fwd")

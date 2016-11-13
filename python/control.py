@@ -12,6 +12,12 @@ class ControlLoop(threading.Thread):
         self._encoder = RotaryEncoder(signal, period, self._pid.calculate)
         self._stop_requested = threading.Event()
         self.setDaemon(True)
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exec_type, exec_value, traceback):
+        self.stop()
     
     def run(self):
         self._encoder.start()
@@ -26,3 +32,4 @@ class ControlLoop(threading.Thread):
 
     def set_setpoint(self, setpoint):
         self._pid.setpoint = setpoint
+

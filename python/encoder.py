@@ -11,7 +11,14 @@ class RotaryEncoder(threading.Thread):
         self._period = period
         self._callback = callback
         self.setDaemon(True)
-        
+
+    def __enter__(self):
+        pass
+
+    def __exit__(self, exec_type, exec_value, traceback):
+        self.stop()
+        self.callback = None
+
     def _timer_handler(self):
         count = self._sensor_handler.tally()
         self._sensor_handler.reset_tally()
