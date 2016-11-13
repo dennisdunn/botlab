@@ -1,7 +1,8 @@
+import sys
 import threading
-from encoder import RotaryEncoder
 from pid import Pid
 from motor import Motor
+from encoder import RotaryEncoder
 
 class ControlLoop(threading.Thread):
     def __init__(self, period, signal, fwd, rev):
@@ -15,7 +16,8 @@ class ControlLoop(threading.Thread):
     def run(self):
         self._encoder.start()
         while not self._stop_requested.is_set():
-            print("proc={0}\tsig={1}", self._pid.process_variable, self._pid.control_signal)
+            pass
+        self._pid.enable = False
         self._encoder.stop()
         self._motor.reset()
 
@@ -23,5 +25,4 @@ class ControlLoop(threading.Thread):
         self._stop_requested.set()
 
     def set_setpoint(self, setpoint):
-        print("setpoint={0}".format(setpoint))
         self._pid.setpoint = setpoint

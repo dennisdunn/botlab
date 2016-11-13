@@ -22,4 +22,6 @@ class Bot:
 b = Bot()
 b.start()
 b.set_speed(150)
+while True:
+    pass
 
