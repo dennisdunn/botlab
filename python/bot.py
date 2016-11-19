@@ -15,11 +15,13 @@ class Bot:
         # self._rightMotor.stop()
 
     def set_speed(self, target):
-        self._leftMotor.setTarget(target)
+        self._leftMotor.set_setpoint(target)
         # self._rightMotor.setTarget(target)
 
 
 b = Bot()
 b.start()
 b.set_speed(150)
+while True:
+    pass
 
