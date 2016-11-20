@@ -8,7 +8,7 @@ class pid:
         self._prev_error = 0
 
         self.setpoint = 0
-        self.kp = 1 
+        self.kp = -0.5 
         self.ki = 0
         self.kd = 0
 
