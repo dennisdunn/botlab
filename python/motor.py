@@ -1,15 +1,13 @@
 
 import pigpio
 
-pi = pigpio.pi()
-
-class Motor:
-    def __init__(self, gpio_fwd, gpio_rev):
+class motor:
+    def __init__(self, pi, gpio_fwd, gpio_rev):
         self._gpio_fwd = gpio_fwd
         self._gpio_rev = gpio_rev
         self._gpio_current = gpio_fwd
-        self.power = 0
         self.direction = "fwd"
+        self.power = 0
 
     def __enter__(self):
         pass
@@ -17,9 +15,13 @@ class Motor:
     def __exit__(self, exec_type, exec_value, traceback):
         self.reset()
 
-    def reset(self):
+    def stop(self):
         self.set_power(0)
         self.set_direction("fwd")
+
+    def adjust_power(self, delta):
+        power = self.power + delta
+        self.set_power(power)
 
     def set_power(self, power):
         power = int(power)
