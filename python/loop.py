@@ -1,7 +1,8 @@
+import threading
 
-class loop(threading.thread):
+class loop(threading.Thread):
     def __init__(self, motor, encoder, pid):
-        self.threading.Thread.__init__(self)
+        threading.Thread.__init__(self)
 
         self._encoder = encoder
         self._motor = motor
@@ -27,7 +28,7 @@ class loop(threading.thread):
 
     def cancel(self):
         self._stop_requested.set()
-        self._reader.cancel()
+        self._encoder.cancel()
         self._motor.stop()
 
 if __name__ == "__main__":
@@ -50,6 +51,7 @@ if __name__ == "__main__":
     reader = reader(pi, reader_gpio, pulse_per_revolution, weight)
     motor = motor(pi, fwd_gpio, rev_gpio)
     pid = pid()
+    pid.setpoint = 150
 
     loop = loop(motor, reader, pid)
 
