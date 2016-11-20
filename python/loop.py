@@ -24,12 +24,13 @@ class loop(threading.Thread):
         while not self._stop_requested.is_set():
             self.pv = self._encoder.RPM()
             self.sig = self._pid.calculate(self.pv)
+            self.err = self._pid._error
             self._motor.adjust_power(self.sig)
 
     def cancel(self):
         self._stop_requested.set()
-        self._encoder.cancel()
         self._motor.stop()
+        self._encoder.cancel()
 
 if __name__ == "__main__":
 
@@ -66,8 +67,6 @@ if __name__ == "__main__":
 
         time.sleep(SAMPLE_TIME)
 
-        rpm = loop.pv
-
-        print("RPM={}".format(int(rpm+0.5)))
+        print("RPM={}\tdelta={1}\terr={2}".format(int(loop.pv+0.5), int(loop.sig+0.5),int(loop.err+0.5)))
 
     loop.cancel()
