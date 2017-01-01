@@ -6,12 +6,12 @@
 class Tach
 {
     public:
-        Tach(int pin);
+        Tach(int pin, void(*dispatcher)(void));
+        void handler();
         int get_rpm();
     private:
         int _t;
-        int _n;
-        void _ISR();
+        volatile int _n;
         void _reset();
 };
 

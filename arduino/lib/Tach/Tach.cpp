@@ -3,13 +3,14 @@
 
 #define IRQ_PER_REVOLUTION 20
 
-Tach::Tach(int pin) 
+Tach::Tach(int pin, void(*dispatcher)(void))
 {
     pinMode(pin, INPUT_PULLUP);
-    attachInterrupt(digitalPinToInterrupt(pin), _ISR, RISING); 
+    attachInterrupt(pin - 2, dispatcher, RISING);
+    _reset();
 }
 
-void Tach::_ISR()
+void Tach::handler()
 {
     _n++;
 }
