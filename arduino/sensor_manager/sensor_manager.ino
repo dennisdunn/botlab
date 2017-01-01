@@ -1,6 +1,7 @@
 #include <NewPing.h>
 
 #include <Sonar.h>
+#include <Tach.h>
 
 #define SENSOR 14
 #define MAX_DISTANCE 300

@@ -9,8 +9,11 @@ class Tach
         Tach(int pin);
         int get_rpm();
     private:
-        int _prev_t;
-}
+        int _t;
+        int _n;
+        void _ISR();
+        void _reset();
+};
 
 
 #endif

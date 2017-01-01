@@ -5,21 +5,26 @@
 
 Tach::Tach(int pin) 
 {
-    _prev_t = millis();
-    attachInterrupt(pin, _handler, RISING);
+    pinMode(pin, INPUT_PULLUP);
+    attachInterrupt(digitalPinToInterrupt(pin), _ISR, RISING); 
 }
 
-Tach::_handler()
+void Tach::_ISR()
 {
     _n++;
 }
 
-Tach::get_rpm()
+int Tach::get_rpm()
 {
-    long t = millis() - _prev_t;
-    int rpm = 0;
+    long t = millis() - _t;
+    int n = _n;
+    _reset();
 
-    _prev_t = millis();
+    return n * 3000 / t;
+}
+
+void Tach::_reset()
+{
     _n = 0;
-    return rpm;
+    _t = millis();
 }
