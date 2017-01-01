@@ -1,7 +1,6 @@
 #ifndef Sonar_h
 #define Sonar_h
 
-#include "Arduino.h"
 #include <NewPing.h>
 
 class Sonar {
