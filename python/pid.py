@@ -8,12 +8,12 @@ class pid:
         self._prev_error = 0
 
         self.setpoint = 0
-        self.kp = -0.5 
+        self.kp = 0
         self.ki = 0
         self.kd = 0
 
     def calculate(self, process_variable):
-        self._error = self.setpoint - process_variable
+        self._error = process_variable - self.setpoint 
         self._diff = self._prev_error - self._error
         self._prev_error = self._error
         self._integral = self._integral + self._error

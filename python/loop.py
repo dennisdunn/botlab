@@ -67,6 +67,6 @@ if __name__ == "__main__":
 
         time.sleep(SAMPLE_TIME)
 
-        print("RPM={}\tdelta={1}\terr={2}".format(int(loop.pv+0.5), int(loop.sig+0.5),int(loop.err+0.5)))
+        print("RPM={}\tdelta={}\terr={}".format(int(loop.pv+0.5), int(loop.sig+0.5),int(loop.err+0.5)))
 
     loop.cancel()
