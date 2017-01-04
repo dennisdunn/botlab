@@ -31,9 +31,9 @@ void loop() {
 void send(const String& label, int value)
 {
   digitalWrite(LED13,HIGH);
-  Serial.print("{:");
+  Serial.print("{\"type\":");
   Serial.print(label);
-  Serial.print(",");
+  Serial.print("\", \"value\":");
   Serial.print(value);
   Serial.print("}");
   Serial.println();
@@ -47,4 +47,6 @@ void tach_0_dispatcher(){
 void tach_1_dispatcher(){
   tach_1.handler();
 }
+
+
 
