@@ -1,0 +1,21 @@
+{
+  "name": "botcon",
+  "homepage": "https://github.com/dennisdunn/botlab",
+  "authors": [
+    "Dennis Dunn <ansofive@gmail.com>"
+  ],
+  "description": "Robot Control Console",
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-material": "^1.1.1"
+  }
+}
