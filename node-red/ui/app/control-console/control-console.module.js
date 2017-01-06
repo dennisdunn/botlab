@@ -1,1 +1,1 @@
-angular.module("controlConsole", ['apiService']);
+angular.module("controlConsole", ['core']);

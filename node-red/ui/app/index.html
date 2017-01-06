@@ -1,5 +1,5 @@
 <!doctype HTML>    
-<html lang="en" ng-app="botconApp" >
+<html lang="en" ng-app="app" >
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Angular Material style sheet -->
@@ -21,10 +21,11 @@
   <script src="bower_components/angular-material/angular-material.min.js"></script>
   
   <!-- Your application bootstrap  -->
-  <script src="app.module.js"></script>
+  <script src="core/core.module.js"></script>
+  <script src="core/api.service.js"></script>
   <script src="control-console/control-console.module.js"></script>
   <script src="control-console/control-console.component.js"></script>
-  <script src="core/core.module.js"></script>
+  <script src="app.module.js"></script>
   
 </body>
 </html>

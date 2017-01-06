@@ -1,17 +1,17 @@
 
-angular
-.module("controlConsole")
-.component("controlConsole", {
-    templateUrl:"control-console/control-console.template.html",
-    controller:function ControlConsoleController($scope, apiService){
-        $scope.onStop = function() {
-            apiService.stop();
-            apiService.setLed('red', 'momentary');
-        };
+angular.module("controlConsole")
+    .component("controlConsole", {
+        templateUrl: "control-console/control-console.template.html",
+        controller: function ControlConsoleController(apiService) {
+            this.stopClick = function() {
+                alert('stop');
+                apiService.stop();
+                apiService.setLed('red', 'momentary');
+            };
 
-        $scope.onCancel = function() {
-            apiService.cancelTurn();
-            apiService.setLed('yellow', 'momentary');
-        };
-    }
-});
+            this.cancelClick = function() {
+                apiService.cancelTurn();
+                apiService.setLed('yellow', 'momentary');
+            };
+        }
+    });
