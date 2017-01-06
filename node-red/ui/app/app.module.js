@@ -2,7 +2,8 @@
 angular.module('app', [
     'ngMaterial',
     'core',
-    'controlConsole'
+    'controlConsole',
+    'directionalConsole'
 ]);
 
 angular.module('app')

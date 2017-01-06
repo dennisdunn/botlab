@@ -1,15 +1,18 @@
-<!doctype HTML>    
-<html lang="en" ng-app="app" >
+<!doctype HTML>
+<html lang="en" ng-app="app">
+
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Angular Material style sheet -->
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 </head>
+
 <body>
   <!--
     Your HTML content here
-  -->  
+  -->
   <control-console></control-console>
+  <directional-console></directional-console>
 
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="bower_components/angular/angular.min.js"></script>
@@ -19,15 +22,18 @@
 
   <!-- Angular Material Library -->
   <script src="bower_components/angular-material/angular-material.min.js"></script>
-  
+
   <!-- Your application bootstrap  -->
   <script src="core/core.module.js"></script>
   <script src="core/api.service.js"></script>
   <script src="control-console/control-console.module.js"></script>
   <script src="control-console/control-console.component.js"></script>
+  <script src="directional-console/directional-console.module.js"></script>
+  <script src="directional-console/directional-console.component.js"></script>
   <script src="app.module.js"></script>
-  
+
 </body>
+
 </html>
 
 <!--
