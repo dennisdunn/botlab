@@ -1,1 +1,1 @@
-angular.module("controlConsole", []);
+angular.module("controlConsole", ['apiService']);
