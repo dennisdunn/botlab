@@ -11,30 +11,40 @@
   <!--
     Your HTML content here
   -->
-  <md-toolbar>
-    <div class="md-toolbar-tools">
-      <span flex></span>
-      <md-menu md-position-mode="target-right target" md-offset="0 40">
-        <md-button class="md-icon-button" md-menu-origin aria-label="More">
-          <md-icon md-svg-icon="dots-vertical" ng-click="$mdOpenMenu($event)"></md-icon>
-        </md-button>
-        <md-menu-content width="4">
-          <md-menu-item>
-            <md-button>
-              <div layout="row" flex>
-                <p flex>Settings</p>              
-              <md-icon md-svg-icon="settings"></md-icon>
-              </div>
-            </md-button>
-          </md-menu-item>
-          <md-menu-divider></md-menu-divider>
-          <md-menu-item>
-            <md-button ng-href="http://roverbot:1880/admin">Flow Editor</md-button>
-          </md-menu-item>
-        </md-menu-content>
-      </md-menu>
-    </div>
-  </md-toolbar>
+  <div ng-controller="toolbarController as ctrl">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <span flex></span>
+        <md-menu md-position-mode="target-right target" md-offset="0 40">
+          <md-button class="md-icon-button" md-menu-origin aria-label="More">
+            <md-icon md-svg-icon="dots-vertical" ng-click="ctrl.openMenu($mdOpenMenu, $event)"></md-icon>
+          </md-button>
+          <md-menu-content width="4">
+            <md-menu-item>
+              <md-button ng-click="ctrl.openSettings($event)">
+                <div layout="row" flex>
+                  <p flex>Settings</p>
+                  <md-icon md-svg-icon="settings"></md-icon>
+                </div>
+              </md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider>
+            <md-menu-item>
+              <md-button ng-href="http://roverbot:1880/admin" target="blank">Flow Editor</md-button>
+            </md-menu-item>
+            <md-menu-divider></md-menu-divider><md-menu-item>
+              <md-button ng-click="ctrl.openAbout($event)">
+                <div layout="row" flex>
+                  <p flex>About</p>
+                  <md-icon md-svg-icon="about"></md-icon>
+                </div>
+              </md-button>
+            </md-menu-item>
+          </md-menu-content>
+        </md-menu>
+      </div>
+    </md-toolbar>
+  </div>
   <div layout="column" layout-padding>
     <control-console></control-console>
     <power-console></power-console>
@@ -53,6 +63,8 @@
   <script src="core/core.module.js"></script>
   <script src="core/api.service.js"></script>
   <script src="core/event.controller.js"></script>
+  <script src="core/toolbar.controller.js"></script>
+  <script src="core/settings.service.js"></script>
   <script src="control-console/control-console.module.js"></script>
   <script src="control-console/control-console.component.js"></script>
   <script src="directional-console/directional-console.module.js"></script>
