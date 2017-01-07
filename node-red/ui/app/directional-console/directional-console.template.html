@@ -1,5 +1,8 @@
-<section layout="row" layout-align="center center">
-    <md-slider-container>
-        <md-slider flex min="-25" max="25" class="md-secondary" ng-change="$ctrl.onChanged()" ng-model="$ctrl.rate"></md-slider>
-    </md-slider-container>
-</section>
+<md-slider-container flex>
+    <md-input-container>
+        <input flex type="number" ng-model="$ctrl.rate" aria-label="rate" aria-controls="rate-slider">
+    </md-input-container>
+    <md-slider md-discrete ng-model="$ctrl.rate" ng-change="$ctrl.onChanged()" min="-25" max="25" aria-label="rate" class="md-secondary"></md-slider>
+    </md-slider>
+    <h5>Turn</h5>
+</md-slider-container>

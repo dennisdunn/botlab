@@ -8,9 +8,11 @@ angular.module('core')
                 case 'green':
                     break;
                 case 'yellow':
+                    $rootScope.$broadcast('rate.set', { value: 0 });
                     $rootScope.$broadcast('rate.changed', { value: 0 });
                     break;
                 case 'red':
+                    $rootScope.$broadcast('power.set', { value: 0 });
                     $rootScope.$broadcast('power.changed', { value: 0 });
                     break;
             }
