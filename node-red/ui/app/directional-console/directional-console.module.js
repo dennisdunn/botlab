@@ -1,1 +1,1 @@
-angular.module("directionalConsole", ['core']);
+angular.module("directionalConsole", []);

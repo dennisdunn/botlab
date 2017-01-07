@@ -7,13 +7,15 @@
   <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
 </head>
 
-<body>
+<body ng-controller="eventController">
   <!--
     Your HTML content here
   -->
-  <control-console></control-console>
-  <directional-console></directional-console>
-
+  <md-content>
+    <control-console></control-console>
+    <power-console></power-console>
+    <directional-console></directional-console>
+  </md-content>
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="bower_components/angular/angular.min.js"></script>
   <script src="bower_components/angular-animate/angular-animate.min.js"></script>
@@ -26,10 +28,13 @@
   <!-- Your application bootstrap  -->
   <script src="core/core.module.js"></script>
   <script src="core/api.service.js"></script>
+  <script src="core/event.controller.js"></script>
   <script src="control-console/control-console.module.js"></script>
   <script src="control-console/control-console.component.js"></script>
   <script src="directional-console/directional-console.module.js"></script>
   <script src="directional-console/directional-console.component.js"></script>
+  <script src="power-console/power-console.module.js"></script>
+  <script src="power-console/power-console.component.js"></script>
   <script src="app.module.js"></script>
 
 </body>

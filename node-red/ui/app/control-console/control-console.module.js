@@ -1,1 +1,1 @@
-angular.module("controlConsole", ['core']);
+angular.module("controlConsole", []);
