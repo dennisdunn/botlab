@@ -11,7 +11,15 @@
   <!--
     Your HTML content here
   -->
-  <div class="md-padding">
+  <md-toolbar>
+    <div class="md-toolbar-tools">
+      <span flex></span>
+      <md-button class="md-icon-button" aria-label="More">
+        <md-icon md-svg-icon="dots-vertical"></md-icon>
+      </md-button>
+    </div>
+  </md-toolbar>
+  <div layout="column" layout-padding>
     <control-console></control-console>
     <power-console></power-console>
     <directional-console></directional-console>
