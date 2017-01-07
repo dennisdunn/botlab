@@ -14,9 +14,25 @@
   <md-toolbar>
     <div class="md-toolbar-tools">
       <span flex></span>
-      <md-button class="md-icon-button" aria-label="More">
-        <md-icon md-svg-icon="dots-vertical"></md-icon>
-      </md-button>
+      <md-menu md-position-mode="target-right target" md-offset="0 40">
+        <md-button class="md-icon-button" md-menu-origin aria-label="More">
+          <md-icon md-svg-icon="dots-vertical" ng-click="$mdOpenMenu($event)"></md-icon>
+        </md-button>
+        <md-menu-content width="4">
+          <md-menu-item>
+            <md-button>
+              <div layout="row" flex>
+                <p flex>Settings</p>              
+              <md-icon md-svg-icon="settings"></md-icon>
+              </div>
+            </md-button>
+          </md-menu-item>
+          <md-menu-divider></md-menu-divider>
+          <md-menu-item>
+            <md-button ng-href="http://roverbot:1880/admin">Flow Editor</md-button>
+          </md-menu-item>
+        </md-menu-content>
+      </md-menu>
     </div>
   </md-toolbar>
   <div layout="column" layout-padding>
