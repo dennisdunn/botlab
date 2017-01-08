@@ -1,28 +1,29 @@
 angular.module('core')
-.factory('apiService', ['$http', function($http) {
+    .factory('apiService', ['$http', 'settingsService', function ($http, settingsService) {
 
-    var urlBase = '/api/';
-    var service = {};
+        function getUrl() {
+            return settingsService.botUri + settingsService.apiUri;
+        };
 
-    service.setPower = function(level){
-        return $http.get(urlBase + 'power?param='+level);
-    };
+        return {
+            setPower: function (level) {
+                return $http.get(getUrl() + '/power?param=' + level);
+            },
 
-    service.setTurnrate = function(rate){
-        return $http.get(urlBase + 'turnrate?param='+rate);
-    };
+            setTurnrate: function (rate) {
+                return $http.get(getUrl() + '/turnrate?param=' + rate);
+            },
 
-    service.setLed = function(target, state){
-        return $http.get(urlBase + 'led?cmd='+target+'&param='+state);
-    };
+            setLed: function (target, state) {
+                return $http.get(getUrl() + '/led?cmd=' + target + '&param=' + state);
+            },
 
-    service.cancelTurn = function(){
-        return $http.get(urlBase + 'turnrate?param=0');
-    };
+            cancelTurn: function () {
+                return $http.get(getUrl() + '/turnrate?param=0');
+            },
 
-    service.stop = function(){
-        return $http.get(urlBase + 'power?param=0');
-    };
-
-    return service;
-}]);
+            stop: function () {
+                return $http.get(getUrl() + '/power?param=0');
+            }
+        }
+    }]);
