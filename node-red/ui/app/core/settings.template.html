@@ -1,0 +1,25 @@
+<md-dialog-content>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span>Settings</span>
+            <span flex></span>
+            <md-button class="md-icon-button" md-menu-origin aria-label="close">
+                <md-icon md-svg-icon="close" ng-click="close()"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+    <div layout="column" layout-padding class="md-input-form">
+        <md-input-container>
+            <label>Host URL</label>
+            <input type="text" ng-model="settings.botUri">
+        </md-input-container>
+        <md-input-container>
+            <label>API URL</label>
+            <input type="text" ng-model="settings.apiUri">
+        </md-input-container>
+        <md-input-container>
+            <label>Editor URL</label>
+            <input type="text" ng-model="settings.editUri">
+        </md-input-container>
+    </div>
+</md-dialog-content>

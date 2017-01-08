@@ -1,5 +1,5 @@
 angular.module('core')
-    .controller('toolbarController', function ($mdDialog, settingsService) {
+    .controller('ToolbarController', function ($mdDialog, settingsService) {
         var originatorEv;
 
         this.openMenu = function ($mdOpenMenu, ev) {
@@ -7,20 +7,21 @@ angular.module('core')
             $mdOpenMenu(ev);
         };
 
-        this.openSettings = function () {
+        this.openSettings = function ($event) {
 
             $mdDialog.show(
-                $mdDialog.alert()
-                    .targetEvent(originatorEv)
-                    .clickOutsideToClose(true)
-                    .parent('body')
-                    .title('Settings')
-                    .textContent(settingsService.botUri + settingsService.apiUri)
-                    .ok('OK'));
+                {
+                    targetEvent: $event,
+                    templateUrl: 'core/settings.template.html',
+                    clickOutsideToClose: true,
+                    escapeToClose: true,
+                    controller: 'SettingsController',
+                    locals: { settings: settingsService }
+                });
 
             originatorEv = null;
-        };  
-        
+        };
+
         this.openAbout = function () {
 
             $mdDialog.show(

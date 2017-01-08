@@ -11,7 +11,7 @@
   <!--
     Your HTML content here
   -->
-  <div ng-controller="toolbarController as ctrl">
+  <div ng-controller="ToolbarController as ctrl">
     <md-toolbar>
       <div class="md-toolbar-tools">
         <span flex></span>
@@ -34,10 +34,7 @@
             </md-menu-item>
             <md-menu-divider></md-menu-divider><md-menu-item>
               <md-button ng-click="ctrl.openAbout($event)">
-                <div layout="row" flex>
-                  <p flex>About</p>
-                  <md-icon md-svg-icon="about"></md-icon>
-                </div>
+                About
               </md-button>
             </md-menu-item>
           </md-menu-content>
@@ -65,6 +62,7 @@
   <script src="core/event.controller.js"></script>
   <script src="core/toolbar.controller.js"></script>
   <script src="core/settings.service.js"></script>
+  <script src="core/settings.controller.js"></script>
   <script src="control-console/control-console.module.js"></script>
   <script src="control-console/control-console.component.js"></script>
   <script src="directional-console/directional-console.module.js"></script>
