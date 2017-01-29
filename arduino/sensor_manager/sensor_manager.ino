@@ -22,10 +22,17 @@ void setup() {
 }
 
 void loop() {
-  send("sonar", sonar.get_range());
-  send("tach0", tach_0.get_rpm());
-  send("tach1", tach_1.get_rpm());
+  // send("sonar", sonar.get_range());
+  // send("tach0", tach_0.get_rpm());
+  // send("tach1", tach_1.get_rpm());
+  plot(tach_0.get_rpm(), tach_1.get_rpm());
   delay(1000/FREQ);
+}
+
+void plot(int v0, int v1){
+  Serial.print(v0);
+  Serial.print(",");
+  Serial.println(v1);
 }
 
 void send(const String& label, int value)
