@@ -5,30 +5,28 @@
 
 Tach::Tach(int pin, void (*dispatcher)(void))
 {
-    pinMode(pin, INPUT_PULLUP);
-    attachInterrupt(pin - 2, dispatcher, FALLING);
-    _reset();
+    attachInterrupt(pin - 2, dispatcher, RISING);
+    _n = 0;
+    _t = 0;
+    _rpm = 0;
 }
 
 void Tach::handler()
 {
+    int t = 0;
     _n++;
+
+    if(_n >= 20)
+    {
+        t = millis();
+        _rpms = (_n * 3000)/(t - _t);
+        _n = 0;
+        _t = t;
+    }
 }
 
 int Tach::get_rpm()
 {
-    noInterrupts();
-
-    int n = _n;
-    int t = (int)(millis() - _t);
-
-    _reset();
-    interrupts();
-    return (n * 3000) / t;
+    return _rpm;
 }
 
-void Tach::_reset()
-{
-    _n = 0;
-    _t = millis();
-}

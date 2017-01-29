@@ -10,9 +10,9 @@ class Tach
         void handler();
         int get_rpm();
     private:
-        unsigned long _t;
-        volatile  int _n;
-        void _reset();
+        volatile unsigned long _t;
+        volatile int _rpm;
+        volatile int _n;
 };
 
 
