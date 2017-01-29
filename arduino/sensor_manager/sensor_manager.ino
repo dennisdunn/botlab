@@ -31,7 +31,7 @@ void loop() {
 void send(const String& label, int value)
 {
   digitalWrite(LED13,HIGH);
-  Serial.print("{\"sensor\":");
+  Serial.print("{\"sensor\":\"");
   Serial.print(label);
   Serial.print("\", \"value\":");
   Serial.print(value);
