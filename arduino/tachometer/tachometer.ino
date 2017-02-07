@@ -1,24 +1,11 @@
 #include <MsTimer2.h>
-
-#define IRQ_0_PIN 2
-#define IRQ_1_PIN 3
-#define STR_BUF 64
-#define LED 13
-#define HZ 10
-
-#define IRQ_0 (IRQ_0_PIN - 2)
-#define IRQ_1 (IRQ_1_PIN - 2)
+#include "tachometer.h"
 
 char buffer[STR_BUF];
 int conversion_factor = 1;
 
 volatile int pulse_count[2][2];
 volatile boolean has_data = false;
-
-void timer_isr();
-void tach_0_isr();
-void tach_1_isr();
-void send(int x, int y);
 
 void setup()
 {
@@ -73,9 +60,3 @@ void tach_1_isr()
 {
   pulse_count[IRQ_1][0]++;
 }
-
-
-
-
-
-
