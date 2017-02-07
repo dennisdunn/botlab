@@ -3,7 +3,7 @@
 
 #define IRQ_0_PIN 2
 #define IRQ_1_PIN 3
-#define STR_BUF 64
+#define BUF_LEN 7
 #define LED 13
 #define HZ 10
 
