@@ -25,7 +25,20 @@ void setup()
 
 void loop()
 {
-  send(pulse_count[IRQ_0], pulse_count[IRQ_1]);
+  int tach_0 = 0;
+  int tach_1 = 0;
+  int counts[2][BUF_LEN];
+
+  cli();
+  memcpy(counts, ring_buffer, sizeof(ring_buffer));
+  sei();
+
+  qsort(ring_buffer[IRQ_0][0], BUF_LEN, sizeof(int), cmp<int>);
+  qsort(ring_buffer[IRQ_1][0], BUF_LEN, sizeof(int), cmp<int>);
+
+  // report the median
+  send(counts[IRQ_0][BUF_LEN / 2], counts[IRQ_1][BUF_LEN / 2]);
+
   digitalWrite(LED, !digitalRead(LED));
   delay(1000 / HZ);
 }
@@ -39,6 +52,25 @@ void send(int x, int y)
   Serial.print("]");
   Serial.println();
 }
+
+// Sort
+// http://arduino.stackexchange.com/questions/13255/do-i-need-a-bubble-sort-or-something-easier
+template <typename T>
+int cmp(const void *arg1, const void *arg2)
+{
+  T *a = (T *)arg1; // cast to pointers to type T
+  T *b = (T *)arg2;
+  // a less than b?
+  if (*a < *b)
+    return -1;
+  // a greater than b?
+  if (*a > *b)
+    return 1;
+  // must be equal
+  return 0;
+}
+
+// ISR
 
 void timer_isr()
 {

@@ -1,5 +1,5 @@
 #ifndef TACHOMETER.H
-#define TACHOMETER.H
+#define TACHOMETER .H
 
 #define IRQ_0_PIN 2
 #define IRQ_1_PIN 3
@@ -14,5 +14,6 @@ void timer_isr();
 void tach_0_isr();
 void tach_1_isr();
 void send(int x, int y);
+int cmp(const void *arg1, const void *arg2);
 
 #endif
