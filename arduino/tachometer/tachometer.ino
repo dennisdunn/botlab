@@ -3,14 +3,13 @@
 
 float conversion_factor = 1.0;
 
-volatile int pulse_count[2];
-volatile int ring_buffer[2][BUF_LEN];
+volatile int pulse_count[2] = {
+  0};
+volatile int ring_buffer[2][BUF_LEN] = {
+  0};
 
 void setup()
 {
-  memset(pulse_count, 0, sizeof(pulse_count));
-  memset(ring_buffer, 0, sizeof(ring_buffer));
-
   Serial.begin(115200);
 
   pinMode(IRQ_0_PIN, INPUT_PULLUP);
@@ -30,11 +29,13 @@ void loop()
   int counts[2][BUF_LEN];
 
   cli();
-  memcpy(counts, ring_buffer, sizeof(ring_buffer));
+  for(int i = 0; i < 2; i++)
+    for(int j = 0; j < BUF_LEN; j++)
+      counts[i][j] = ring_buffer[i][j];
   sei();
 
-  qsort(ring_buffer[IRQ_0][0], BUF_LEN, sizeof(int), cmp<int>);
-  qsort(ring_buffer[IRQ_1][0], BUF_LEN, sizeof(int), cmp<int>);
+  //  qsort(counts[IRQ_0][0], BUF_LEN, sizeof(int), cmp<int>);
+  //  qsort(counts[IRQ_1][0], BUF_LEN, sizeof(int), cmp<int>);
 
   // report the median
   send(counts[IRQ_0][BUF_LEN / 2], counts[IRQ_1][BUF_LEN / 2]);
@@ -63,7 +64,8 @@ void timer_isr()
   ring_buffer[IRQ_0][idx] = pulse_count[IRQ_0];
   ring_buffer[IRQ_1][idx] = pulse_count[IRQ_1];
 
-  memset(pulse_count, 0, sizeof(pulse_count));
+  for(int i =0; i < 2; i++)
+    pulse_count[i] = 0;
 }
 
 void tach_0_isr()
@@ -75,3 +77,4 @@ void tach_1_isr()
 {
   pulse_count[IRQ_1]++;
 }
+
