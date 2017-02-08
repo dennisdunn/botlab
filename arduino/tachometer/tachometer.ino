@@ -3,6 +3,7 @@
 
 float conversion_factor = 1.0;
 
+volatile bool has_data = false;
 volatile int pulse_count[2] = {0};
 volatile int ring_buffer[2][BUF_LEN] = {0};
 
@@ -22,60 +23,51 @@ void setup()
 
 void loop()
 {
-  int tach_0 = 0;
-  int tach_1 = 0;
-  int counts[2][BUF_LEN];
-
-  cli();
-
-  tach_0 = pulse_count[0];
-  tach_1 = pulse_count[1];
-
-  for(int i = 0; i < 2; i++)
+  if (has_data)
   {
-    for(int j = 0; j < BUF_LEN; j++)
+    int tach_0[BUF_LEN];
+    int tach_1[BUF_LEN];
+
+    cli();
+    for (int i = 0; i < BUF_LEN; i++)
     {
-      counts[i][j] = ring_buffer[i][j];
+      tach_0[i] = ring_buffer[IRQ_0][i];
+      tach_1[i] = ring_buffer[IRQ_1][i];
     }
+    sei();
+
+    qsort(tach_0, BUF_LEN, sizeof(int), cmp<int>);
+    qsort(tach_1, BUF_LEN, sizeof(int), cmp<int>);
+
+    // report the median
+    send(tach_0[BUF_LEN / 2], tach_1[BUF_LEN / 2]);
+
+    digitalWrite(LED, !digitalRead(LED));
+    has_data = false;
   }
-
-  sei();
-
-  qsort(counts[IRQ_0], BUF_LEN, sizeof(int), cmp<int>);
-  qsort(counts[IRQ_1], BUF_LEN, sizeof(int), cmp<int>);
-
-  // report the median
-  // send(counts[IRQ_0][BUF_LEN / 2], counts[IRQ_1][BUF_LEN / 2]);
-  send(tach_0, tach_1);
-
-  digitalWrite(LED, !digitalRead(LED));
-  delay(1000 / HZ);
 }
 
 void send(int x, int y)
 {
-  Serial.print("[");
-  Serial.print(x);
-  Serial.print(", ");
-  Serial.print(y);
-  Serial.print("]");
-  Serial.println();
+  char buffer[STR_BUF];
+  sprintf(buffer, "[%i,%i]", x, y);
+  Serial.println(buffer);
 }
 
 void timer_isr()
 {
-  static int idx = -1;
-  idx = ++idx % BUF_LEN;
+  static int idx = 0;
 
-  for(int i =0;i < 2; i++)
-  {
-    ring_buffer[i][idx] = pulse_count[i];
-  }
+  ring_buffer[IRQ_0][i] = pulse_count[IRQ_0];
+  ring_buffer[IRQ_1][i] = pulse_count[IRQ_1];
 
-  for(int i =0; i < 2; i++)
-  {
-    pulse_count[i] = 0;
-  }
+  pulse_count[IRQ_0] = 0;
+  pulse_count[IRQ_1] = 0;
+
+  if (++idx == BUF_LEN)
+    idx = 0;
+
+  has_data = true;
 }
 
 void tach_0_isr()
@@ -87,8 +79,3 @@ void tach_1_isr()
 {
   pulse_count[IRQ_1]++;
 }
-
-
-
-
-
