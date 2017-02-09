@@ -49,7 +49,7 @@ void loop()
 
 void send(int x, int y)
 {
-  char buffer[STR_BUF];
+  char buffer[STR_LEN];
   sprintf(buffer, "[%i,%i]", x, y);
   Serial.println(buffer);
 }
@@ -58,8 +58,8 @@ void timer_isr()
 {
   static int idx = 0;
 
-  ring_buffer[IRQ_0][i] = pulse_count[IRQ_0];
-  ring_buffer[IRQ_1][i] = pulse_count[IRQ_1];
+  ring_buffer[IRQ_0][idx] = pulse_count[IRQ_0];
+  ring_buffer[IRQ_1][idx] = pulse_count[IRQ_1];
 
   pulse_count[IRQ_0] = 0;
   pulse_count[IRQ_1] = 0;
