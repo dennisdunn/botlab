@@ -1,0 +1,697 @@
+[
+    {
+        "id": "5fc3b7db.3c3578",
+        "type": "tab",
+        "label": "api"
+    },
+    {
+        "id": "3d5b3ade.b23e9e",
+        "type": "tab",
+        "label": "buttons"
+    },
+    {
+        "id": "e12c7d67.c8d7f",
+        "type": "tab",
+        "label": "pid"
+    },
+    {
+        "id": "d44f9861.13ce38",
+        "type": "tab",
+        "label": "explorer hat"
+    },
+    {
+        "id": "83d26ab5.30fe78",
+        "type": "serial-port",
+        "z": "",
+        "serialport": "/dev/serial0",
+        "serialbaud": "115200",
+        "databits": "8",
+        "parity": "none",
+        "stopbits": "1",
+        "newline": "\\n",
+        "bin": "false",
+        "out": "char",
+        "addchar": false
+    },
+    {
+        "id": "3696f208.cf704e",
+        "type": "http in",
+        "z": "5fc3b7db.3c3578",
+        "name": "",
+        "url": "/led",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 142,
+        "y": 200,
+        "wires": [
+            [
+                "6dbe68f5.b164a8",
+                "bb4cb71a.b0aad8"
+            ]
+        ]
+    },
+    {
+        "id": "6dbe68f5.b164a8",
+        "type": "http response",
+        "z": "5fc3b7db.3c3578",
+        "name": "",
+        "x": 383,
+        "y": 402,
+        "wires": []
+    },
+    {
+        "id": "81957735.19eb08",
+        "type": "comment",
+        "z": "5fc3b7db.3c3578",
+        "name": "about...",
+        "info": "## Lights\n* cmd=[blue red yellow green]\n* param=[on off]\n\n## Motors\n* param=[0..100]\n\n## Turn rate\n* param=[-10..10]",
+        "x": 929,
+        "y": 34,
+        "wires": []
+    },
+    {
+        "id": "bb4cb71a.b0aad8",
+        "type": "function",
+        "z": "5fc3b7db.3c3578",
+        "name": "parse",
+        "func": "\nreturn {topic:'light.'+msg.payload.cmd, payload:msg.payload.param};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 368,
+        "y": 149,
+        "wires": [
+            [
+                "14592ebd.0aa4b1"
+            ]
+        ]
+    },
+    {
+        "id": "99c2b018.aa0e",
+        "type": "http in",
+        "z": "5fc3b7db.3c3578",
+        "name": "",
+        "url": "/power",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 132,
+        "y": 260,
+        "wires": [
+            [
+                "6dbe68f5.b164a8",
+                "135ba63d.a04e2a"
+            ]
+        ]
+    },
+    {
+        "id": "135ba63d.a04e2a",
+        "type": "function",
+        "z": "5fc3b7db.3c3578",
+        "name": "parse",
+        "func": "var value = 1*msg.payload.param;\nglobal.set('power', value);\nreturn {topic:'power', payload:value};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 375,
+        "y": 218,
+        "wires": [
+            [
+                "a0927625.f7a9d8"
+            ]
+        ]
+    },
+    {
+        "id": "b5c74dfb.59d2d",
+        "type": "http in",
+        "z": "5fc3b7db.3c3578",
+        "name": "",
+        "url": "/turnRate",
+        "method": "get",
+        "swaggerDoc": "",
+        "x": 122,
+        "y": 320,
+        "wires": [
+            [
+                "6dbe68f5.b164a8",
+                "d96c5ad4.1c4c28"
+            ]
+        ]
+    },
+    {
+        "id": "d96c5ad4.1c4c28",
+        "type": "function",
+        "z": "5fc3b7db.3c3578",
+        "name": "parse",
+        "func": "var value = 1*msg.payload.param;\nglobal.set('rate', value);\nreturn {topic:'rate', payload:value};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 374,
+        "y": 289,
+        "wires": [
+            [
+                "a0927625.f7a9d8"
+            ]
+        ]
+    },
+    {
+        "id": "5ccf0033.ee906",
+        "type": "function",
+        "z": "5fc3b7db.3c3578",
+        "name": "setpoint",
+        "func": "var power = global.get('power') || 0;\nvar rate = global.get('rate') || 0;\nvar msg1 = {topic:'pid', id:0, setpoint:power - rate};\nvar msg2 = {topic:'pid', id:1, setpoint:power + rate};\nreturn [[msg1, msg2]];",
+        "outputs": "1",
+        "noerr": 0,
+        "x": 645,
+        "y": 151,
+        "wires": [
+            [
+                "bf0b7de8.7339e"
+            ]
+        ]
+    },
+    {
+        "id": "eb164e98.979fd8",
+        "type": "switch",
+        "z": "3d5b3ade.b23e9e",
+        "name": "dispatch touch",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "explorerhat/touch.1",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "explorerhat/touch.2",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "explorerhat/touch.3",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "explorerhat/touch.4",
+                "vt": "str"
+            }
+        ],
+        "checkall": "false",
+        "outputs": 4,
+        "x": 200,
+        "y": 180,
+        "wires": [
+            [
+                "dd821f61.b7b53"
+            ],
+            [
+                "653d9346.b5823c"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "6f8e342a.9e5144",
+        "type": "comment",
+        "z": "3d5b3ade.b23e9e",
+        "name": "about...",
+        "info": "* touch.1 - forward for x seconds\n* touch.2 - toggle pid-is-active",
+        "x": 670,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "7f1d791a.263c58",
+        "type": "link out",
+        "z": "3d5b3ade.b23e9e",
+        "name": "btn out",
+        "links": [
+            "4eb06d77.069bb4"
+        ],
+        "x": 635,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c7de0062.7f6ac",
+        "type": "comment",
+        "z": "5fc3b7db.3c3578",
+        "name": "about...",
+        "info": "* led - payload.cmd, payload.param\n  * cmd in red, green, yellow, blue\n  * param in on, off\n* power - payload.param\n  * param in -100...100\n* turnRate - payload.param\n  * param in -20...20",
+        "x": 650,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "dd821f61.b7b53",
+        "type": "trigger",
+        "z": "3d5b3ade.b23e9e",
+        "op1": "on",
+        "op2": "off",
+        "op1type": "str",
+        "op2type": "str",
+        "duration": "3",
+        "extend": false,
+        "units": "s",
+        "reset": "",
+        "name": "",
+        "x": 360,
+        "y": 60,
+        "wires": [
+            [
+                "e79263e5.cf9c3"
+            ]
+        ]
+    },
+    {
+        "id": "e79263e5.cf9c3",
+        "type": "function",
+        "z": "3d5b3ade.b23e9e",
+        "name": "motor test",
+        "func": "var speed = 60;\n\nif(msg.payload == 'on'){\n    return [[{topic:'light.blue', payload:'on'}, {topic:'motor.1', payload:speed}, {topic:'motor.2', payload:speed}]]\n} else {\n    return [[{topic:'light.blue', payload:'off'}, {topic:'motor.1', payload:0}, {topic:'motor.2', payload:0}]]\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 480,
+        "y": 160,
+        "wires": [
+            [
+                "7f1d791a.263c58"
+            ]
+        ]
+    },
+    {
+        "id": "653d9346.b5823c",
+        "type": "function",
+        "z": "3d5b3ade.b23e9e",
+        "name": "enable pid",
+        "func": "if (msg.payload === 1) {\n    var value = global.get('pidIsActive') || false;\n    value = !value;\n    global.set('pidIsActive', value);\n    return {topic:'light.yellow', payload:value?'on':'off'};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 260,
+        "wires": [
+            [
+                "7f1d791a.263c58"
+            ]
+        ]
+    },
+    {
+        "id": "26584a8b.af0ad6",
+        "type": "serial in",
+        "z": "e12c7d67.c8d7f",
+        "name": "",
+        "serial": "83d26ab5.30fe78",
+        "x": 85,
+        "y": 197,
+        "wires": [
+            [
+                "1a2de467.181964"
+            ]
+        ]
+    },
+    {
+        "id": "fd596dd4.006e68",
+        "type": "switch",
+        "z": "e12c7d67.c8d7f",
+        "name": "sensors",
+        "property": "topic",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "tach0",
+                "vt": "str"
+            },
+            {
+                "t": "eq",
+                "v": "tach1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 198.5,
+        "y": 307,
+        "wires": [
+            [
+                "48a44712.10db48"
+            ],
+            [
+                "81730d9c.f7bd"
+            ]
+        ]
+    },
+    {
+        "id": "17ce1cb6.fa22db",
+        "type": "comment",
+        "z": "e12c7d67.c8d7f",
+        "name": "about...",
+        "info": "## sensors output\n* sonar\n* tach0\n* tach1",
+        "x": 749.5,
+        "y": 35,
+        "wires": []
+    },
+    {
+        "id": "1a2de467.181964",
+        "type": "function",
+        "z": "e12c7d67.c8d7f",
+        "name": "parse",
+        "func": "var p = JSON.parse(msg.payload);\nvar msg0 = {topic:'tach0',payload:p[0]};\nvar msg1 = {topic:'tach1',payload:p[1]};\n\nreturn [[msg0, msg1]];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 82.5,
+        "y": 379,
+        "wires": [
+            [
+                "fd596dd4.006e68"
+            ]
+        ]
+    },
+    {
+        "id": "48a44712.10db48",
+        "type": "PID control",
+        "z": "e12c7d67.c8d7f",
+        "name": "",
+        "target": "",
+        "kp": "1",
+        "ki": "0",
+        "kd": "0",
+        "x": 343,
+        "y": 71,
+        "wires": [
+            [
+                "816b78fa.f65578"
+            ]
+        ]
+    },
+    {
+        "id": "81730d9c.f7bd",
+        "type": "PID control",
+        "z": "e12c7d67.c8d7f",
+        "name": "",
+        "target": "",
+        "kp": "1",
+        "ki": "0",
+        "kd": "0",
+        "x": 389,
+        "y": 225,
+        "wires": [
+            [
+                "6a528e7d.1082"
+            ]
+        ]
+    },
+    {
+        "id": "14592ebd.0aa4b1",
+        "type": "link out",
+        "z": "5fc3b7db.3c3578",
+        "name": "led src",
+        "links": [],
+        "x": 534,
+        "y": 111,
+        "wires": []
+    },
+    {
+        "id": "bf0b7de8.7339e",
+        "type": "link out",
+        "z": "5fc3b7db.3c3578",
+        "name": "pid src",
+        "links": [
+            "31234263.805eee"
+        ],
+        "x": 764,
+        "y": 113,
+        "wires": []
+    },
+    {
+        "id": "31234263.805eee",
+        "type": "link in",
+        "z": "e12c7d67.c8d7f",
+        "name": "pid sink",
+        "links": [
+            "bf0b7de8.7339e"
+        ],
+        "x": 52,
+        "y": 43,
+        "wires": [
+            [
+                "e2f34f4d.f935a"
+            ]
+        ]
+    },
+    {
+        "id": "eac88ef4.006fe",
+        "type": "rpi-explorerhat in",
+        "z": "d44f9861.13ce38",
+        "name": "",
+        "touch": true,
+        "input": false,
+        "analog": false,
+        "x": 216,
+        "y": 119,
+        "wires": [
+            [
+                "7be91f9.c3029e"
+            ]
+        ]
+    },
+    {
+        "id": "897ff1d4.259d",
+        "type": "rpi-explorerhat out",
+        "z": "d44f9861.13ce38",
+        "name": "",
+        "x": 516,
+        "y": 290,
+        "wires": []
+    },
+    {
+        "id": "7be91f9.c3029e",
+        "type": "link out",
+        "z": "d44f9861.13ce38",
+        "name": "btn src",
+        "links": [
+            "71c1b4b6.74917c"
+        ],
+        "x": 459,
+        "y": 202,
+        "wires": []
+    },
+    {
+        "id": "4eb06d77.069bb4",
+        "type": "link in",
+        "z": "d44f9861.13ce38",
+        "name": "hw sink",
+        "links": [
+            "7f1d791a.263c58",
+            "1a715f56.500f41",
+            "bd4ad366.3fd8b"
+        ],
+        "x": 265,
+        "y": 209,
+        "wires": [
+            [
+                "897ff1d4.259d"
+            ]
+        ]
+    },
+    {
+        "id": "71c1b4b6.74917c",
+        "type": "link in",
+        "z": "3d5b3ade.b23e9e",
+        "name": "btn sink",
+        "links": [
+            "7be91f9.c3029e"
+        ],
+        "x": 88,
+        "y": 332,
+        "wires": [
+            [
+                "eb164e98.979fd8"
+            ]
+        ]
+    },
+    {
+        "id": "e2f34f4d.f935a",
+        "type": "switch",
+        "z": "e12c7d67.c8d7f",
+        "name": "setpoint",
+        "property": "id",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "eq",
+                "v": "0",
+                "vt": "msg"
+            },
+            {
+                "t": "eq",
+                "v": "1",
+                "vt": "str"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 133,
+        "y": 117,
+        "wires": [
+            [
+                "48a44712.10db48"
+            ],
+            [
+                "81730d9c.f7bd"
+            ]
+        ]
+    },
+    {
+        "id": "816b78fa.f65578",
+        "type": "change",
+        "z": "e12c7d67.c8d7f",
+        "name": "pid0",
+        "rules": [
+            {
+                "t": "set",
+                "p": "id",
+                "pt": "msg",
+                "to": "0",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 518,
+        "y": 89,
+        "wires": [
+            [
+                "1fef233b.690bad"
+            ]
+        ]
+    },
+    {
+        "id": "6a528e7d.1082",
+        "type": "change",
+        "z": "e12c7d67.c8d7f",
+        "name": "pid1",
+        "rules": [
+            {
+                "t": "set",
+                "p": "id",
+                "pt": "msg",
+                "to": "1",
+                "tot": "num"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 517,
+        "y": 153,
+        "wires": [
+            [
+                "1fef233b.690bad"
+            ]
+        ]
+    },
+    {
+        "id": "1fef233b.690bad",
+        "type": "function",
+        "z": "e12c7d67.c8d7f",
+        "name": "power",
+        "func": "var power = global.get('power') || [0, 0];\nvar id = msg.id + 1;\n\nreturn {topic:'motor.' + id, payload: power[id] + msg.payload};",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 689,
+        "y": 124,
+        "wires": [
+            [
+                "1a715f56.500f41"
+            ]
+        ]
+    },
+    {
+        "id": "1a715f56.500f41",
+        "type": "link out",
+        "z": "e12c7d67.c8d7f",
+        "name": "pid src",
+        "links": [
+            "4eb06d77.069bb4"
+        ],
+        "x": 654,
+        "y": 294,
+        "wires": []
+    },
+    {
+        "id": "9feb862.b6ee378",
+        "type": "function",
+        "z": "5fc3b7db.3c3578",
+        "name": "power",
+        "func": "var power = global.get('power') || 0;\nvar rate = global.get('rate') || 0;\nvar msg1 = {topic:'motor.1', payload:power - rate};\nvar msg2 = {topic:'motor.2', id:1, payload:power + rate};\nreturn [[msg1, msg2]];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 672,
+        "y": 318,
+        "wires": [
+            [
+                "bd4ad366.3fd8b",
+                "6757c6c5.f17f68"
+            ]
+        ]
+    },
+    {
+        "id": "bd4ad366.3fd8b",
+        "type": "link out",
+        "z": "5fc3b7db.3c3578",
+        "name": "power src",
+        "links": [
+            "4eb06d77.069bb4"
+        ],
+        "x": 768,
+        "y": 194,
+        "wires": []
+    },
+    {
+        "id": "a0927625.f7a9d8",
+        "type": "switch",
+        "z": "5fc3b7db.3c3578",
+        "name": "route",
+        "property": "pidIsActive",
+        "propertyType": "global",
+        "rules": [
+            {
+                "t": "true"
+            },
+            {
+                "t": "else"
+            }
+        ],
+        "checkall": "true",
+        "outputs": 2,
+        "x": 522,
+        "y": 247,
+        "wires": [
+            [
+                "5ccf0033.ee906"
+            ],
+            [
+                "9feb862.b6ee378"
+            ]
+        ]
+    },
+    {
+        "id": "6757c6c5.f17f68",
+        "type": "debug",
+        "z": "5fc3b7db.3c3578",
+        "name": "",
+        "active": true,
+        "console": "false",
+        "complete": "false",
+        "x": 702,
+        "y": 445,
+        "wires": []
+    }
+]
