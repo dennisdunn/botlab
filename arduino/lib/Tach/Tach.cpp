@@ -5,28 +5,28 @@
 
 Tach::Tach(int pin, void (*dispatcher)(void))
 {
-    attachInterrupt(pin - 2, dispatcher, RISING);
+    _irq = digitalPinToInterrupt(pin);
+    attachInterrupt(_irq, dispatcher, RISING);
     _n = 0;
-    _then = 0;
+    _then = millis();
 }
 
-void Tach::handler()
+void Tach::isr()
 {
     _n++;
 }
 
-int Tach::get_rpm()
+unsigned int Tach::get_rpm()
 {
-    int rpm;
-    long now;
+    unsigned int rpm;
+    unsigned long now;
 
-    cli();
+    detachInterrupt(_irq);
     now = millis();
-    rpm = (_n * 3000)/(now - _then);
+    rpm = (_n * 3000) / (now - _then);
     _n = 0;
     _then = now;
     sei();
 
     return rpm;
 }
-

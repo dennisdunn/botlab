@@ -30,9 +30,11 @@ void loop() {
 }
 
 void plot(int v0, int v1){
+  digitalWrite(LED13,HIGH);
   Serial.print(v0);
   Serial.print(",");
   Serial.println(v1);
+  digitalWrite(LED13,LOW);
 }
 
 void send(const String& label, int value)
