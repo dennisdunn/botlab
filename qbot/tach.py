@@ -3,9 +3,9 @@
 
 import sys
 import getopt
+import atexit
 import serial
 import pika
-import atexit
 
 def main(argv):
     """ Read tachometer values"""
@@ -15,35 +15,17 @@ def main(argv):
 
     atexit.register(close, options)
 
-    while(1):
+    while 1:
         #read serial(
-        data = port.readLine()
+        data = options["port"] .readLine()
         vals = data.split(",")
-        for in range(0,1):
+        for i in range(0, 1):
             msg = {}
-            msg["tach_{}".format(i))] = int(vals[i])
-            channel.basic_publish(exchange='', routing_key=options["queueName"], body=msg)
+            msg["tach_{}".format(i)] = int(vals[i])
+            options["queue"].basic_publish(exchange='', routing_key=options["queueName"], body=msg)
 
 
-def parseoptions(argv):
-    """Parse the command line"""
-    options = {}
-    try:
-        opts, args = getopt.getopt(argv, "hd:b:q:", ["device=", "baud=", "queue="])
-    except getopt.GetoptError:
-        #  print "% -d /dev/serial0 -b 112512" sys.argv[0]
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-        #    print "% -d /dev/serial0 -b 112512" sys.argv[0]
-            sys.exit()
-        elif opt in ("-d", "--device"):
-            options["device"] = arg
-        elif opt in ("-b", "--baud"):
-            options["baud"] = arg
-        elif opt in ("-q", "--queue"):
-            options["queueName"] = arg
-    return options
+
 
 def openport(options):
     """Open the given serial port"""
@@ -60,7 +42,7 @@ def openqueue(options):
     """Connect to the tachometer queue"""
     connection = pika.BlockingConnection(pika.ConnectionParameters('localhost'))
     channel = connection.channel()
-    channel.queue_declare(queue=options[queueName])
+    channel.queue_declare(queue=options["queueName"])
     return channel
 
 def close(options):

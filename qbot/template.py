@@ -1,25 +1,26 @@
-#!/usr/bin/python
 
-import sys, getopt
+import sys
+import getopt
 
-def main(argv):
-   inputfile = ''
-   outputfile = ''
-   try:
-      opts, args = getopt.getopt(argv,"hi:o:",["ifile=","ofile="])
-   except getopt.GetoptError:
-       # print usage
-      sys.exit(2)
-   for opt, arg in opts:
-      if opt == '-h':
-          # print usage
-         sys.exit()
-      elif opt in ("-i", "--ifile"):
-         inputfile = arg
-      elif opt in ("-o", "--ofile"):
-         outputfile = arg
-   print 'Input file is "', inputfile
-   print 'Output file is "', outputfile
+class Program:
+    """Base for programs"""
+    def __init__(self, argv):
+        def options = ["d", "device", "b", "baud", "q", "queue"]
+        pass
 
-if __name__ == "__main__":
-   main(sys.argv[1:])
+    def parseoptions(self, options, argv):
+        """Parse the command line. Options is a plist"""
+        options = {}
+        try:
+            opts, args = getopt.getopt(argv, "d:b:q:", ["device=", "baud=", "queue="])
+        except getopt.GetoptError:
+            #  print "% -d /dev/serial0 -b 112512" sys.argv[0]
+            sys.exit(2)
+        for opt, arg in opts:
+            if opt in ("-d", "--device"):
+                options["device"] = arg
+            elif opt in ("-b", "--baud"):
+                options["baud"] = arg
+            elif opt in ("-q", "--queue"):
+                options["queue"] = arg
+        return options
