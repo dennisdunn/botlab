@@ -1,0 +1,15 @@
+{
+  "name": "qbot",
+  "version": "0.1.0",
+  "description": "node-red was fine except for the fact that it is single threaded.  By the time an incoming message was processed another would  arrive. This pushed CPU usage and resulted in a locked bot,  to busy to do anything.",
+  "main": "tach.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "amqplib": "^0.5.1",
+    "serialport": "^4.0.7"
+  }
+}
