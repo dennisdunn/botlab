@@ -2,26 +2,69 @@
 
 'use strict'
 
-let serial = require('serialport');
-let amqp = require('amqplib/callback_api');
+let process = require('process');
 
-const defaultOptions = {
+
+const serialOptions = {
     baud: 115200,
     device: '/dev/ttyUSB0'
 };
 
-class Tach {
-    constructor(options = defaultOptions) {
+const queueOptions = {
+    queue: 'tach_sensors',
+    callback: (data) => { console.log(data) }
+};
+
+class PortMonitor {
+    constructor(options = serialOptions) {
+        let serial = require('serialport');
+        this.settings = options;
         this.port = new serial(options.device, {
             baudRate: options.baud,
             parser: serial.parsers.readline('\n')
         });
-        this.port.on('data', this.onData);
+        this.port.on('error', function (err) {
+            console.log('Error: ', err.message);
+        })
+        this.port.on('data', this.transform);
     }
 
-    onData(data) {
+    transform(data) {
+        let counts = JSON.parse(data);
+        for (let i = 0; i < counts.length; i++) {
+            let msg = { topic: 'tach_reading', id: i, value: counts[i] };
+            if (this.settings.callback) this.settings.callback(msg);
+        }
+    }
+};
+
+class Publisher {
+    constructor(options = queueOptions) {
+        this.settings = options;
+        let self = this;
+        let open = require('amqplib').connect('amqp://localhost');
+
+        open.then(function (conn) {
+            return conn.createChannel();
+        }).then(function (ch) {
+            self.channel = ch;
+        }).catch(console.warn);
+    }
+
+    publish(data) {
         console.log(data);
-    }
-}
+        let buffer = Buffer.from(JSON.stringify(data));
 
-var tach_reader = new Tach();
+        return this.channel.assertQueue(this.settings.queue).then(function (ok) {
+            return this.channel.sendToQueue(this.settings.queue, buffer);
+        });
+    }
+};
+
+//let publisher = new Publisher(queueOptions);
+//serialOptions.callback = publisher.publish;
+let mon = new PortMonitor(serialOptions);
+
+process.on('SIGINT',()=>{
+    process.exit();
+});
