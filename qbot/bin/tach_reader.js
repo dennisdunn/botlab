@@ -13,9 +13,7 @@ const serialOptions = {
     device: '/dev/ttyUSB0'
 };
 
-const queueOptions = {
-    queue: 'tach_sensors'
-};
+const queueName = 'tach_readings';
 
 
 amqp.connect('amqp://localhost').then(conn => {
@@ -38,10 +36,10 @@ port.on('data', (data) => {
         let counts = JSON.parse(data);
 
         for (let i = 0; i < counts.length; i++) {
-            let msg = { topic: 'tach_reading', id: i, value: counts[i] };
+            let msg = { topic: queueName, id: i, value: counts[i] };
             let buffer = Buffer.from(JSON.stringify(msg));
-            channel.assertQueue(queueOptions.queue).then(function (ok) {
-                return channel.sendToQueue(queueOptions.queue, buffer);
+            channel.assertQueue(queueName).then(function (ok) {
+                return channel.sendToQueue(queueName, buffer);
             });
         }
     }

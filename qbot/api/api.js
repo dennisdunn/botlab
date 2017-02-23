@@ -32,7 +32,7 @@ module.exports = (amqp => {
                 let cmd = {
                     version: req.params.apiversion,
                     target: 'led',
-                    action: 'list',
+                    action: 'get',
                     key: req.params.key
                 };
                 enqueue(cmd);
@@ -75,7 +75,8 @@ module.exports = (amqp => {
                     version: req.params.apiversion,
                     target: 'motor',
                     action: 'set',
-                    key: req.params.key
+                    key: req.params.key,
+                    value: req.params.value
                 };
                 enqueue(cmd);
                 res.json(cmd);
@@ -84,7 +85,8 @@ module.exports = (amqp => {
                 let cmd = {
                     version: req.params.apiversion,
                     target: 'motor',
-                    action: 'set'
+                    action: 'setall',
+                    value: req.params.value
                 };
                 enqueue(cmd);
                 res.json(cmd);
