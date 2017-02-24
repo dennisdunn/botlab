@@ -12,7 +12,7 @@ module.exports = (amqp => {
 
     enqueue = data => {
         let buffer = Buffer.from(JSON.stringify(data));
-        channel.assertQueue(queueName).then(function (ok) {
+        channel.assertQueue(queueName, { durable: false }).then(function (ok) {
             return channel.sendToQueue(queueName, buffer);
         });
     }
@@ -22,6 +22,7 @@ module.exports = (amqp => {
             list: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'led',
                     action: 'list'
                 };
@@ -31,6 +32,7 @@ module.exports = (amqp => {
             get: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'led',
                     action: 'get',
                     key: req.params.key
@@ -41,6 +43,7 @@ module.exports = (amqp => {
             set: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'led',
                     action: 'set',
                     key: req.params.key,
@@ -54,6 +57,7 @@ module.exports = (amqp => {
             list: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'motor',
                     action: 'list'
                 };
@@ -63,6 +67,7 @@ module.exports = (amqp => {
             get: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'motor',
                     action: 'get',
                     key: req.params.key
@@ -73,6 +78,7 @@ module.exports = (amqp => {
             set: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'motor',
                     action: 'set',
                     key: req.params.key,
@@ -84,6 +90,7 @@ module.exports = (amqp => {
             setall: (req, res) => {
                 let cmd = {
                     version: req.params.apiversion,
+                    timestamp: Date.now(),
                     target: 'motor',
                     action: 'setall',
                     value: req.params.value
