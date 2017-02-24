@@ -8,8 +8,6 @@ let actions = require('./actions');
 let process = require('process');
 let amqp = require('amqplib');
 
-let channel = null;
-
 amqp.connect('amqp://localhost').then(conn => {
     return conn.createChannel();
 }).then(ch => {
@@ -24,7 +22,6 @@ amqp.connect('amqp://localhost').then(conn => {
             console.log(payload);
         }
     }, { noAck: true });
-    channel = ch;
 }).catch(console.warn);
 
 process.on('SIGINT', () => {

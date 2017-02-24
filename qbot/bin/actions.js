@@ -1,28 +1,17 @@
+let logger = action => {
+    console.log(Date.now() + ':' + JSON.stringify(action));
+};
 
 module.exports = {
     'motor': {
-        'list': action => {
-            console.log(action);
-        },
-        'get': action => {
-            console.log(action);
-        },
-        'set': action => {
-            console.log(action);
-        },
-        'setall': action => {
-            console.log(action);
-        }
+        'list': logger,
+        'get': logger,
+        'set': logger,
+        'setall': logger,
     },
     'led': {
-        'list': action => {
-            console.log(action);
-        },
-        'get': action => {
-            console.log(action);
-        },
-        'set': action => {
-            console.log(action);
-        }
+        'list': logger,
+        'get': logger,
+        'set': logger,
     }
 };
