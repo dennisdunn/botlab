@@ -1,8 +1,9 @@
+'use strict';
+
 let express = require('express');
 let path = require('path');
 let amqp = require('amqplib');
 let api = require('./api')(amqp);
-
 let app = express();
 
 // api

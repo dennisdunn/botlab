@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = (amqp => {
 
     const queueName = 'commands';
@@ -6,11 +8,11 @@ module.exports = (amqp => {
 
     amqp.connect('amqp://localhost').then(conn => {
         return conn.createChannel();
-    }).then(ch => {
-        channel = ch;
-    }).catch(console.warn);
+}).then(ch => {
+    channel = ch;
+}).catch(console.warn);
 
-    enqueue = data => {
+    let enqueue = data => {
         let buffer = Buffer.from(JSON.stringify(data));
         channel.assertQueue(queueName, { durable: false }).then(function (ok) {
             return channel.sendToQueue(queueName, buffer);
