@@ -35,9 +35,11 @@ let motor_setall = cmd => { }
 
 let led_list = cmd => {
     let leds = [];
-    for (key of ['blue', 'red', 'yellow', 'green']) {
-        leds.push(led_get(key));
+    for (var key of ['blue', 'red', 'yellow', 'green']) {
+        let value = get_gpio(LEDS[key]);
+        leds.push({'key':key, 'value':value});
     }
+    return leds;
 }
 
 let led_get = cmd => {

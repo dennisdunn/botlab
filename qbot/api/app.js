@@ -2,18 +2,18 @@
 
 let express = require('express');
 let path = require('path');
-let amqp = require('amqplib');
-let api = require('./api')(amqp);
+let amqp = require('amqplib/callback_api');
+let dispatch = require('./api')(amqp);
 let app = express();
 
 // api
-app.get('/api/:apiversion/:target/:key/:value', api.led.get);
-app.get('/api/:apiversion/:target/:key', api.led.get);
-app.get('/api/:apiversion/:target', api.led.list);
+app.get('/api/:apiversion/:target/:key/:value', dispatch);
+app.get('/api/:apiversion/:target/:key', dispatch);
+app.get('/api/:apiversion/:target', dispatch);
 
-app.post('/api/:apiversion/:target/:key/:value', api.led.get);
-app.post('/api/:apiversion/:target/:key', api.led.get);
-app.post('/api/:apiversion/:target', api.led.list);
+app.post('/api/:apiversion/:target/:key/:value', dispatch);
+app.post('/api/:apiversion/:target/:key', dispatch);
+app.post('/api/:apiversion/:target', dispatch);
 
 // static content
 app.use('/', express.static(path.join(__dirname, 'public')));

@@ -6,14 +6,12 @@ module.exports = (amqp => {
 
     let channel = null;
 
-    amqp.connect('amqp://localhost')
-        .then(conn => {
-            return conn.createChannel();
-        })
-        .then(ch => {
-            channel = ch;
-        })
-        .catch(console.warn);
+    amqp.connect('amqp://localhost',
+        (err, conn) => {
+            return conn.createChannel(
+                    (err, ch)=> {
+                        channel=ch;
+                    })});
 
     let uuid = () => {
         let num = Date.now().toString(16) + Math.random().toFixed(20).toString(16).substr(2);
@@ -22,102 +20,58 @@ module.exports = (amqp => {
 
     let enqueue = data => {
         let buffer = Buffer.from(JSON.stringify(data));
-        channel.assertQueue(COMMAND_QUEUE, { durable: false })
-            .then(function (ok) {
+        channel.assertQueue(COMMAND_QUEUE, { durable: false },
+            (err) => {
                 return channel.sendToQueue(COMMAND_QUEUE, buffer);
             });
     }
 
     let rpc_call = cmd => {
         let buffer = Buffer.from(JSON.stringify(cmd));
-        channel.assertQueue('', { exclusive: true })
-            .then((err, q) => {
-                channel.consume(q.name, msg => (msg), { noAck: true });
-                channel.sendToQueue(COMMAND_QUEUE, buffer, { correlationId: uuid(), reply_to: q.name });
+        channel.assertQueue('', { exclusive: true },
+            (err, q) => {
+                channel.consume(q.queue, msg =>{
+                   return  msg;
+                }, { noAck: true });
+                channel.sendToQueue(COMMAND_QUEUE, buffer, { 
+                    content_type:'application/json',
+                    correlation_id: uuid(),
+                    reply_to: q.queue});
             });
     }
 
-    return {
-        led: {
-            list: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'led',
-                    action: 'list'
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            },
-            get: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'led',
-                    action: 'get',
-                    key: req.params.key
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            },
-            set: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'led',
-                    action: 'set',
-                    key: req.params.key,
-                    value: req.params.value
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            }
-        },
-        motor: {
-            list: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'motor',
-                    action: 'list'
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            },
-            get: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'motor',
-                    action: 'get',
-                    key: req.params.key
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            },
-            set: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'motor',
-                    action: 'set',
-                    key: req.params.key,
-                    value: req.params.value
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            },
-            setall: (req, res) => {
-                let cmd = {
-                    version: req.params.apiversion,
-                    timestamp: Date.now(),
-                    target: 'motor',
-                    action: 'setall',
-                    value: req.params.value
-                };
-                let response = rpc_call(cmd);
-                res.json(response);
-            }
+    let commandFactory = req =>{
+        let cmd = {
+            'version': req.params.apiversion,
+            'timestamp':Date.now(),
+            'target':req.params.target
         }
+
+        switch(req.method){
+            case 'GET':
+                cmd.action = req.params.key ? 'get':'list';
+                break;
+            case 'POST':
+                cmd.action = req.params.key? 'set':'setall';
+                break;
+        }
+
+        if(req.params.key){
+            cmd.key = req.params.key;
+        }
+
+        if(req.params.value) {
+            cmd.value = req.params.key;
+        }
+
+        return cmd;
+    }
+
+    return (req, res)=>{
+        let cmd = commandFactory(req);
+        console.log(cmd);
+        let response = rpc_call(cmd);
+        console.log(response);
+        res.json(response);
     }
 });
