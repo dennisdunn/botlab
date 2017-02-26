@@ -14,20 +14,19 @@ amqp.connect('amqp://localhost')
     })
     .then(ch => {
         ch.assertQueue(QUEUE_NAME, { durable: false });
+        ch.prefetch(1);
         ch.consume(QUEUE_NAME, msg => {
             let payload = JSON.parse(msg.content.toString());
             try {
                 let handler = actions[payload.target][payload.action];
                 let result = handler(payload);
+                let buffer = new Buffer(JSON.stringify(result));
 
-                if (result && msg.properties.reply_to) {
-                    ch.sendToQueue(msg.properties.reply_to,
-                        new Buffer(JSON.stringify(result)), {
-                            correlation_id: msg.properties.correlation_id
-                        });
+                ch.sendToQueue(msg.properties.reply_to, buffer, {
+                    correlation_id: msg.properties.correlation_id
+                });
 
-                    ch.ack(msg);
-                }
+                ch.ack(msg);
             } catch (ex) {
                 console.log(ex);
                 console.log(payload);
