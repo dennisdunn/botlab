@@ -31,7 +31,7 @@ amqp.connect('amqp://localhost')
                 console.log(ex);
                 console.log(payload);
             }
-        }, { noAck: true });
+        });
     })
     .catch(console.warn);
 
