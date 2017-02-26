@@ -2,8 +2,11 @@
 
 let express = require('express');
 let path = require('path');
-let amqp = require('amqplib/callback_api');
-let dispatch = require('./api')(amqp);
+
+let gpioLib = require('pigpio');
+let commandHandlers = require('../lib/handlers')(gpioLib);
+let dispatch = require('../lib/rest')(commandHandlers);
+
 let app = express();
 
 // api

@@ -32,10 +32,13 @@ module.exports = (amqp => {
         channel.assertQueue('', { exclusive: true },
             (err, q) => {
                 channel.consume(q.queue, callback, { noAck: true });
+                let cid = uuid();
                 channel.sendToQueue(COMMAND_QUEUE, buffer, {
-                    content_type: 'application/json',
-                    correlation_id: uuid(),
+                    correlation_id: cid,
                     reply_to: q.queue
+                },
+                (err, ok) =>{
+                   
                 });
             });
     }
