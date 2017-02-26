@@ -17,15 +17,14 @@ amqp.connect('amqp://localhost')
         ch.consume(QUEUE_NAME, msg => {
             let payload = JSON.parse(msg.content.toString());
             try {
-                console.log('server - run handler');
                 let handler = actions[payload.target][payload.action];
                 let result = handler(payload);
-                console.log('server - ' + result);
 
                 if (result && msg.properties.reply_to) {
                     ch.sendToQueue(msg.properties.reply_to,
-                        new Buffer(JSON.stringify(result)),
-                        { correlation_id: msg.properties.correlation_id });
+                        new Buffer(JSON.stringify(result)), {
+                            correlation_id: msg.properties.correlation_id
+                        });
 
                     ch.ack(msg);
                 }
