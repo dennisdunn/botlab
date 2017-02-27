@@ -3,7 +3,7 @@
 let express = require('express');
 let path = require('path');
 
-let gpioLib = require('pigpio');
+let gpioLib = require('pigpio').Gpio;
 let commandHandlers = require('../lib/handlers')(gpioLib);
 let dispatch = require('../lib/rest')(commandHandlers);
 

@@ -1,13 +1,11 @@
 'use strict';
 
-module.exports = (gpioLib => {
-
-    const Gpio = gpioLib;
+module.exports = (Gpio => {
 
     const BLUE_LED = 4;
-    const GREEN_LED = 17;
+    const GREEN_LED = 5;
     const RED_LED = 27;
-    const YELLOW_LED = 5;
+    const YELLOW_LED = 17;
 
     const LEDS = {
         blue: BLUE_LED,
@@ -22,9 +20,14 @@ module.exports = (gpioLib => {
     }
 
     let set_gpio = (pin, value) => {
-        value = value === 'on' ? 1 : value;
-        value = value === 'off' ? 0 : value;
-        value = value ? 1 : 0;
+        switch(value.toLowerCase()){
+            case '1':
+            case 'on':
+                value = 1;
+                break;
+            default:
+                value = 0;
+        }
         let gpio = new Gpio(pin);
         gpio.digitalWrite(value);
     }
@@ -35,22 +38,27 @@ module.exports = (gpioLib => {
     let motor_setall = cmd => { }
 
     let led_list = cmd => {
-        let leds = [];
+        let result = [];
         for (var key of ['blue', 'red', 'yellow', 'green']) {
             let value = get_gpio(LEDS[key]);
-            leds.push({'key':key, 'value':value});
+            result.push({key: key, value:value});
         }
-        return leds;
+
+        return result;
     }
 
-    let led_get = key => {
+    let led_get = cmd => {
         let value = get_gpio(LEDS[cmd.key]);
-        return { key: key, value: value };
+        let result = { key: cmd.key, value: value };
+
+        return result;
     }
 
-    let led_set = (key, value) => {
-        set_gpio(LEDS[key], value);
-        return { key: key, value: value };
+    let led_set = cmd => {
+        set_gpio(LEDS[cmd.key], cmd.value);
+        let result = { key: cmd.key, value: cmd.value };
+
+        return result;
     }
 
     return {

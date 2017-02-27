@@ -4,12 +4,6 @@ module.exports = (commandHandlers => {
 
     const handlers = commandHandlers;
 
-    let uuid = () => {
-        let num = Date.now().toString(16) + Math.random().toFixed(20).toString(16).substr(2);
-
-        return num.slice(0, 8) + '-' + num.slice(8, 12) + '-' + num.slice(20, 32);
-    }
-
     let commandFactory = req => {
         let cmd = {
             'version': req.params.apiversion,
@@ -31,7 +25,7 @@ module.exports = (commandHandlers => {
         }
 
         if (req.params.value) {
-            cmd.value = req.params.key;
+            cmd.value = req.params.value;
         }
 
         return cmd;
@@ -42,6 +36,6 @@ module.exports = (commandHandlers => {
         let handler = handlers[cmd.target][cmd.action];
         let results = handler(cmd);
 
-        return results;
+        res.json(results);
     }
 });
