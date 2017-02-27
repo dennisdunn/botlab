@@ -1,22 +1,26 @@
 'use strict';
 
-let express = require('express');
-let path = require('path');
+let Gpio = require('pigpio').Gpio
+let express = require('express')
+let path = require('path')
 
-let gpioLib = require('pigpio').Gpio;
-let commandHandlers = require('../lib/handlers')(gpioLib);
-let dispatch = require('../lib/rest')(commandHandlers);
+let BaseHandler = require('../lib/basehandler')
+let LedHandler = require('../lib/ledhandler')
+let RestApi = require('../lib/restapi')
 
-let app = express();
+let api = new RestApi()
+api.registerHandler('led', new LedHandler(Gpio))
+
+let app = express()
 
 // api
-app.get('/api/:apiversion/:target/:key/:value', dispatch);
-app.get('/api/:apiversion/:target/:key', dispatch);
-app.get('/api/:apiversion/:target', dispatch);
+app.get('/api/:apiversion/:target/:key/:value', api.dispatch);
+app.get('/api/:apiversion/:target/:key', api.dispatch);
+app.get('/api/:apiversion/:target', api.dispatch);
 
-app.post('/api/:apiversion/:target/:key/:value', dispatch);
-app.post('/api/:apiversion/:target/:key', dispatch);
-app.post('/api/:apiversion/:target', dispatch);
+app.post('/api/:apiversion/:target/:key/:value', api.dispatch);
+app.post('/api/:apiversion/:target/:key', api.dispatch);
+app.post('/api/:apiversion/:target', api.dispatch);
 
 // static content
 app.use('/', express.static(path.join(__dirname, 'public')));

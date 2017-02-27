@@ -1,10 +1,15 @@
 'use strict';
 
-module.exports = (commandHandlers => {
+module.exports = class RestApi {
+    constructor() {
+        this.handlers = {}
+    }
 
-    const handlers = commandHandlers;
+    registerHandler(key, handler) {
+        this.handlers[key] = handler;
+    }
 
-    let commandFactory = req => {
+    commandFactory(req) {
         let cmd = {
             'version': req.params.apiversion,
             'timestamp': Date.now(),
@@ -31,11 +36,11 @@ module.exports = (commandHandlers => {
         return cmd;
     }
 
-    return (req, res) => {
-        let cmd = commandFactory(req);
-        let handler = handlers[cmd.target][cmd.action];
+    dispatch(req, res) {
+        let cmd = this.commandFactory(req);
+        let handler = this.handlers[cmd.target][cmd.action];
         let results = handler(cmd);
 
         res.json(results);
     }
-});
+}
