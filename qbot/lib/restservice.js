@@ -1,45 +1,53 @@
 'use strict';
 
-module.exports = {
+module.exports = (function () {
 
-    _handlers: {},
+    const _handlers = {};
 
-    registerHandler: (key, handler) => {
-        this._handlers[key] = handler;
-    },
+    const self = {
+        registerHandler: (key, handler) => {
+            _handlers[key] = handler;
+        },
 
-    dispatch: (req, res) => {
-        let cmd = this.commandFactory(req);
-        let handler = this._handlers[cmd.target][cmd.action];
-        let results = handler(cmd);
+        dispatch: (req, res) => {
+            let cmd = self.commandFactory(req);
+            let handler = _handlers[cmd.target][cmd.action];
+            let results = handler(cmd);
 
-        res.json(results);
-    },
+            res.json(results);
+        },
 
-    commandFactory: (req) => {
-        let cmd = {
-            'version': req.params.apiversion,
-            'timestamp': Date.now(),
-            'target': req.params.target
+        handlers: () => {
+            return _handlers;
+        },
+
+        commandFactory: (req) => {
+            let cmd = {
+                'version': req.params.apiversion,
+                'timestamp': Date.now(),
+                'target': req.params.target
+            }
+
+            switch (req.method) {
+                case 'GET':
+                    cmd.action = req.params.key ? 'get' : 'list';
+                    break;
+                case 'POST':
+                    cmd.action = req.params.key ? 'set' : 'setall';
+                    break;
+            }
+
+            if (req.params.key) {
+                cmd.key = req.params.key;
+            }
+
+            if (req.params.value) {
+                cmd.value = req.params.value;
+            }
+
+            return cmd;
         }
-
-        switch (req.method) {
-            case 'GET':
-                cmd.action = req.params.key ? 'get' : 'list';
-                break;
-            case 'POST':
-                cmd.action = req.params.key ? 'set' : 'setall';
-                break;
-        }
-
-        if (req.params.key) {
-            cmd.key = req.params.key;
-        }
-
-        if (req.params.value) {
-            cmd.value = req.params.value;
-        }
-
-        return cmd;
     }
-}
+
+    return self;
+})();

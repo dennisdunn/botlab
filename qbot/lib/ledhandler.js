@@ -14,28 +14,30 @@ module.exports = (gpioService => {
         yellow: YELLOW_LED
     }
 
-    return {
+    const _service = gpioService;
+
+    const self = {
         list: (cmd) => {
             let result = [];
             for (var key of Object.keys(LEDS)) {
-                let value = gpioService.get_gpio(LEDS[key]);
+                let value = _service.get_gpio(LEDS[key]);
                 result.push({ key: key, value: value });
             }
             return result;
         },
 
         get: (cmd) => {
-            let value = gpioService.get_gpio(LEDS[cmd.key]);
+            let value = _service.get_gpio(LEDS[cmd.key]);
             let result = { key: cmd.key, value: value };
 
             return result;
         },
 
         set: (cmd) => {
-            gpioService.set_gpio(LEDS[cmd.key], cmd.value);
+            _service.set_gpio(LEDS[cmd.key], cmd.value);
             let result = { key: cmd.key, value: cmd.value };
 
             return result;
         }
     }
-})
+});

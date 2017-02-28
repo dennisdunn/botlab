@@ -2,9 +2,11 @@
 
 module.exports = (gpio => {
 
-    return {
+    const _gpio = gpio;
+
+    const self = {
         read: (pin) => {
-            let gpio_pin = new gpio(pin);
+            let gpio_pin = new _gpio(pin);
             return gpio_pin.digitalRead();
         },
 
@@ -19,9 +21,11 @@ module.exports = (gpio => {
                 default:
                     value = 0;
             }
-            let gpio_pin = new gpio(pin);
+            let gpio_pin = new _gpio(pin);
             gpio_pin.digitalWrite(value);
         }
-    }
+    };
+
+    return self;
 });
 
