@@ -4,11 +4,11 @@ let Gpio = require('pigpio').Gpio;
 let express = require('express');
 let path = require('path');
 
-let LedHandler = require('../lib/ledhandler');
-let RestApi = require('../lib/restapi');
+let gpioService = require('../lib/gpioservice')(Gpio);
+let ledHandler = require('../lib/ledhandler')(gpioService);
+let api = require('../lib/restservice');
 
-let api = new RestApi();
-api.registerHandler('led', new LedHandler(Gpio));
+api.registerHandler('led', ledHandler);
 
 let app = express();
 
