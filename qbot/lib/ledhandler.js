@@ -20,24 +20,25 @@ module.exports = (gpioService => {
         list: (cmd) => {
             let result = [];
             for (var key of Object.keys(LEDS)) {
-                let value = _service.get_gpio(LEDS[key]);
+                let value = _service.read(LEDS[key]);
                 result.push({ key: key, value: value });
             }
             return result;
         },
 
         get: (cmd) => {
-            let value = _service.get_gpio(LEDS[cmd.key]);
+            let value = _service.read(LEDS[cmd.key]);
             let result = { key: cmd.key, value: value };
 
             return result;
         },
 
         set: (cmd) => {
-            _service.set_gpio(LEDS[cmd.key], cmd.value);
+            _service.write(LEDS[cmd.key], cmd.value);
             let result = { key: cmd.key, value: cmd.value };
 
             return result;
         }
     }
+    return self;
 });

@@ -6,9 +6,11 @@ let path = require('path');
 
 let gpioService = require('../lib/gpioservice')(Gpio);
 let ledHandler = require('../lib/ledhandler')(gpioService);
+let motorhandler = require('../lib/motorhandler')(gpioService);
 let api = require('../lib/restservice');
 
 api.registerHandler('led', ledHandler);
+api.registerHandler('motor', motorhandler);
 
 let app = express();
 
