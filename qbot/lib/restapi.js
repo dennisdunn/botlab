@@ -2,7 +2,12 @@
 
 module.exports = class RestApi {
     constructor() {
-        this.handlers = {}
+        this._handlers = {};
+        this.commandFactory = this.commandFactory.bind(this);
+    }
+
+    get handlers(){
+        return this._handlers;
     }
 
     registerHandler(key, handler) {
@@ -37,7 +42,7 @@ module.exports = class RestApi {
     }
 
     dispatch(req, res) {
-        let cmd = this.commandFactory(req);
+        let cmd = (r => this.commandFactory(r));
         let handler = this.handlers[cmd.target][cmd.action];
         let results = handler(cmd);
 

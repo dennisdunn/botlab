@@ -1,5 +1,7 @@
 'use strict';
 
+let BaseHandler = require('./basehandler')
+
 const BLUE_LED = 4;
 const GREEN_LED = 5;
 const RED_LED = 27;
@@ -12,7 +14,7 @@ const LEDS = {
     yellow: YELLOW_LED
 }
 
-module.exports = class LedHandler extends baseHandler {
+module.exports = class LedHandler extends BaseHandler {
     constructor(gpio) {
         super(gpio);
     }

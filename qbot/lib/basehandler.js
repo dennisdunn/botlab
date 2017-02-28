@@ -3,6 +3,9 @@
 module.exports = class BaseHandler {
     constructor(gpio) {
         this.Gpio = gpio;
+
+        this.get_gpio = this.get_gpio.bind(this);
+        this.set_gpio = this.set_gpio.bind(this);
     }
 
     get_gpio(pin) {

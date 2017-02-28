@@ -1,17 +1,16 @@
 'use strict';
 
-let Gpio = require('pigpio').Gpio
-let express = require('express')
-let path = require('path')
+let Gpio = require('pigpio').Gpio;
+let express = require('express');
+let path = require('path');
 
-let BaseHandler = require('../lib/basehandler')
-let LedHandler = require('../lib/ledhandler')
-let RestApi = require('../lib/restapi')
+let LedHandler = require('../lib/ledhandler');
+let RestApi = require('../lib/restapi');
 
-let api = new RestApi()
-api.registerHandler('led', new LedHandler(Gpio))
+let api = new RestApi();
+api.registerHandler('led', new LedHandler(Gpio));
 
-let app = express()
+let app = express();
 
 // api
 app.get('/api/:apiversion/:target/:key/:value', api.dispatch);
