@@ -21,4 +21,5 @@ module.exports = (gpioService => {
             return {};
         }
     }
+    return self;
 });
