@@ -11,11 +11,11 @@ module.exports = (gpioService => {
         },
 
         get: (cmd) => {
-            return _motors[mKey];
+            return _motors[cmd.key];
         },
 
         set: (cmd) => {
-            _motors[cmd.key].power = cmd.value;
+            _motors[cmd.key].power =parseInt( cmd.value);
             return self.get(cmd);
         },
 
