@@ -5,10 +5,10 @@ module.exports = (gpioService => {
     const MOTOR_A_KEY = 'A';
     const MOTOR_B_KEY = 'B';
 
-    const MOTOR_A_FORWARD = 19;
-    const MOTOR_A_BACKWARD = 20;
-    const MOTOR_B_FORWARD = 21;
-    const MOTOR_B_BACKWARD = 26;
+    const MOTOR_A_FORWARD = 26;
+    const MOTOR_A_BACKWARD = 21;
+    const MOTOR_B_FORWARD = 20;
+    const MOTOR_B_BACKWARD = 19;
 
     const DIRECTION_FORWARD = 'forward';
     const DIRECTION_BACKWARD = 'backward';
@@ -24,7 +24,7 @@ module.exports = (gpioService => {
         }
     }
 
-    const _gpio= gpioService;
+    const _service = gpioService;
 
     const _motors = {
         'A': {
@@ -53,8 +53,7 @@ module.exports = (gpioService => {
             _motors[key].power = level;
             let direction = _motors[key]['direction'];
             let signal = MOTOR_GPIO[key][direction];
-            let gpio = new _gpio(signal, { mode: _gpio.OUTPUT });
-            gpio.pwmWrite(level);
+            _service.pwmWrite(signal, level);
             return self.get(cmd);
         },
 
