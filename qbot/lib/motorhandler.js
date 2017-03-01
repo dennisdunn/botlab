@@ -14,24 +14,24 @@ module.exports = (gpioService => {
     const DIRECTION_BACKWARD = 'backward';
 
     const MOTOR_GPIO = {
-        MOTOR_A_KEY: {
-            DIRECTION_FORWARD: MOTOR_A_FORWARD,
-            DIRECTION_BACKWARD: MOTOR_A_BACKWARD
+        'A':{
+            'forward': MOTOR_A_FORWARD,
+            'backward': MOTOR_A_BACKWARD
         },
-        MOTOR_B_KEY: {
-            DIRECTION_FORWARD: MOTOR_B_FORWARD,
-            DIRECTION_BACKWARD: MOTOR_B_BACKWARD
+        'B': {
+            'forward': MOTOR_B_FORWARD,
+            'backward': MOTOR_B_BACKWARD
         }
     }
 
-    const _service = gpioService;
+    const _gpio= gpioService;
 
     const _motors = {
-        MOTOR_A_KEY: {
+        'A': {
             'power': 0,
             'direction': DIRECTION_FORWARD
         },
-        MOTOR_B_KEY: {
+        'B': {
             'power': 0,
             'direction': DIRECTION_FORWARD
         }
@@ -47,12 +47,13 @@ module.exports = (gpioService => {
         },
 
         set: (cmd) => {
+            let key = cmd.key.toUpperCase();
             let level = parseInt(cmd.value);
             level = level > 255 ? 255 : level < 0 ? 0 : level;
-            _motors[cmd.key.toUpperCase()].power = level;
+            _motors[key].power = level;
             let direction = _motors[key]['direction'];
             let signal = MOTOR_GPIO[key][direction];
-            let gpio = new gpio(signal, , { mode: Gpio.OUTPUT });
+            let gpio = new _gpio(signal, { mode: _gpio.OUTPUT });
             gpio.pwmWrite(level);
             return self.get(cmd);
         },
