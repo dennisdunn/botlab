@@ -31,9 +31,18 @@ module.exports = (function () {
             switch (req.method) {
                 case 'GET':
                     cmd.action = req.params.key ? 'get' : 'list';
+                    cmd.key = req.params.key;
+                    cmd.value = req.params.value;
                     break;
                 case 'POST':
-                    cmd.action = req.params.key ? 'set' : 'setall';
+                    if (req.params.value) {
+                        cmd.action = 'set';
+                        cmd.key = req.params.key;
+                        cmd.value = req.params.value;
+                    } else {
+                        cmd.action = 'set';
+                        cmd.value = req.params.key;
+                    }
                     break;
             }
 

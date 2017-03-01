@@ -25,14 +25,14 @@ module.exports = (gpio => {
             gpio_pin.digitalWrite(value);
         },
 
-        pwmWrite:(pin,value)=> {
+        pwmWrite: (pin, value) => {
             let gpio_pin = new _gpio(pin, { mode: _gpio.OUTPUT });
             gpio_pin.pwmWrite(value);
         },
 
-        pwmRead:(pin)=> {
+        pwmRead: (pin) => {
             let gpio_pin = new _gpio(pin)
-                gpio_pin.pwmRead();
+            gpio_pin.pwmRead();
         }
     };
 
