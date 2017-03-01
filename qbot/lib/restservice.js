@@ -40,7 +40,7 @@ module.exports = (function () {
                         cmd.key = req.params.key;
                         cmd.value = req.params.value;
                     } else {
-                        cmd.action = 'set';
+                        cmd.action = 'setall';
                         cmd.value = req.params.key;
                     }
                     break;

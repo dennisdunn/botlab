@@ -59,8 +59,8 @@ module.exports = (gpioService => {
 
         setall: (cmd) => {
             for (var key of Object.keys(_motors)) {
-                let cmd = { 'key': key, 'value': cmd.value };
-                self.set(cmd);
+                let xcmd = { 'key': key, 'value': cmd.value };
+                self.set(xcmd);
             }
             return self.list();
         }
