@@ -23,7 +23,7 @@ class AppContainer extends React.Component {
             <MuiThemeProvider>
                 <div>
                 <Buttonbar></Buttonbar>
-                <Joystick size="400"></Joystick>
+                <Joystick width='400' height='400'></Joystick>
                 </div>
             </MuiThemeProvider>
         );
