@@ -44,7 +44,8 @@ export default class Joystick extends React.Component {
 
     dispatch(canvasPoint) {
         let cartesian = this.canvasToCartesianCoordinates(canvasPoint);
-        let polar = this.canvasToCartesianCoordinates(cartesian);
+        let polar = this.cartesianToPolarCoordinates(cartesian);
+        this.props.positionChangeHandler(polar);
     }
 
     drawTrace(pos) {
@@ -84,9 +85,11 @@ export default class Joystick extends React.Component {
     }
 
     cartesianToPolarCoordinates(point) {
+        let theta = Math.atan2(point.y, point.x);
+        theta = theta < 0 ? 2 * Math.PI + theta : theta;
         return {
             r: Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2)),
-            theta: Math.atan2(point.y, point.x)
+            theta: theta
         }
     }
 

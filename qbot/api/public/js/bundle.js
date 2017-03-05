@@ -15282,7 +15282,6 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-// this acts as a container component
 var AppContainer = function (_React$Component) {
     _inherits(AppContainer, _React$Component);
 
@@ -15291,16 +15290,16 @@ var AppContainer = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (AppContainer.__proto__ || Object.getPrototypeOf(AppContainer)).call(this, props));
 
-        _this.init = _this.init.bind(_this);
+        _this.onPositionChanged = _this.onPositionChanged.bind(_this);
         return _this;
     }
 
     _createClass(AppContainer, [{
-        key: 'init',
-        value: function init(list) {
+        key: 'onPositionChanged',
+        value: function onPositionChanged(position) {
             var dispatch = this.props.dispatch;
 
-            dispatch({ type: 'INIT', payload: this.props.state });
+            dispatch({ type: 'SET_POWER', payload: position });
         }
     }, {
         key: 'render',
@@ -15312,7 +15311,7 @@ var AppContainer = function (_React$Component) {
                     'div',
                     null,
                     _react2.default.createElement(_buttonbar2.default, null),
-                    _react2.default.createElement(_joystick2.default, { width: '400', height: '400' })
+                    _react2.default.createElement(_joystick2.default, { width: '400', height: '400', positionChangeHandler: this.onPositionChanged })
                 )
             );
         }
@@ -15322,7 +15321,7 @@ var AppContainer = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = (0, _reactRedux.connect)(function (state) {
-    return { 'state': state };
+    return { 'position': state.position };
 })(AppContainer);
 
 /***/ }),
@@ -15341,8 +15340,8 @@ exports.default = function () {
   var action = arguments[1];
 
   switch (action.type) {
-    case 'INIT':
-      return action.payload;
+    case 'SET_POWER':
+      return { position: action.payload };
     default:
       return state;
   }
@@ -15527,7 +15526,8 @@ var Joystick = function (_React$Component) {
         key: 'dispatch',
         value: function dispatch(canvasPoint) {
             var cartesian = this.canvasToCartesianCoordinates(canvasPoint);
-            var polar = this.canvasToCartesianCoordinates(cartesian);
+            var polar = this.cartesianToPolarCoordinates(cartesian);
+            this.props.positionChangeHandler(polar);
         }
     }, {
         key: 'drawTrace',
@@ -15571,9 +15571,11 @@ var Joystick = function (_React$Component) {
     }, {
         key: 'cartesianToPolarCoordinates',
         value: function cartesianToPolarCoordinates(point) {
+            var theta = Math.atan2(point.y, point.x);
+            theta = theta < 0 ? 2 * Math.PI + theta : theta;
             return {
                 r: Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2)),
-                theta: Math.atan2(point.y, point.x)
+                theta: theta
             };
         }
     }, {
@@ -40657,8 +40659,6 @@ var _reactTapEventPlugin = __webpack_require__(200);
 
 var _reactTapEventPlugin2 = _interopRequireDefault(_reactTapEventPlugin);
 
-var _reactRouter = __webpack_require__(126);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var store = (0, _redux.createStore)(_reducers2.default);
@@ -40668,15 +40668,7 @@ var store = (0, _redux.createStore)(_reducers2.default);
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: store },
-  _react2.default.createElement(
-    _reactRouter.Router,
-    { history: _reactRouter.browserHistory },
-    _react2.default.createElement(
-      _reactRouter.Route,
-      { path: '/' },
-      _react2.default.createElement(_reactRouter.IndexRoute, { component: _appcontainer2.default })
-    )
-  )
+  _react2.default.createElement(_appcontainer2.default, null)
 ), document.getElementById('root'));
 
 /***/ })

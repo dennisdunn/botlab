@@ -1,7 +1,7 @@
 export default (state = {}, action) => {
   switch (action.type) {
-    case 'INIT':
-      return action.payload;
+    case 'SET_POWER':
+      return { position: action.payload }
     default:
       return state;
   }

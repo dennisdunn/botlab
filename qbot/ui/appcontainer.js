@@ -5,29 +5,28 @@ import Buttonbar from './buttonbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Joystick from './joystick';
 
-// this acts as a container component
 class AppContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.init = this.init.bind(this);
+        this.onPositionChanged = this.onPositionChanged.bind(this);
     }
 
-    init(list) {
-        let {dispatch} = this.props;
-        dispatch({ type: 'INIT', payload: this.props.state });
+    onPositionChanged(position) {
+        let { dispatch } = this.props;
+        dispatch({ type: 'SET_POWER', payload: position });
     }
 
     render() {
         return (
             <MuiThemeProvider>
                 <div>
-                <Buttonbar></Buttonbar>
-                <Joystick width='400' height='400'></Joystick>
+                    <Buttonbar></Buttonbar>
+                    <Joystick width='400' height='400' positionChangeHandler={this.onPositionChanged}></Joystick>
                 </div>
             </MuiThemeProvider>
         );
     }
 }
 
-export default connect(state => ({ 'state': state }))(AppContainer);
+export default connect(state => ({ 'position': state.position }))(AppContainer);
