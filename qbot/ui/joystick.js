@@ -45,7 +45,7 @@ export default class Joystick extends React.Component {
     dispatch(canvasPoint) {
         let cartesian = this.canvasToCartesianCoordinates(canvasPoint);
         let polar = this.cartesianToPolarCoordinates(cartesian);
-        this.props.positionChangeHandler(polar);
+        this.props.onPosition(polar);
     }
 
     drawTrace(pos) {
