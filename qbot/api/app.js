@@ -3,6 +3,7 @@
 let Gpio = require('pigpio').Gpio;
 let express = require('express');
 let path = require('path');
+let bodyParser = require('body-parser');
 
 let gpioService = require('../lib/gpioservice')(Gpio);
 let ledHandler = require('../lib/ledhandler')(gpioService);
@@ -13,13 +14,13 @@ api.registerHandler('led', ledHandler);
 api.registerHandler('motor', motorhandler);
 
 let app = express();
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 // api
-app.get('/api/:apiversion/:target/:key/:value', api.dispatch);
 app.get('/api/:apiversion/:target/:key', api.dispatch);
 app.get('/api/:apiversion/:target', api.dispatch);
 
-app.post('/api/:apiversion/:target/:key/:value', api.dispatch);
 app.post('/api/:apiversion/:target/:key', api.dispatch);
 app.post('/api/:apiversion/:target', api.dispatch);
 
