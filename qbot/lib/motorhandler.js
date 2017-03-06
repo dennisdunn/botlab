@@ -14,7 +14,7 @@ module.exports = (gpioService => {
     const DIRECTION_BACKWARD = 'backward';
 
     const MOTOR_GPIO = {
-        'A':{
+        'A': {
             'forward': MOTOR_A_FORWARD,
             'backward': MOTOR_A_BACKWARD
         },
@@ -38,12 +38,12 @@ module.exports = (gpioService => {
     }
 
     const self = {
-        list: (cmd) => {
-            return _motors;
-        },
-
         get: (cmd) => {
             return _motors[cmd.key.toUpperCase()];
+        },
+
+        getall: (cmd) => {
+            return _motors;
         },
 
         set: (cmd) => {
@@ -58,11 +58,13 @@ module.exports = (gpioService => {
         },
 
         setall: (cmd) => {
+            let result = [];
             for (var key of Object.keys(_motors)) {
                 let xcmd = { 'key': key, 'value': cmd.value };
                 self.set(xcmd);
+                result.push(xcmd);
             }
-            return self.list();
+            return result;
         }
     }
     return self;

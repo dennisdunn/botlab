@@ -17,7 +17,14 @@ module.exports = (gpioService => {
     const _service = gpioService;
 
     const self = {
-        list: (cmd) => {
+        get: (cmd) => {
+            let value = _service.read(LEDS[cmd.key]);
+            let result = { key: cmd.key, value: value };
+
+            return result;
+        },
+
+        getall: (cmd) => {
             let result = [];
             for (var key of Object.keys(LEDS)) {
                 let value = _service.read(LEDS[key]);
@@ -26,17 +33,19 @@ module.exports = (gpioService => {
             return result;
         },
 
-        get: (cmd) => {
-            let value = _service.read(LEDS[cmd.key]);
-            let result = { key: cmd.key, value: value };
-
-            return result;
-        },
-
         set: (cmd) => {
             _service.write(LEDS[cmd.key], cmd.value);
             let result = { key: cmd.key, value: cmd.value };
 
+            return result;
+        },
+
+        setall: (cmd) => {
+            let result = [];
+            for (var key of Object.keys(LEDS)) {
+                _service.write(LEDS[cmd.key], cmd.value);
+                result.push({ key: cmd.key, value: cmd.value });
+            }
             return result;
         }
     }

@@ -25,35 +25,19 @@ module.exports = (function () {
             let cmd = {
                 'version': req.params.apiversion,
                 'timestamp': Date.now(),
-                'target': req.params.target
+                'target': req.params.target,
+                'key':req.params.key,
+                'value':req.params.value
             }
 
             switch (req.method) {
                 case 'GET':
-                    cmd.action = req.params.key ? 'get' : 'list';
-                    cmd.key = req.params.key;
-                    cmd.value = req.params.value;
+                    cmd.action = req.params.key ? 'get' : 'getall';
                     break;
                 case 'POST':
-                    if (req.params.value) {
-                        cmd.action = 'set';
-                        cmd.key = req.params.key;
-                        cmd.value = req.params.value;
-                    } else {
-                        cmd.action = 'setall';
-                        cmd.value = req.params.key;
-                    }
+                    cmd.action = req.params.key ? 'set' : 'setall';
                     break;
             }
-
-            if (req.params.key) {
-                cmd.key = req.params.key;
-            }
-
-            if (req.params.value) {
-                cmd.value = req.params.value;
-            }
-
             return cmd;
         }
     }
