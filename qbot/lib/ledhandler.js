@@ -43,7 +43,7 @@ module.exports = (gpioService => {
         setall: (cmd) => {
             let result = [];
             for (var key of Object.keys(LEDS)) {
-                _service.write(LEDS[cmd.key], cmd.value);
+                _service.write(LEDS[key], cmd.value);
                 result.push({ key: cmd.key, value: cmd.value });
             }
             return result;

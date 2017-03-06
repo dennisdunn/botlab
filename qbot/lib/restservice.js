@@ -27,9 +27,8 @@ module.exports = (function () {
                 'timestamp': Date.now(),
                 'target': req.params.target,
                 'key':req.params.key,
-                'value':req.params.value
+                'value':req.body.value
             }
-
             switch (req.method) {
                 case 'GET':
                     cmd.action = req.params.key ? 'get' : 'getall';
