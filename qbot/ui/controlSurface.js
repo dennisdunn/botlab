@@ -2,6 +2,11 @@ import React from 'react'
 import Styles from './joystick.css'
 import CoordinateTransforms from './coordinateTransforms'
 
+/**
+ * A control surface reports on mouse actions in
+ * pre-defined "hot zones." Hot zones are closed
+ * paths on the control surface.
+ */
 export default class controlSurface extends React.Component {
     constructor(props) {
         super(props);

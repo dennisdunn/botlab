@@ -1,39 +1,31 @@
-<<<<<<< HEAD
 import React from 'react';
+import PolarGrid from './polarGrid';
+import ControlSurface from './controlSurface';
 import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import Buttonbar from './buttonbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import JoystickContainer from './joystick';
 import request from 'superagent';
 
-
-const rfactor = 3;
 const url = "http://"
-=======
-import React from 'react'
-import { connect } from 'react-redux'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import ConsoleComponent from './consolecomponent'
->>>>>>> 6c4811c907699516e8b6c273b3f1d5b45baaf63b
 
 class AppContainer extends React.Component {
 
     constructor(props) {
         super(props);
+        this.clickHandler = this.clickHandler.bind(this);
+    }
+
+    clickHandler(e) {
+
     }
 
     render() {
+        let deadZone = Math.PI * 0.25
         return (
             <MuiThemeProvider>
-<<<<<<< HEAD
                 <div>
-                    <Buttonbar onClick={this.clickHandler}></Buttonbar>
-                    <JoystickContainer width='400' height='400'></JoystickContainer>
+                    <PolarGrid id="polargrid" size="310" radius="150" lines="10"></PolarGrid>
+                    <ControlSurface id="controlsurface" size="310" radius="150" zoneRadius="200" zoneWidth="60" zoneTheta={deadZone}></ControlSurface>
                 </div>
-=======
-                <ConsoleComponent />
->>>>>>> 6c4811c907699516e8b6c273b3f1d5b45baaf63b
             </MuiThemeProvider>
         );
     }
