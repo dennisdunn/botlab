@@ -1,7 +1,16 @@
-export default (state = {}, action) => {
+const DEFAULT_STATE = {
+  power: 0,
+  turn: 0,
+  blue: false,
+  green: false,
+  yellow: false,
+  red: false
+}
+
+export default (state = DEFAULT_STATE, action) => {
   switch (action.type) {
     case 'SET_POWER':
-      return { position: action.payload }
+    break;
     default:
       return state;
   }
