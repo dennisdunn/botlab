@@ -10,6 +10,7 @@ module.exports = (function () {
         },
 
         dispatch: (req, res) => {
+            return; // TODO remove this once the joystick is working
             let cmd = self.commandFactory(req);
             let handler = _handlers[cmd.target][cmd.action];
             let results = handler(cmd);

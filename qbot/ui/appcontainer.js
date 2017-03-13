@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import Buttonbar from './buttonbar'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import Joystick from './joystick';
+import JoystickContainer from './joystick';
 import request from 'superagent';
 
 
@@ -35,7 +35,7 @@ class AppContainer extends React.Component {
             <MuiThemeProvider>
                 <div>
                     <Buttonbar onClick={this.clickHandler}></Buttonbar>
-                    <Joystick width='400' height='400' onPosition={this.positionHandler}></Joystick>
+                    <JoystickContainer width='400' height='400'></JoystickContainer>
                 </div>
             </MuiThemeProvider>
         );
