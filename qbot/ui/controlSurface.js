@@ -23,41 +23,45 @@ export default class controlSurface extends React.Component {
             y: this.props.size / 2
         }
 
+        this.mouseMoveTimerId = null
+
         this.zones = []
         this.xy = new CoordinateTransforms(this.origin)
         this.createZones(this.props.radius, this.props.zoneWidth, this.props.zoneTheta)
     }
 
     mousedownHandler(e) {
-        e.preventDefault()
-        this.setState({ tracking: true })
-        let canvasPoint = this.xy.eventToDom(e)
-        this.drawTrace(canvasPoint)
-        this.dispatch(canvasPoint)
+        if (this.isHitInZone(e)) {
+            e.preventDefault()
+            this.setState({ tracking: true })
+        }
     }
 
     mouseupHandler(e) {
-        e.preventDefault()
-        this.setState({ tracking: false })
-        let canvasPoint = {
-            x: this.props.width / 2,
-            y: this.props.height / 2
+        if (this.state.tracking) {
+            e.preventDefault()
+            this.setState({ tracking: false })
         }
-        this.drawTrace(canvasPoint)
-        this.dispatch(canvasPoint)
     }
 
     mousemoveHandler(e) {
-        if (this.state.tracking) {
+        if (this.state.tracking && this.isHitInZone(e)) {
             e.preventDefault()
-            let domPoint = this.xy.eventToDom(e)
+            let pt = this.getPolarCoordinates(e)
+            if (this.mouseMoveTimerId) clearTimeout(this.mouseMoveTimerId)
+            this.mouseMoveTimerId = setTimeout(this.props.onChanged, 250, pt);
         }
     }
 
-    dispatch(domPoint) {
-        let cartesian = this.xy.domToCartesian(domPoint)
-        let polar = this.xy.cartesianToPolar(cartesian)
-        this.props.onPositionChanged(polar)
+    isHitInZone(e) {
+        let ctx = document.getElementById(this.props.id).getContext('2d')
+        return this.zones.reduce((v, z) => v || ctx.isPointInPath(z, e.clientX, e.clientY), false)
+    }
+
+    getPolarCoordinates(e) {
+        let domPoint = this.xy.eventToDom(e)
+        let canvasPoint = this.xy.domToCartesian(domPoint)
+        return this.xy.cartesianToPolar(canvasPoint)
     }
 
     createZones(radius, deltaRadius, theta) {

@@ -12,11 +12,11 @@ class AppContainer extends React.Component {
 
     constructor(props) {
         super(props);
-        this.clickHandler = this.clickHandler.bind(this);
+        this.onChangedHandler = this.onChangedHandler.bind(this);
     }
 
-    clickHandler(e) {
-
+    onChangedHandler(polar) {
+        console.log(polar)
     }
 
     render() {
@@ -25,7 +25,7 @@ class AppContainer extends React.Component {
             <MuiThemeProvider>
                 <div className={Styles.joystick_container}>
                     <PolarGrid id="polargrid" stroke="green" fill="lightgreen" size="310" radius="150" lines="10"></PolarGrid>
-                    <ControlSurface id="controlsurface" stroke="green" fill="rgba(0, 255, 0, 0.75)" size="310" radius="150" zoneRadius="200" zoneWidth="60" zoneTheta={deadZone}></ControlSurface>
+                    <ControlSurface id="controlsurface" stroke="green" fill="rgba(0, 255, 0, 0.75)" size="310" radius="150" zoneRadius="200" zoneWidth="60" zoneTheta={deadZone} onChanged={this.onChangedHandler}></ControlSurface>
                 </div>
             </MuiThemeProvider>
         );
