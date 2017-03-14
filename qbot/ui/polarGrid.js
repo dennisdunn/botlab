@@ -1,11 +1,12 @@
 import React from 'react'
+import Styles from './app.css'
 
 /**
  * Draw a polar coordinate grid, aka a "radar Screen"
  */
 export default class PolarGrid extends React.Component {
     constructor(props) {
-        super(props);
+        super(props)
     }
 
     // size of the width and height of the canvas
@@ -21,7 +22,6 @@ export default class PolarGrid extends React.Component {
         }
         let offset = (Math.sqrt(Math.pow(size, 2) + Math.pow(size, 2)) - size) / 2
         offset = Math.sqrt(Math.pow(offset, 2) / 2)
-        console.log(offset)
         ctx.moveTo(offset, offset)
         ctx.lineTo(size - offset, size - offset)
         ctx.moveTo(offset, size - offset)
@@ -35,8 +35,10 @@ export default class PolarGrid extends React.Component {
             ctx.arc(midAxis.x, midAxis.y, r, 0, 2 * Math.PI)
         }
 
-        ctx.strokeStyle = 'green'
+        ctx.fillStyle = this.props.fill || "white"
+        ctx.strokeStyle = this.props.stroke || "black"
         ctx.lineWidth = 1
+        ctx.fill()
         ctx.stroke()
     }
 
@@ -46,7 +48,7 @@ export default class PolarGrid extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className={Styles.polarGrid_container}>
                 <canvas id={this.props.id}
                     width={this.props.size}
                     height={this.props.size}>

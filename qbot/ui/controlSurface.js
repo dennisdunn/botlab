@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from './joystick.css'
+import Styles from './app.css'
 import CoordinateTransforms from './coordinateTransforms'
 
 /**
@@ -9,56 +9,55 @@ import CoordinateTransforms from './coordinateTransforms'
  */
 export default class controlSurface extends React.Component {
     constructor(props) {
-        super(props);
-        console.log(props)
+        super(props)
         this.state = {
             tracking: false
         }
 
-        this.mousedownHandler = this.mousedownHandler.bind(this);
-        this.mouseupHandler = this.mouseupHandler.bind(this);
-        this.mousemoveHandler = this.mousemoveHandler.bind(this);
+        this.mousedownHandler = this.mousedownHandler.bind(this)
+        this.mouseupHandler = this.mouseupHandler.bind(this)
+        this.mousemoveHandler = this.mousemoveHandler.bind(this)
 
-        let origin = {
-            x: this.props.width / 2, // origin
-            y: this.props.height / 2 // origin
+        this.origin = {
+            x: this.props.size / 2,
+            y: this.props.size / 2
         }
 
         this.zones = []
-        this.xy = new CoordinateTransforms(origin)
-        this.createZones(origin.x, this.props.zoneWidth, this.props.zoneTheta)
+        this.xy = new CoordinateTransforms(this.origin)
+        this.createZones(this.props.radius, this.props.zoneWidth, this.props.zoneTheta)
     }
 
     mousedownHandler(e) {
-        e.preventDefault();
-        this.setState({ tracking: true });
-        let canvasPoint = this.xy.eventToDom(e);
-        this.drawTrace(canvasPoint);
+        e.preventDefault()
+        this.setState({ tracking: true })
+        let canvasPoint = this.xy.eventToDom(e)
+        this.drawTrace(canvasPoint)
         this.dispatch(canvasPoint)
     }
 
     mouseupHandler(e) {
-        e.preventDefault();
-        this.setState({ tracking: false });
+        e.preventDefault()
+        this.setState({ tracking: false })
         let canvasPoint = {
             x: this.props.width / 2,
             y: this.props.height / 2
         }
-        this.drawTrace(canvasPoint);
-        this.dispatch(canvasPoint);
+        this.drawTrace(canvasPoint)
+        this.dispatch(canvasPoint)
     }
 
     mousemoveHandler(e) {
         if (this.state.tracking) {
-            e.preventDefault();
-            let domPoint = this.xy.eventToDom(e);
+            e.preventDefault()
+            let domPoint = this.xy.eventToDom(e)
         }
     }
 
     dispatch(domPoint) {
-        let cartesian = this.xy.domToCartesian(domPoint);
-        let polar = this.xy.cartesianToPolar(cartesian);
-        this.props.onPositionChanged(polar);
+        let cartesian = this.xy.domToCartesian(domPoint)
+        let polar = this.xy.cartesianToPolar(cartesian)
+        this.props.onPositionChanged(polar)
     }
 
     createZones(radius, deltaRadius, theta) {
@@ -81,45 +80,39 @@ export default class controlSurface extends React.Component {
             r: rDelta,
             theta: plusTheta
         }]))
-         this.zones.push(this.createZone([{
-             r: radius,
-             theta: 0
-         },
-         {
-             r: radius,
-             theta: minusTheta
-         },
-         {
-             r: rDelta,
-             theta: minusTheta
-         },
-         {
-             r: rDelta,
-             theta: 0
-         }]))
+        this.zones.push(this.createZone([{
+            r: radius,
+            theta: 0
+        },
+        {
+            r: radius,
+            theta: minusTheta
+        },
+        {
+            r: rDelta,
+            theta: minusTheta
+        },
+        {
+            r: rDelta,
+            theta: 0
+        }]))
     }
 
     createZone(points) {
-        let path = new Path2D();
-        let line = points.map(polar => this.xy.cartesianToDom(this.xy.polarToCartesian(polar)))
-        console.log(points)
-        path.moveTo(line[0].x, line[0].y)
-        path.arc(200, 200, points[0].r, points[0].theta, points[1].theta, true)
-     //   path.moveTo(line[1].x, line[1].y)
-        path.lineTo(line[2].x, line[2].y)
-        path.arc(200, 200, points[2].r, points[2].theta, points[3].theta)
-     //   path.moveTo(line[3].x, line[3].y)
-        path.lineTo(line[0].x, line[0].y)
-    //           path.closePath()
+        let path = new Path2D()
+        path.arc(this.origin.x, this.origin.y, points[0].r, points[0].theta, points[1].theta, true)
+        path.arc(this.origin.x, this.origin.y, points[2].r, points[2].theta, points[3].theta)
+        path.closePath()
 
         return path
     }
 
     drawZones() {
         let ctx = document.getElementById(this.props.id).getContext('2d')
-        ctx.fillStyle = 'rgba(0, 255, 0, 0.5)'
-        console.log(this.zones)
+        ctx.fillStyle = this.props.fill || "white"
+        ctx.strokeStyle = this.props.stroke || "black"
         for (let i = 0; i < this.zones.length; i++) {
+            ctx.fill(this.zones[i])
             ctx.stroke(this.zones[i])
         }
     }
@@ -130,10 +123,10 @@ export default class controlSurface extends React.Component {
 
     render() {
         return (
-            <div className={Styles.joystick}>
+            <div className={Styles.controlSurface_container}>
                 <canvas id={this.props.id}
-                    width={this.props.width}
-                    height={this.props.height}
+                    width={this.props.size}
+                    height={this.props.size}
                     onMouseDown={this.mousedownHandler}
                     onMouseUp={this.mouseupHandler}
                     onMouseMove={this.mousemoveHandler}>
