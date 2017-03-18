@@ -11,7 +11,7 @@ export default class Surface extends React.Component {
 
         this.state = {
             graphicsContext: null,
-            clickHandlers:[]
+            clickHandlers: []
         }
 
         this.refCallback = this.refCallback.bind(this)
@@ -36,7 +36,7 @@ export default class Surface extends React.Component {
         const graphicsProps = { graphicsContext: this.state.graphicsContext, register: this.register }
         const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
         return (
-            <div>
+            <div style={{ position: 'absolute' }}>
                 <canvas id={this.props.id}
                     width={this.props.width || 300}
                     height={this.props.height || 150}

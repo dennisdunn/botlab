@@ -1,5 +1,4 @@
 import React from 'react'
-import Styles from './app.css'
 
 /**
  * Draw a polar coordinate grid, aka a "radar Screen"
@@ -45,15 +44,14 @@ export default class PolarGrid extends React.Component {
     componentDidMount() {
         this.drawGrid(this.props.size, this.props.radius, this.props.lines);
     }
-
     render() {
         return (
-            <div className={Styles.polarGrid_container}>
+            <div style={{ position: 'absolute' }}>
                 <canvas id={this.props.id}
                     width={this.props.size}
                     height={this.props.size}>
                 </canvas>
-            </div>
+            </div >
         );
     }
 }

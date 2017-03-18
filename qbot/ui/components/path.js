@@ -22,14 +22,9 @@ export default class Path extends React.Component {
 
     draw() {
         if (this.props.graphicsContext) {
-            if (this.props.fill) {
-                this.props.graphicsContext.fillStyle = this.props.fill
-                this.props.graphicsContext.fill(this.state.path)
-            }
-            if (this.props.stroke) {
-                this.props.graphicsContext.strokeStyle = this.props.stroke
-                this.props.graphicsContext.stroke(this.state.path)
-            }
+            const context = Object.assign(this.props.graphicsContext, this.props)
+            if (this.props.fillStyle) context.fill(this.state.path)
+            if (this.props.strokeStyle) context.stroke(this.state.path)
         }
     }
 
