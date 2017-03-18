@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { Arc, Line, Circle, GraphicsComponent } from './components/graphicsComponents'
+import { Arc, Line, Circle} from './components/graphicsComponents'
 import Surface from './components/canvasComponent'
 
 const url = "http://"

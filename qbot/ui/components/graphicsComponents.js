@@ -1,6 +1,6 @@
 import React from 'react'
 
-export class GraphicsComponent extends React.Component {
+class GraphicsComponent extends React.Component {
     constructor(props) {
         super(props)
     }
@@ -33,10 +33,9 @@ export class Arc extends GraphicsComponent {
         super(props)
     }
 
-    draw() {
+    draw() { 
+        this.props.ctx.moveTo(this.props.from.x, this.props.from.y)       
         this.props.ctx.arcTo(this.props.from.x, this.props.from.y, this.props.to.x, this.props.to.y, this.props.radius)
-        this.props.ctx.moveTo(this.props.from.x, this.props.from.y)
-        this.props.ctx.lineTo(this.props.to.x, this.props.to.y)
     }
 }
 
