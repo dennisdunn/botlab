@@ -32,9 +32,8 @@ export class Arc extends GraphicsComponent {
     }
 
     draw() {
-        this.props.path.moveTo(this.props.from.x, this.props.from.y)
-        this.props.path.arcTo(this.props.from.x, this.props.from.y, this.props.to.x, this.props.to.y, this.props.radius)
-    }
+        this.props.path.arc(this.props.origin.x, this.props.origin.y, this.props.radius, this.props.start, this.props.end, this.props.ccw || false)
+     }
 }
 
 export class Circle extends GraphicsComponent {

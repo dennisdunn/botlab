@@ -8,16 +8,19 @@ import React from 'react'
 export default class Surface extends React.Component {
     constructor(props) {
         super(props)
-        this.state = { graphicsContext: null }
+
+        this.state = {
+            graphicsContext: null,
+            clickHandlers:[]
+        }
+
         this.refCallback = this.refCallback.bind(this)
         this.clickHandler = this.clickHandler.bind(this)
-        this.mountHandler = this.mountHandler.bind(this)
-
-        this.clickHandlers = []
+        this.register = this.register.bind(this)
     }
 
-    mountHandler(component) {
-        this.clickHandlers.push(component.hitHandler)
+    register(clickHandler) {
+        this.state.clickHandlers.push(clickHandler)
     }
 
     refCallback(el) {
@@ -26,11 +29,11 @@ export default class Surface extends React.Component {
     }
 
     clickHandler(e) {
-        this.clickHandlers.map(handler => handler(e))
+        this.state.clickHandlers.forEach(handler => handler(e))
     }
 
     render() {
-        const graphicsProps = { graphicsContext: this.state.graphicsContext, onMount:this.mountHandler }
+        const graphicsProps = { graphicsContext: this.state.graphicsContext, register: this.register }
         const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
         return (
             <div>
