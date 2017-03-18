@@ -7,11 +7,18 @@ export default class Path extends React.Component {
             path: new Path2D()
         }
         this.draw = this.draw.bind(this)
-        this.isHitInZone = this.isHitInZone.bind(this)
+        this.hitHandler = this.hitHandler.bind(this)
     }
 
-    isHitInZone(e) {
-        return this.props.graphicsContext.isPointInPath(this.state.path, e.clientX, e.clientY)
+    hitHandler(e) {
+        if (this.props.onClick && this.props.graphicsContext.isPointInPath(this.state.path, e.clientX, e.clientY)) {
+            e.preventDefault()
+            this.props.onClick(e)
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.onMount) this.props.onMount(this)
     }
 
     draw() {

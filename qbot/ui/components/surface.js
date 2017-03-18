@@ -10,6 +10,14 @@ export default class Surface extends React.Component {
         super(props)
         this.state = { graphicsContext: null }
         this.refCallback = this.refCallback.bind(this)
+        this.clickHandler = this.clickHandler.bind(this)
+        this.mountHandler = this.mountHandler.bind(this)
+
+        this.clickHandlers = []
+    }
+
+    mountHandler(component) {
+        this.clickHandlers.push(component.hitHandler)
     }
 
     refCallback(el) {
@@ -17,10 +25,13 @@ export default class Surface extends React.Component {
         this.setState({ graphicsContext: context })
     }
 
-    render() {
-        const graphicsProps = { graphicsContext: this.state.graphicsContext }
-        const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
+    clickHandler(e) {
+        this.clickHandlers.map(handler => handler(e))
+    }
 
+    render() {
+        const graphicsProps = { graphicsContext: this.state.graphicsContext, onMount:this.mountHandler }
+        const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
         return (
             <div>
                 <canvas id={this.props.id}

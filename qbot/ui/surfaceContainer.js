@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import { Arc, Line, Circle } from './components/graphicsComponents'
+import { Arc, Line, Circle } from './components/primitives'
 import Path from './components/path'
-import Surface from './components/canvasComponent'
+import Surface from './components/surface'
 
 const url = "http://"
 
@@ -12,23 +12,27 @@ class AppContainer extends React.Component {
     constructor(props) {
         super(props);
         this.clickHandler = this.clickHandler.bind(this)
+        this.clickHandler2 = this.clickHandler2.bind(this)
     }
 
     clickHandler(e) {
-        console.log(e)
+        console.log('path one')
+    }
+
+    clickHandler2(e) {
+        console.log('path two')
     }
 
     render() {
         return (
             <MuiThemeProvider>
                 <div style={{ position: 'relative' }}>
-                    <Surface id="controlsurface" width="310" height="310">
-                        <Path fill="lightgreen" stroke="green">
-                            <Circle center={{ x: 155, y: 155 }} radius={100}></Circle>
+                    <Surface id="controlsurface" width="310" height="310" >
+                        <Path fill="lightblue" stroke="blue" onClick={this.clickHandler}>
+                            <Circle center={{ x: 100, y: 155 }} radius={100}></Circle>
                         </Path>
-                        <Path stroke="black" >
-                            <Line from={{ x: 0, y: 0 }} to={{ x: 310, y: 310 }}></Line>
-                            <Line from={{ x: 310, y: 0 }} to={{ x: 0, y: 310 }}></Line>
+                        <Path fill="lightgreen" stroke="green" onClick={this.clickHandler2}>
+                            <Circle center={{ x: 200, y: 155 }} radius={100}></Circle>
                         </Path>
                     </Surface>
                 </div>
