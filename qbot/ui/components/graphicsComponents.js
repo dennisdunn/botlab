@@ -6,10 +6,8 @@ class GraphicsComponent extends React.Component {
     }
 
     componentDidUpdate() {
-        if (this.props.ctx) {
-            this.draw()
-            this.props.onUpdate();
-        }
+        if (this.props.path) this.draw()
+        if (this.props.onDraw) this.props.onDraw()
     }
 
     render() {
@@ -23,8 +21,8 @@ export class Line extends GraphicsComponent {
     }
 
     draw() {
-        this.props.ctx.moveTo(this.props.from.x, this.props.from.y)
-        this.props.ctx.lineTo(this.props.to.x, this.props.to.y)
+        this.props.path.moveTo(this.props.from.x, this.props.from.y)
+        this.props.path.lineTo(this.props.to.x, this.props.to.y)
     }
 }
 
@@ -33,9 +31,9 @@ export class Arc extends GraphicsComponent {
         super(props)
     }
 
-    draw() { 
-        this.props.ctx.moveTo(this.props.from.x, this.props.from.y)       
-        this.props.ctx.arcTo(this.props.from.x, this.props.from.y, this.props.to.x, this.props.to.y, this.props.radius)
+    draw() {
+        this.props.path.moveTo(this.props.from.x, this.props.from.y)
+        this.props.path.arcTo(this.props.from.x, this.props.from.y, this.props.to.x, this.props.to.y, this.props.radius)
     }
 }
 
@@ -45,7 +43,7 @@ export class Circle extends GraphicsComponent {
     }
 
     draw() {
-        this.props.ctx.moveTo(this.props.center.x + this.props.radius, this.props.center.y)
-        this.props.ctx.arc(this.props.center.x, this.props.center.y, this.props.radius, 0, 2 * Math.PI)
+        this.props.path.moveTo(this.props.center.x + this.props.radius, this.props.center.y)
+        this.props.path.arc(this.props.center.x, this.props.center.y, this.props.radius, 0, 2 * Math.PI)
     }
 }
