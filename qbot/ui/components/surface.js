@@ -10,17 +10,26 @@ export default class Surface extends React.Component {
         super(props)
 
         this.state = {
+            paths: [],
             graphicsContext: null,
-            clickHandlers: []
+            origin: this.props.origin || { x: this.props.width / 2, y: this.props.height / 2 }
         }
 
+        this.register = this.register.bind(this)
         this.refCallback = this.refCallback.bind(this)
         this.clickHandler = this.clickHandler.bind(this)
-        this.register = this.register.bind(this)
     }
 
-    register(clickHandler) {
-        this.state.clickHandlers.push(clickHandler)
+    componentDidUpdate() {
+        this.state.paths.forEach(path => {
+            Object.assign(this.state.graphicsContext, path.props)
+            if (path.props.strokeStyle) this.state.graphicsContext.stroke(path.state.path)
+            if (path.props.fillStyle) this.state.graphicsContext.fill(path.state.path)
+        })
+    }
+
+    register(path) {
+        this.state.paths.push(path)
     }
 
     refCallback(el) {
@@ -29,20 +38,25 @@ export default class Surface extends React.Component {
     }
 
     clickHandler(e) {
-        this.state.clickHandlers.forEach(handler => handler(e))
+        e.persist()
+        this.state.paths.forEach(path => {
+            if (path.props.onClick && this.state.graphicsContext.isPointInPath(path.state.path, e.clientX, e.clientY)) {
+                path.props.onClick(e)
+            }
+        })
     }
 
     render() {
-        const graphicsProps = { graphicsContext: this.state.graphicsContext, register: this.register }
+        const graphicsProps = {
+            origin: this.state.origin,
+            register: this.register
+        }
         const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
         return (
             <div style={{ position: 'absolute' }}>
                 <canvas id={this.props.id}
                     width={this.props.width || 300}
                     height={this.props.height || 150}
-                    onMouseDown={this.mousedownHandler}
-                    onMouseUp={this.mouseupHandler}
-                    onMouseMove={this.mousemoveHandler}
                     onClick={this.clickHandler}
                     ref={this.refCallback}>
                 </canvas>

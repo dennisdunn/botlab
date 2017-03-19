@@ -17,10 +17,12 @@ class AppContainer extends React.Component {
     }
 
     onLeftclick(e) {
+        e.preventDefault()
         console.log('left')
     }
 
     onRightclick(e) {
+        e.preventDefault()
         console.log('right')
     }
 
@@ -30,15 +32,10 @@ class AppContainer extends React.Component {
                 <div style={{ position: 'relative' }}>
                     <PolarGrid id="polargrid" stroke="green" fill="lightgreen" size="310" radius="150" lines="10"></PolarGrid>
                     <Surface id="controlsurface" width="310" height="310">
-                        <Path strokeStyle='blue' fillStyle='rgba(0, 128, 0, 0.75)' onClick={this.onLeftclick}>
-                            <Arc origin={{ x: 155, y: 155 }} radius={150} end={Math.PI} start={1.45 * Math.PI}  ccw='true'/>
-                            <Line from={{x:5,y:155}} to={{x:50,y:155}}></Line>
-                            <Arc origin={{ x: 155, y: 155 }} radius={100} start={Math.PI} end={1.45 * Math.PI} />
-                        </Path>
-                        <Path fillStyle='rgba(0, 128, 0, 0.75)' onClick={this.onRightclick}>
-                            <Arc origin={{ x: 155, y: 155 }} radius={150} start={0} end={1.55 * Math.PI} ccw='true' />
-                            <Arc origin={{ x: 155, y: 155 }} radius={100} end={0} start={1.55 * Math.PI} />
-                        </Path>
+                        <Path strokeStyle='blue' fillStyle='rgba(128, 128, 128, 0.5)' onClick={this.onLeftclick}>
+                            <Arc origin={{ x: 0, y: 0 }} radius={150} end={0.5 * Math.PI} start={Math.PI} />
+                            <Arc origin={{ x: 0, y: 0 }} radius={100} start={0.5 * Math.PI} end={Math.PI} ccw='false' />
+                         </Path>
                     </Surface>
                 </div>
             </MuiThemeProvider>

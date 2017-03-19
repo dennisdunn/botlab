@@ -1,10 +1,9 @@
 
 export default class CoordinateTransforms {
     constructor(props) {
-        this.offset = props;
     }
 
-    eventToDom(e) {
+    static eventToDom(e) {
         var rect = document.getElementById(e.target.id).getBoundingClientRect();
         return {
             x: e.clientX - rect.left,
@@ -12,30 +11,38 @@ export default class CoordinateTransforms {
         };
     }
 
-    domToCartesian(point, offset = this.offset) {
+    static domToCartesian(point, offset) {
         return {
             x: point.x - offset.x,
             y: offset.y - point.y
         }
     }
 
-    cartesianToDom(point, offset = this.offset) {
+    static cartesianToDom(point, offset) {
         return {
             x: point.x + offset.x,
             y: offset.y - point.y
         }
     }
 
-    cartesianToPolar(point) {
+    static polarToDom(point) {
+        return {
+            r: point.r,
+            theta: 2 * Math.PI - point.theta
+        }
+    }
+
+    static cartesianToPolar(point) {
         let theta = Math.atan2(point.y, point.x);
-        theta = theta < 0 ? 2 * Math.PI + theta : theta;
+        if (point.x < 0) theta = theta + Math.PI
+        if (point.x > 0 && point.y < 0) theta = theta + 2 * Math.PI
         return {
             r: Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2)),
             theta: theta
         }
     }
 
-    polarToCartesian(point) {
+    static polarToCartesian(point) {
         return {
             x: point.r * Math.cos(point.theta),
             y: point.r * Math.sin(point.theta)
