@@ -28,9 +28,19 @@ export class Line extends GraphicsComponent {
     }
 
     addToPath() {
-        const from = this.coordinatesToDom(this.props.from)
         const to = this.coordinatesToDom(this.props.to)
         this.props.path.lineTo(to.x, to.y)
+    }
+}
+
+export class Move extends GraphicsComponent {
+    constructor(props) {
+        super(props)
+    }
+
+    addToPath() {
+        const to = this.coordinatesToDom(this.props.to)
+        this.props.path.moveTo(to.x, to.y)
     }
 }
 
@@ -40,9 +50,8 @@ export class Arc extends GraphicsComponent {
     }
 
     addToPath() {
-        const start = 2 * Math.PI - this.props.start
-        const end = 2 * Math.PI - this.props.end
-        this.props.path.arc(this.props.origin.x, this.props.origin.y, this.props.radius, start, end, this.props.ccw)
+        const origin = this.coordinatesToDom(this.props.origin)
+        this.props.path.arc(origin.x, origin.y, this.props.radius, this.props.start, this.props.end, this.props.ccw)
     }
 }
 
