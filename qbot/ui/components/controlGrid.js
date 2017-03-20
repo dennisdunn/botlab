@@ -1,4 +1,5 @@
 import React from 'react'
+import CoordinateTransforms from '../lib/coordinateTransforms'
 
 /**
  * Draw a bot control grid
@@ -7,10 +8,11 @@ export default class ControlGrid extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            paths: [],
-            origin: { x: this.props.size / 2, y: this.props.size / 2 },
-            halfGap: 0.100
+            paths: []
         }
+
+        this.coordService = new CoordinateTransforms({ x: this.props.size / 2, y: this.props.size / 2 })
+        this.halfGap = 0.100
 
         this.state.paths.push(this.arcPath(1.375, 1.625, 90, 150))
         this.state.paths.push(this.arcPath(0.750, 1.375, 90, 150))
@@ -37,18 +39,28 @@ export default class ControlGrid extends React.Component {
 
     arcPath(start, end, innerRadius, outerRadius) {
         let path = new Path2D()
+        let point = { r: outerRadius, theta: start * Math.PI + this.halfGap }
+        path.arc(this.coordService.offset.x, this.coordService.offset.y, outerRadius, point.theta, end * Math.PI - this.halfGap)
+        path.arc(this.coordService.offset.x, this.coordService.offset.y, innerRadius, end * Math.PI - this.halfGap, point.theta, true)
 
-        path.arc(this.state.origin.x, this.state.origin.y, outerRadius, start * Math.PI + this.state.halfGap, end * Math.PI - this.state.halfGap)
-        path.arc(this.state.origin.x, this.state.origin.y, innerRadius, end * Math.PI - this.state.halfGap, start * Math.PI + this.state.halfGap, true)
+        point = this.coordService.canvaspolarToPolar(point)
+        point = this.coordService.polarToCartesian(point)
+        point = this.coordService.cartesianToCanvas(point)
+        path.lineTo(point.x, point.y)
 
         return path
     }
 
     semiPath(start, end, radius) {
         let path = new Path2D()
+        let point = { r: radius, theta: start * Math.PI + this.halfGap }
+        path.arc(this.coordService.offset.x, this.coordService.offset.y, radius, point.theta, end * Math.PI - this.halfGap)
 
-        path.arc(this.state.origin.x, this.state.origin.y, radius, start * Math.PI + this.state.halfGap, end * Math.PI - this.state.halfGap)
-
+        point = this.coordService.canvaspolarToPolar(point)
+        point = this.coordService.polarToCartesian(point)
+        point = this.coordService.cartesianToCanvas(point)
+        path.lineTo(point.x, point.y)
+        
         return path
     }
 
