@@ -1,23 +1,31 @@
 
+import sut from '../ui/lib/coordinateTransforms'
+import { assert, should } from 'chai'
 
-    static domToCartesian(point, offset) {
-        return {
-            x: point.x - offset.x,
-            y: offset.y - point.y
-        }
+describe('coordinate transform test of', () => {
+    describe('cartesian to polar', () => {
+        it('should convert quadrant I to polar', () => { assert.fail() });
+        it('should convert quadrant II to polar', () => { assert.fail() });
+        it('should convert quadrant III to polar', () => { assert.fail() });
+        it('should convert quadrant IV to polar', () => { assert.fail() });
+    });
 
-        
+    describe('polar to cartesian', () => {
+        it('should convert polar to quadrant I', () => { assert.fail() });
+        it('should convert polar to quadrant II', () => { assert.fail() });
+        it('should convert polar to quadrant III', () => { assert.fail() });
+        it('should convert polar to quadrant IV', () => { assert.fail() });
+    });
 
-        let dom = Coord.eventToDom(e);
-        let c = Coord.domToCartesian(dom, this.state.offset);
-        let p = Coord.cartesianToPolar(c)
-        let c2 = Coord.polarToCartesian(p)
-        let dom2 = Coord.cartesianToDom(c2, this.state.offset)
-console.log(dom)
-console.log(c)
-console.log(p)
-console.log(c2)
-console.log(dom2)
+    describe('cartesian to canvas', () => {
+        it('should convert quadrant I to canvas', () => { assert.fail() });
+        it('should convert quadrant II to canvas', () => { assert.fail() });
+        it('should convert quadrant III to canvas', () => { assert.fail() });
+        it('should convert quadrant IV to canvas', () => { assert.fail() });
+    });
 
-
-return
+    describe('polar to canvas polar', () => {
+        it('should convert canvas polar to polar', () => { assert.fail() });
+        it('should convert polar to canvas polar', () => { assert.fail() })
+    });
+})
