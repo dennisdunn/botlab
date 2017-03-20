@@ -20,6 +20,14 @@ export default class CoordinateTransforms {
         return CoordinateTransforms.polarToCartesian(point)
     }
 
+    polarToCanvaspolar(point) {
+        return CoordinateTransforms.polarToCanvas(point)
+    }
+
+    canvaspolarToPolar(point) {
+        return CoordinateTransforms.polarToCanvas(point)
+    }
+
     static canvasToCartesian(point, offset) {
         return {
             x: point.x - offset.x,
@@ -36,8 +44,7 @@ export default class CoordinateTransforms {
 
     static cartesianToPolar(point) {
         let theta = Math.atan2(point.y, point.x);
-        if (point.x < 0) theta = theta + Math.PI
-        if (point.x > 0 && point.y < 0) theta = theta + 2 * Math.PI
+        if (point.y < 0) theta += 2 * Math.PI
         return {
             r: Math.sqrt(Math.pow(point.x, 2) + Math.pow(point.y, 2)),
             theta: theta

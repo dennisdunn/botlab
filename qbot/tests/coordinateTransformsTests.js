@@ -24,13 +24,19 @@ const data = {
         III: { x: 50, y: 150 },
         IV: { x: 150, y: 150 }
     },
+    'canvasPolar': {
+        I: { r: radius, theta: 7 / 4 * Math.PI },
+        II: { r: radius, theta: 5 / 4 * Math.PI },
+        III: { r: radius, theta: 3 / 4 * Math.PI },
+        IV: { r: radius, theta: 1 / 4 * Math.PI }
+    }
 }
 
 const sut = new CoordinateTransforms(origin)
 
 describe('coordinate transform test of', () => {
-    describe('cartesian to polar', () => {
-         ['I', 'II', 'III', 'IV'].forEach(quadrant => {
+    describe('cartesian to polar conversions', () => {
+        ['I', 'II', 'III', 'IV'].forEach(quadrant => {
             let msg = 'should convert quadrant ' + quadrant + ' coordinates to polar coordinates'
             it(msg, () => {
                 let r = sut.cartesianToPolar(data.cartesian[quadrant])
@@ -38,9 +44,9 @@ describe('coordinate transform test of', () => {
                 r.theta.should.be.closeTo(data.polar[quadrant].theta, 1e-4)
             })
         })
-    });
+    })
 
-    describe('polar to cartesian', () => {
+    describe('polar to cartesian conversions', () => {
         ['I', 'II', 'III', 'IV'].forEach(quadrant => {
             let msg = 'should convert polar coordinates to quadrant ' + quadrant + ' coordinates'
             it(msg, () => {
@@ -49,9 +55,9 @@ describe('coordinate transform test of', () => {
                 r.y.should.be.closeTo(data.cartesian[quadrant].y, 1e-4)
             })
         })
-    });
+    })
 
-    describe('cartesian to canvas', () => {
+    describe('cartesian to canvas conversions', () => {
         ['I', 'II', 'III', 'IV'].forEach(quadrant => {
             let msg = 'should convert quadrant ' + quadrant + ' coordinates to canvas coordinates'
             it(msg, () => {
@@ -59,9 +65,9 @@ describe('coordinate transform test of', () => {
                 r.should.deep.equal(data.canvas[quadrant])
             })
         })
-    });
+    })
 
-    describe('canvas to cartesian', () => {
+    describe('canvas to cartesian conversions', () => {
         ['I', 'II', 'III', 'IV'].forEach(quadrant => {
             let msg = 'should convert canvas coordinates to quadrant ' + quadrant + ' coordinates'
             it(msg, () => {
@@ -69,14 +75,27 @@ describe('coordinate transform test of', () => {
                 r.should.deep.equal(data.cartesian[quadrant])
             })
         })
-    });
+    })
 
-    describe('polar to canvas polar', () => {
-        it('should convert canvas polar to polar', () => {
-            assert.fail()
-        });
-        it('should convert polar to canvas polar', () => {
-            assert.fail()
+    describe('polar to canvas-referenced polar conversions', () => {
+        ['I', 'II', 'III', 'IV'].forEach(quadrant => {
+            let msg = 'should convert polar coordinates to canvas-referenced polar coordinates'
+            it(msg, () => {
+                let r = sut.polarToCanvaspolar(data.polar[quadrant])
+                r.r.should.be.closeTo(data.canvasPolar[quadrant].r, 1e-4)
+                r.theta.should.be.closeTo(data.canvasPolar[quadrant].theta, 1e-4)
+            })
         })
-    });
+    })
+
+    describe('canvas-referenced polar to polar conversions', () => {
+        ['I', 'II', 'III', 'IV'].forEach(quadrant => {
+            let msg = 'should convert canvas-referenced polar coordinates to polar coordinates'
+            it(msg, () => {
+                let r = sut.polarToCanvaspolar(data.canvasPolar[quadrant])
+                r.r.should.be.closeTo(data.polar[quadrant].r, 1e-4)
+                r.theta.should.be.closeTo(data.polar[quadrant].theta, 1e-4)
+            })
+        })
+    })
 })
