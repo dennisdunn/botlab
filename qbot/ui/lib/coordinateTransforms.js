@@ -1,34 +1,36 @@
 
 export default class CoordinateTransforms {
-    constructor(props) {
+    constructor(offset) {
+        this.offset = offset
     }
 
-    static eventToDom(e) {
-        var rect = document.getElementById(e.target.id).getBoundingClientRect();
-        return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        };
+    canvasToCartesian(point) {
+        return CoordinateTransforms.canvasToCartesian(point, this.offset)
     }
 
-    static domToCartesian(point, offset) {
+    cartesianToCanvas(point) {
+        return CoordinateTransforms.cartesianToCanvas(point, this.offset)
+    }
+
+    cartesianToPolar(point) {
+        return CoordinateTransforms.cartesianToPolar(point)
+    }
+
+    polarToCartesian(point) {
+        return CoordinateTransforms.polarToCartesian(point)
+    }
+
+    static canvasToCartesian(point, offset) {
         return {
             x: point.x - offset.x,
             y: offset.y - point.y
         }
     }
 
-    static cartesianToDom(point, offset) {
+    static cartesianToCanvas(point, offset) {
         return {
             x: point.x + offset.x,
             y: offset.y - point.y
-        }
-    }
-
-    static polarToDom(point) {
-        return {
-            r: point.r,
-            theta: 2 * Math.PI - point.theta
         }
     }
 
@@ -47,5 +49,20 @@ export default class CoordinateTransforms {
             x: point.r * Math.cos(point.theta),
             y: point.r * Math.sin(point.theta)
         }
+    }
+
+    static polarToCanvas(point) {
+        return {
+            r: point.r,
+            theta: 2 * Math.PI - point.theta
+        }
+    }
+
+    static eventToCanvas(e) {
+        var rect = document.getElementById(e.target.id).getBoundingClientRect();
+        return {
+            x: e.clientX - rect.left,
+            y: e.clientY - rect.top
+        };
     }
 }
