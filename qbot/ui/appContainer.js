@@ -15,7 +15,7 @@ class AppContainer extends React.Component {
         return (
             <MuiThemeProvider>
                 <div style={{ position: 'relative' }}>
-                   <ControlGrid id='controlGrid' size='310'></ControlGrid>
+                    <ControlGrid id='controlGrid' size='310' onClick={console.log}></ControlGrid>
                 </div>
             </MuiThemeProvider>
         );

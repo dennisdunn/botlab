@@ -11920,7 +11920,7 @@ var AppContainer = function (_React$Component) {
                 _react2.default.createElement(
                     'div',
                     { style: { position: 'relative' } },
-                    _react2.default.createElement(_controlGrid2.default, { id: 'controlGrid', size: '310' })
+                    _react2.default.createElement(_controlGrid2.default, { id: 'controlGrid', size: '310', onClick: console.log })
                 )
             );
         }
@@ -12051,38 +12051,61 @@ var ControlGrid = function (_React$Component) {
             paths: []
         };
 
+        _this.clickHandler = _this.clickHandler.bind(_this);
+
         _this.coordService = new _coordinateTransforms2.default({ x: _this.props.size / 2, y: _this.props.size / 2 });
-        _this.halfGap = 0.100;
+        _this.halfGap = 0.070;
 
-        _this.state.paths.push(_this.arcPath(1.375, 1.625, 90, 150));
-        _this.state.paths.push(_this.arcPath(0.750, 1.375, 90, 150));
-        _this.state.paths.push(_this.arcPath(1.625, 0.250, 90, 150));
+        _this.state.paths.push(_this.arcPath(1.375, 1.625, 90, 150, { fillStyle: 'green' }, 'straight'));
+        _this.state.paths.push(_this.arcPath(0.750, 1.375, 90, 150, { fillStyle: 'lightgreen' }, 'left'));
+        _this.state.paths.push(_this.arcPath(1.625, 0.250, 90, 150, { fillStyle: 'lightgreen' }, 'right'));
 
-        _this.state.paths.push(_this.arcPath(0.625, 0.750, 90, 150));
-        _this.state.paths.push(_this.arcPath(0.500, 0.625, 90, 150));
-        _this.state.paths.push(_this.arcPath(0.375, 0.500, 90, 150));
-        _this.state.paths.push(_this.arcPath(0.250, 0.375, 90, 150));
+        _this.state.paths.push(_this.arcPath(0.625, 0.750, 90, 150, { fillStyle: 'blue' }, 'blue'));
+        _this.state.paths.push(_this.arcPath(0.500, 0.625, 90, 150, { fillStyle: 'green' }, 'green'));
+        _this.state.paths.push(_this.arcPath(0.375, 0.500, 90, 150, { fillStyle: 'orange' }, 'yellow'));
+        _this.state.paths.push(_this.arcPath(0.250, 0.375, 90, 150, { fillStyle: 'red' }, 'red'));
 
-        _this.state.paths.push(_this.semiPath(0.875, 0.125, 70));
-        _this.state.paths.push(_this.semiPath(0.125, 0.875, 70));
+        _this.state.paths.push(_this.semiPath(0.875, 0.125, 80, { fillStyle: 'lightblue' }, 'speed'));
+        _this.state.paths.push(_this.semiPath(0.125, 0.875, 80, { fillStyle: 'blue' }, 'stop'));
         return _this;
     }
 
     _createClass(ControlGrid, [{
+        key: 'clickHandler',
+        value: function clickHandler(e) {
+            var _this2 = this;
+
+            if (this.props.onClick) {
+                var ctx = document.getElementById(this.props.id).getContext('2d');
+                var point = { x: e.clientX, y: e.clientY };
+                this.state.paths.map(function (path) {
+                    if (ctx.isPointInPath(path, point.x, point.y)) {
+                        point = _this2.coordService.canvasToCartesian(point);
+                        point = _this2.coordService.cartesianToPolar(point);
+                        _this2.props.onClick({ coordinates: point, action: path.action });
+                    }
+                });
+            }
+        }
+    }, {
         key: 'drawGrid',
         value: function drawGrid() {
             var ctx = document.getElementById(this.props.id).getContext('2d');
             this.state.paths.forEach(function (path) {
-                path.options = { strokeStyle: 'black' };
-                Object.assign(ctx, path.options || {});
-                if (path.options.fillStyle) ctx.fill(path);
-                if (path.options.strokeStyle) ctx.stroke(path);
+                Object.assign(ctx, path.styles);
+                if (path.styles.fillStyle) ctx.fill(path);
+                if (path.styles.strokeStyle) ctx.stroke(path);
             });
         }
     }, {
         key: 'arcPath',
         value: function arcPath(start, end, innerRadius, outerRadius) {
+            var styles = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : { strokeStyle: 'black' };
+            var action = arguments[5];
+
             var path = new Path2D();
+            path.styles = styles;
+            path.action = action;
             var point = { r: outerRadius, theta: start * Math.PI + this.halfGap };
             path.arc(this.coordService.offset.x, this.coordService.offset.y, outerRadius, point.theta, end * Math.PI - this.halfGap);
             path.arc(this.coordService.offset.x, this.coordService.offset.y, innerRadius, end * Math.PI - this.halfGap, point.theta, true);
@@ -12096,8 +12119,10 @@ var ControlGrid = function (_React$Component) {
         }
     }, {
         key: 'semiPath',
-        value: function semiPath(start, end, radius) {
+        value: function semiPath(start, end, radius, styles, action) {
             var path = new Path2D();
+            path.styles = styles;
+            path.action = action;
             var point = { r: radius, theta: start * Math.PI + this.halfGap };
             path.arc(this.coordService.offset.x, this.coordService.offset.y, radius, point.theta, end * Math.PI - this.halfGap);
 
@@ -12121,7 +12146,8 @@ var ControlGrid = function (_React$Component) {
                 { style: { position: 'absolute' } },
                 _react2.default.createElement('canvas', { id: this.props.id,
                     width: this.props.size,
-                    height: this.props.size })
+                    height: this.props.size,
+                    onClick: this.clickHandler })
             );
         }
     }]);
