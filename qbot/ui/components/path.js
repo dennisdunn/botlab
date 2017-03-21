@@ -15,10 +15,9 @@ export default class Path extends React.Component {
     render() {
         const childProps = {
             path: this.state.path,
-            origin: this.props.origin
+            service: this.props.service
         }
         const children = React.Children.map(this.props.children, child => React.cloneElement(child, childProps))
-
         return <div>{children}</div>
     }
 }

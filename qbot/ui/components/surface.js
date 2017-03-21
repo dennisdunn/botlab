@@ -1,10 +1,6 @@
 import React from 'react'
+import CoordinateTransforms from '../lib/coordinateTransforms'
 
-/**
- * A control surface reports on mouse actions in
- * pre-defined "hot zones." Hot zones are closed
- * paths on the control surface.
- */
 export default class Surface extends React.Component {
     constructor(props) {
         super(props)
@@ -12,8 +8,9 @@ export default class Surface extends React.Component {
         this.state = {
             paths: [],
             graphicsContext: null,
-            origin: this.props.origin || { x: this.props.width / 2, y: this.props.height / 2 }
+            offset: { x: this.props.width / 2, y: this.props.height / 2 }
         }
+        this.state.service = new CoordinateTransforms(this.state.offset)
 
         this.register = this.register.bind(this)
         this.refCallback = this.refCallback.bind(this)
@@ -21,10 +18,10 @@ export default class Surface extends React.Component {
     }
 
     componentDidUpdate() {
-        this.state.paths.forEach(path => {
-            Object.assign(this.state.graphicsContext, path.props)
-            if (path.props.strokeStyle) this.state.graphicsContext.stroke(path.state.path)
-            if (path.props.fillStyle) this.state.graphicsContext.fill(path.state.path)
+        this.state.paths.forEach(path => {console.log(path)
+            Object.assign(this.state.graphicsContext, path.styles)
+            if (path.styles.strokeStyle) this.state.graphicsContext.stroke(path.state.path)
+            if (path.styles.fillStyle) this.state.graphicsContext.fill(path.state.path)
         })
     }
 
@@ -41,22 +38,24 @@ export default class Surface extends React.Component {
         e.persist()
         this.state.paths.forEach(path => {
             if (path.props.onClick && this.state.graphicsContext.isPointInPath(path.state.path, e.clientX, e.clientY)) {
-                path.props.onClick(e)
+                let point = this.state.service.canvasToCartesian({ x: e.clientX, y: e.clientY })
+                point = this.state.service.cartesianToPolar(point)
+                path.props.onClick({ coordinates: point, action: path.props.action })
             }
         })
     }
 
     render() {
         const graphicsProps = {
-            origin: this.state.origin,
-            register: this.register
+            register: this.register,
+            service: this.state.service
         }
         const children = React.Children.map(this.props.children, child => React.cloneElement(child, graphicsProps))
         return (
             <div style={{ position: 'absolute' }}>
                 <canvas id={this.props.id}
-                    width={this.props.width || 300}
-                    height={this.props.height || 150}
+                    width={this.props.width}
+                    height={this.props.height}
                     onClick={this.clickHandler}
                     ref={this.refCallback}>
                 </canvas>

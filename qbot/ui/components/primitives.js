@@ -1,5 +1,4 @@
 import React from 'react'
-import CoordinateTransforms from '../coordinateTransforms'
 
 class GraphicsComponent extends React.Component {
     constructor(props) {
@@ -8,13 +7,6 @@ class GraphicsComponent extends React.Component {
 
     componentDidMount() {
         if (this.props.path) this.addToPath()
-    }
-
-    coordinatesToDom(coordinates) {
-        const point = coordinates.r && coordinates.theta
-            ? CoordinateTransforms.polarToCartesian(coordinates, this.props.origin)
-            : coordinates
-        return CoordinateTransforms.cartesianToDom(point, this.props.origin)
     }
 
     render() {
