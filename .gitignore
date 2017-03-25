@@ -33,4 +33,4 @@ bower_components/
 dist/
 
 **/bundle.js
-
+qbot/api/public/js/bundle.js
