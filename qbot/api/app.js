@@ -4,6 +4,7 @@ let Gpio = require('pigpio').Gpio;
 let express = require('express');
 let path = require('path');
 let bodyParser = require('body-parser');
+let cors = require('cors')
 
 let gpioService = require('../lib/gpioservice')(Gpio);
 let ledHandler = require('../lib/ledhandler')(gpioService);
@@ -14,6 +15,7 @@ api.registerHandler('led', ledHandler);
 api.registerHandler('motor', motorhandler);
 
 let app = express();
+app.use(cors)
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
