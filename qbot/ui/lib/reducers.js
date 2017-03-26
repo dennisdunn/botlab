@@ -38,24 +38,23 @@ const INITIAL_POWER_STATE = {
 }
 
 function powerReducer(state = INITIAL_POWER_STATE, action) {
-  let newState = Object.assign({}, state)
+  let update = {}
   switch (action.type) {
     case Actions.SET_POWER:
-      newState.current = action.payload
-      break;
+      update.current = action.value
+      return Object.assign({}, state, update)
     case Actions.SET_POWER_OFF:
-      newState.current = 0
-      break;
+      update.current = 0
+      return Object.assign({}, state, update)
     case Actions.SET_TURN_OFF:
-      newState.turn = 0
-      break;
+      update.turn = 0
+      return Object.assign({}, state, update)
     case Actions.SET_TURN:
-      newState.turn = action.payload
-      break;
+      update.turn = action.value
+      return Object.assign({}, state, update)
     default:
-      newState = state;
+      return state
   }
-  return newState
 }
 
 const rootReducer = combineReducers({ loggingReducer, switchReducer, powerReducer })
