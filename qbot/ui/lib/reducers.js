@@ -14,15 +14,20 @@ const INITIAL_SWITCH_STATE = {
 }
 
 function switchReducer(state = INITIAL_SWITCH_STATE, action) {
-  let newState = Object.assign({}, state)
+  let update = {}
   switch (action.type) {
     case Actions.TOGGLE_SWITCH:
-      newState[action.payload] = !newState[action.payload]
-      break;
+      update[action.key] = !state[action.key]
+      return Object.assign({}, state, update)
+    case Actions.SWITCH_ON:
+      update[action.key] = true
+      return Object.assign({}, state, update)
+    case Actions.SWITCH_OFF:
+      update[action.key] = false
+      return Object.assign({}, state, update)
     default:
-      newState = state;
+      return state
   }
-  return newState
 }
 
 const INITIAL_POWER_STATE = {
@@ -53,5 +58,5 @@ function powerReducer(state = INITIAL_POWER_STATE, action) {
   return newState
 }
 
-const botApp = combineReducers({ loggingReducer, switchReducer, powerReducer })
-export default botApp
+const rootReducer = combineReducers({ loggingReducer, switchReducer, powerReducer })
+export default rootReducer

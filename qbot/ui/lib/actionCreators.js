@@ -1,32 +1,43 @@
 import * as Actions from './actions'
 
+/**
+ * Actions need a target (led, motor), key (red, blue, A, etc),
+ * and value (on, off, 150, etc)
+ */
 let factory = {}
 
 factory[Actions.SWITCH_ON] = (eventArgs) => {
     return {
         type: Actions.SWITCH_ON,
-        payload: eventArgs.payload
+        target: 'led',
+        key: eventArgs.payload
     }
 }
 
 factory[Actions.SWITCH_OFF] = (eventArgs) => {
     return {
         type: Actions.SWITCH_OFF,
-        payload: eventArgs.payload
+        target: 'led',
+        key: eventArgs.payload
     }
 }
 
 factory[Actions.TOGGLE_SWITCH] = (eventArgs) => {
-    return {
-        type: Actions.TOGGLE_SWITCH,
-        payload: eventArgs.payload
+    return (dispatch, getstate) => {
+        let current = getstate()['switchReducer'][eventArgs.payload]
+        dispatch({
+            type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
+            target: 'led',
+            key: eventArgs.payload
+        })
     }
 }
 
 factory[Actions.GET_SWITCH] = (eventArgs) => {
     return {
         type: Actions.GET_SWITCH,
-        payload: eventArgs.payload
+        target: 'led',
+        key: eventArgs.payload
     }
 }
 
