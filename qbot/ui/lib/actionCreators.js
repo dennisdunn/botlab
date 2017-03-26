@@ -66,7 +66,7 @@ factory[Actions.SET_POWER] = (eventArgs) => {
             type: Actions.SET_POWER,
             value: current
         }
-        send(dispatchEvent, urlMotor, payload, action)
+        send(dispatch, urlMotor, payload, action)
     }
 }
 
@@ -79,7 +79,7 @@ factory[Actions.SET_POWER_OFF] = (eventArgs) => {
             type: Actions.SET_POWER,
             value: 0
         }
-        send(dispatchEvent, urlMotor, payload, action)
+        send(dispatch, urlMotor, payload, action)
     }
 }
 
@@ -93,7 +93,7 @@ factory[Actions.SET_TURN] = (eventArgs) => {
             type: Actions.SET_POWER,
             value: current
         }
-        send(dispatchEvent, urlMotor, payload, action)
+        send(dispatch, urlMotor, payload, action)
     }
 }
 
@@ -107,7 +107,7 @@ factory[Actions.SET_TURN_OFF] = (eventArgs) => {
             type: Actions.SET_POWER,
             value: current
         }
-        send(dispatchEvent, urlMotor, payload, action)
+        send(dispatch, urlMotor, payload, action)
     }
 }
 
