@@ -31,7 +31,7 @@ function switchReducer(state = INITIAL_SWITCH_STATE, action) {
 }
 
 const INITIAL_POWER_STATE = {
-  min: 100,
+  min: 150,
   max: 250,
   current: 0,
   turn: 0

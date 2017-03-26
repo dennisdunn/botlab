@@ -6,7 +6,8 @@ require('isomorphic-fetch')
  * and value (on, off, 150, etc)
  */
 let factory = {}
-const urlBase = 'http://192.168.0.13:8080/api/v1/'
+const urlSwitch = 'http://192.168.0.13:8080/api/v1/led/'
+const urlMotor = 'http://192.168.0.13:8080/api/v1/motor/'
 
 factory[Actions.SWITCH_ON] = (eventArgs) => {
     return {
@@ -27,24 +28,15 @@ factory[Actions.SWITCH_OFF] = (eventArgs) => {
 factory[Actions.TOGGLE_SWITCH] = (eventArgs) => {
     return (dispatch, getstate) => {
         let current = getstate()['switchReducer'][eventArgs.payload]
-        fetch(urlBase + 'led/' + eventArgs.payload, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                value: current ? 'off' : 'on'
-            })
-        })
-            .then(checkStatus)
-            .then(parseJSON)
-            .then(data => {
-                dispatch({
-                    type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
-                    target: 'led',
-                    key: eventArgs.payload
-                })
-            })
+        let payload = {
+            value: current ? 'off' : 'on'
+        }
+        let action = {
+            type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
+            target: 'led',
+            key: eventArgs.payload
+        }
+        send(dispatch, urlSwitch + eventArgs.payload, payload, action)
     }
 }
 
@@ -57,31 +49,81 @@ factory[Actions.GET_SWITCH] = (eventArgs) => {
 }
 
 factory[Actions.SET_POWER] = (eventArgs) => {
-    return {
-        type: Actions.SET_POWER,
-        payload: eventArgs.coordinates
+    return (dispatch, getstate) => {
+        let state = getstate()['powerReducer']
+        const delta = (state.max - state.min) / 10
+        let current = state.current
+        if (eventArgs.coordinates.theta > 0.5 * Math.PI) {
+            current += delta
+        } else {
+            state.current -= delta
+        }
+        current = Math.clip(current, state.min, state.max)
+        let payload = {
+            value: current
+        }
+        let action = {
+            type: Actions.SET_POWER,
+            value: current
+        }
+        send(dispatchEvent, urlMotor, payload, action)
     }
 }
 
 factory[Actions.SET_POWER_OFF] = (eventArgs) => {
-    return {
-        type: Actions.SET_POWER_OFF,
-        payload: null
+    return (dispatch, getstate) => {
+        let payload = {
+            value: 0
+        }
+        let action = {
+            type: Actions.SET_POWER,
+            value: 0
+        }
+        send(dispatchEvent, urlMotor, payload, action)
     }
 }
 
 factory[Actions.SET_TURN] = (eventArgs) => {
-    return {
-        type: Actions.SET_TURN,
-        payload: eventArgs.coordinates
+    return (dispatch, getstate) => {
+        let current = getstate()['powerReducer']['current']
+        let payload = {
+            value: current
+        }
+        let action = {
+            type: Actions.SET_POWER,
+            value: current
+        }
+        send(dispatchEvent, urlMotor, payload, action)
     }
 }
 
 factory[Actions.SET_TURN_OFF] = (eventArgs) => {
-    return {
-        type: Actions.SET_TURN_OFF,
-        payload: null
+    return (dispatch, getstate) => {
+        let current = getstate()['powerReducer']['current']
+        let payload = {
+            value: current
+        }
+        let action = {
+            type: Actions.SET_POWER,
+            value: current
+        }
+        send(dispatchEvent, urlMotor, payload, action)
     }
+}
+
+function send(dispatch, endpoint, payload, action) {
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(data => {
+            dispatch(Object.assign(action, data))
+        })
 }
 
 function checkStatus(response) {
@@ -96,6 +138,10 @@ function checkStatus(response) {
 
 function parseJSON(response) {
     return response.json()
+}
+
+Math.clip = function (number, min, max) {
+    return Math.max(min, Math.min(number, max));
 }
 
 export default factory
