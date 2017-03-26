@@ -33,18 +33,18 @@ factory[Actions.TOGGLE_SWITCH] = (eventArgs) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-                value: !current
+                value: current ? 'off' : 'on'
             })
         })
-        .then(checkStatus)
-        .then(parseJSON)
-        .then(data => {
-            dispatch({
-                type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
-                target: 'led',
-                key: eventArgs.payload
+            .then(checkStatus)
+            .then(parseJSON)
+            .then(data => {
+                dispatch({
+                    type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
+                    target: 'led',
+                    key: eventArgs.payload
+                })
             })
-        })
     }
 }
 
@@ -84,7 +84,7 @@ factory[Actions.SET_TURN_OFF] = (eventArgs) => {
     }
 }
 
-function checkStatus(response)  {
+function checkStatus(response) {
     if (response.status >= 200 && response.status < 300) {
         return response
     } else {
@@ -95,7 +95,7 @@ function checkStatus(response)  {
 }
 
 function parseJSON(response) {
-  return response.json()
+    return response.json()
 }
 
 export default factory

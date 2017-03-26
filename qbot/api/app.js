@@ -15,7 +15,7 @@ api.registerHandler('led', ledHandler);
 api.registerHandler('motor', motorhandler);
 
 let app = express();
-app.use(cors)
+app.use(cors())
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 

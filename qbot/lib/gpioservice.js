@@ -16,6 +16,7 @@ module.exports = (gpio => {
                 case 'on':
                 case 'yes':
                 case 'ok':
+                case true:
                     value = 1;
                     break;
                 default:
