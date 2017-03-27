@@ -27,12 +27,12 @@ factory[Actions.SWITCH_OFF] = (eventArgs) => {
 
 factory[Actions.TOGGLE_SWITCH] = (eventArgs) => {
     return (dispatch, getstate) => {
-        let current = getstate()['switchReducer'][eventArgs.payload]
+        let speed = getstate()['switchReducer'][eventArgs.payload]
         let payload = {
-            value: current ? 'off' : 'on'
+            value: speed ? 'off' : 'on'
         }
         let action = {
-            type: current ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
+            type: speed ? Actions.SWITCH_OFF : Actions.SWITCH_ON,
             target: 'led',
             key: eventArgs.payload
         }
@@ -48,23 +48,22 @@ factory[Actions.GET_SWITCH] = (eventArgs) => {
     }
 }
 
-factory[Actions.SET_POWER] = (eventArgs) => {
+factory[Actions.ADJUST_SPEED] = (eventArgs) => {
     return (dispatch, getstate) => {
-        let state = getstate()['powerReducer']
-        const delta = (state.max - state.min) / 10
-        let current = state.current
+        let speed = getstate()['powerReducer']['speed']
         if (eventArgs.coordinates.theta > 0.5 * Math.PI) {
-            current += delta
+            speed += 10
         } else {
-            state.current -= delta
+            speed -= 10
         }
-        current = Math.clip(current, state.min, state.max)
+        speed = Math.max(Math.min(100, speed), 0)
+        let power = speed <= 0 ? 0 : speed + 150
         let payload = {
-            value: current
+            value: power
         }
         let action = {
             type: Actions.SET_POWER,
-            value: current
+            value: speed
         }
         send(dispatch, urlMotor, payload, action)
     }
@@ -85,13 +84,13 @@ factory[Actions.SET_POWER_OFF] = (eventArgs) => {
 
 factory[Actions.SET_TURN] = (eventArgs) => {
     return (dispatch, getstate) => {
-        let current = getstate()['powerReducer']['current']
+        let speed = getstate()['powerReducer']['speed']
         let payload = {
-            value: current
+            value: speed
         }
         let action = {
             type: Actions.SET_POWER,
-            value: current
+            value: speed
         }
         send(dispatch, urlMotor, payload, action)
     }
@@ -99,13 +98,13 @@ factory[Actions.SET_TURN] = (eventArgs) => {
 
 factory[Actions.SET_TURN_OFF] = (eventArgs) => {
     return (dispatch, getstate) => {
-        let current = getstate()['powerReducer']['current']
+        let speed = getstate()['powerReducer']['speed']
         let payload = {
-            value: current
+            value: speed
         }
         let action = {
             type: Actions.SET_POWER,
-            value: current
+            value: speed
         }
         send(dispatch, urlMotor, payload, action)
     }
@@ -138,10 +137,6 @@ function checkStatus(response) {
 
 function parseJSON(response) {
     return response.json()
-}
-
-Math.clip = function (number, min, max) {
-    return Math.max(min, Math.min(number, max));
 }
 
 export default factory

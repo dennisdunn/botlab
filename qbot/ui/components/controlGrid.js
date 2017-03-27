@@ -25,7 +25,7 @@ export default class ControlGrid extends React.Component {
         this.state.paths.push([this.arcPath(0.375, 0.500, 90, 150), { fillStyle: 'orange' }, 'yellow', Actions.TOGGLE_SWITCH])
         this.state.paths.push([this.arcPath(0.250, 0.375, 90, 150), { fillStyle: 'red' }, 'red', Actions.TOGGLE_SWITCH])
 
-        this.state.paths.push([this.semiPath(0.875, 0.125, 80), { fillStyle: 'lightblue' }, null, Actions.SET_POWER])
+        this.state.paths.push([this.semiPath(0.875, 0.125, 80), { fillStyle: 'lightblue' }, null, Actions.ADJUST_SPEED])
         this.state.paths.push([this.semiPath(0.125, 0.875, 80), { fillStyle: 'blue' }, null, Actions.SET_POWER_OFF])
     }
 

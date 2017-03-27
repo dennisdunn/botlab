@@ -31,20 +31,19 @@ function switchReducer(state = INITIAL_SWITCH_STATE, action) {
 }
 
 const INITIAL_POWER_STATE = {
-  min: 150,
-  max: 250,
-  current: 0,
+  speed: 0,
   turn: 0
 }
 
 function powerReducer(state = INITIAL_POWER_STATE, action) {
   let update = {}
+  console.log(state)
   switch (action.type) {
     case Actions.SET_POWER:
-      update.current = action.value
+      update.speed = action.value
       return Object.assign({}, state, update)
     case Actions.SET_POWER_OFF:
-      update.current = 0
+      update.speed = 0
       return Object.assign({}, state, update)
     case Actions.SET_TURN_OFF:
       update.turn = 0

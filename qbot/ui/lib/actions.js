@@ -1,6 +1,7 @@
 export const SET_POWER = 'SET_POWER'
 export const GET_POWER = 'GET_POWER'
 export const SET_POWER_OFF = 'SET_POWER_OFF'
+export const ADJUST_SPEED = 'ADJUST_SPEED'
 
 export const SET_TURN = 'SET_TURN'
 export const SET_TURN_OFF = 'SET_TURN_OFF'

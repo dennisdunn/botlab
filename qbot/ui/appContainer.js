@@ -5,8 +5,6 @@ import ControlGrid from './components/controlGrid'
 import ActionFactory from './lib/actionCreators'
 import * as Actions from './lib/actions'
 
-const url = 'http://'
-
 class AppContainer extends React.Component {
 
     constructor(props) {
