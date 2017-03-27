@@ -5,6 +5,8 @@ export const ADJUST_SPEED = 'ADJUST_SPEED'
 
 export const SET_TURN = 'SET_TURN'
 export const SET_TURN_OFF = 'SET_TURN_OFF'
+export const TURN_LEFT = 'TURN_LEFT'
+export const TURN_RIGHT = 'TURN_RIGHT'
 
 export const SWITCH_ON = 'SWITCH_ON'
 export const SWITCH_OFF = 'SWITCH_OFF'

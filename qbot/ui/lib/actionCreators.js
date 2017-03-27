@@ -82,6 +82,35 @@ factory[Actions.SET_POWER_OFF] = (eventArgs) => {
     }
 }
 
+factory[Actions.TURN_LEFT] = (eventArgs) => {
+        let speed = getstate()['powerReducer']['speed']
+    return (dispatch, getstate) => {
+        let payload = {
+            value: speed - 10 + 150,
+            key:'A'
+        }
+        let action = {
+            type: Actions.SET_TURN,
+            value: 10
+        }
+        send(dispatch, urlMotor, payload, action)
+    }
+}
+
+factory[Actions.TURN_RIGHT] = (eventArgs) => {
+    return (dispatch, getstate) => {
+        let payload = {
+            value: 0,
+            key:'B'
+        }
+        let action = {
+            type: Actions.SET_POWER,
+            value: 10
+        }
+        send(dispatch, urlMotor, payload, action)
+    }
+}
+
 factory[Actions.SET_TURN] = (eventArgs) => {
     return (dispatch, getstate) => {
         let speed = getstate()['powerReducer']['speed']
@@ -99,8 +128,9 @@ factory[Actions.SET_TURN] = (eventArgs) => {
 factory[Actions.SET_TURN_OFF] = (eventArgs) => {
     return (dispatch, getstate) => {
         let speed = getstate()['powerReducer']['speed']
+        let power = speed <= 0 ? 0 : speed + 150
         let payload = {
-            value: speed
+            value: power 
         }
         let action = {
             type: Actions.SET_POWER,
