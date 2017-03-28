@@ -17,13 +17,13 @@ export default class ControlGrid extends React.Component {
         this.halfGap = 0.070
 
         this.state.paths.push([this.arcPath(1.375, 1.625, 90, 150), { fillStyle: 'green' }, null, Actions.SET_TURN_OFF])
-        this.state.paths.push([this.arcPath(0.750, 1.375, 90, 150), { fillStyle: 'lightgreen' }, null, Actions.SET_TURN])
-        this.state.paths.push([this.arcPath(1.625, 0.250, 90, 150), { fillStyle: 'lightgreen' }, null, Actions.SET_TURN])
+        this.state.paths.push([this.arcPath(0.750, 1.375, 90, 150), { fillStyle: 'lightgreen' }, 'left', Actions.ADJUST_TURN])
+        this.state.paths.push([this.arcPath(1.625, 0.250, 90, 150), { fillStyle: 'lightgreen' }, 'right', Actions.ADJUST_TURN])
 
         this.state.paths.push([this.arcPath(0.625, 0.750, 90, 150), { fillStyle: 'blue' }, 'blue', Actions.TOGGLE_SWITCH])
-        this.state.paths.push([this.arcPath(0.500, 0.625, 90, 150), { fillStyle: 'green' }, 'green', Actions.TOGGLE_SWITCH])
-        this.state.paths.push([this.arcPath(0.375, 0.500, 90, 150), { fillStyle: 'orange' }, 'yellow', Actions.TOGGLE_SWITCH])
-        this.state.paths.push([this.arcPath(0.250, 0.375, 90, 150), { fillStyle: 'red' }, 'red', Actions.TOGGLE_SWITCH])
+        this.state.paths.push([this.arcPath(0.500, 0.625, 90, 150), { fillStyle: 'orange' }, 'yellow', Actions.TOGGLE_SWITCH])
+        this.state.paths.push([this.arcPath(0.375, 0.500, 90, 150), { fillStyle: 'red' }, 'red', Actions.TOGGLE_SWITCH])
+        this.state.paths.push([this.arcPath(0.250, 0.375, 90, 150), { fillStyle: 'green' }, 'green', Actions.TOGGLE_SWITCH])
 
         this.state.paths.push([this.semiPath(0.875, 0.125, 80), { fillStyle: 'lightblue' }, null, Actions.ADJUST_SPEED])
         this.state.paths.push([this.semiPath(0.125, 0.875, 80), { fillStyle: 'blue' }, null, Actions.SET_POWER_OFF])
