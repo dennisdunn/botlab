@@ -121,9 +121,6 @@ factory[Actions.SET_TURN_OFF] = (eventArgs) => {
 }
 
 function send(dispatch, endpoint, payload, action) {
-    console.log(payload)
-    console.log(action)
-
     fetch(endpoint, {
         method: 'POST',
         headers: {
