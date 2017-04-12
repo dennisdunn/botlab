@@ -10,17 +10,18 @@ import React from 'react'
 export default class Shape extends React.Component {
     constructor(props) {
         super(props)
-        this.state = {
-            path: new Path2D()
-        }
+        this.getPath = this.getPath.bind(this)
+        console.log(this.props.children)
     }
 
-    componentDidMount() {
-        React.Children.map(this.props.children, child => {
-            child.props.service = null
-            child.props.path = this.state.path
-            child.addToPath(this.state.path)
+    getPath(translate) {
+        const path = new Path2D()
+        React.Children.forEach(this.props.children, child => {
+            let subPath = child.type.prototype.getPath(translate)
+            path.addPath(subPath)
         })
+        path.closePath()
+        return path
     }
 
     render() {

@@ -15,13 +15,16 @@ import React from 'react'
 export default class Arc extends React.Component {
     constructor(props) {
         super(props)
+        this.getPath = this.getPath.bind(this)
     }
 
-    componentWillMount() {
-        let o = this.props.service.offset
-        let s = this.props.service.polarToCanvaspolar(this.props.start)
-        let e = this.props.service.polarToCanvaspolar(this.props.end)
-        this.props.path.arc(o.x, o.y, s.theta, e.theta, s.r)
+    getPath(translate) {
+        const path = new Path2D()
+        let o = translate.offset
+        let s = translate.polarToCanvaspolar(this.props.start)
+        let e = translate.polarToCanvaspolar(this.props.end)
+        path.arc(o.x, o.y, s.theta, e.theta, s.r)
+        return path
     }
 
     render() {
