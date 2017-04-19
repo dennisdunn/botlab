@@ -50,10 +50,13 @@ function powerReducer(state = INITIAL_POWER_STATE, action) {
     case Actions.SET_TURN_OFF:
       update.turn = 0
       return Object.assign({}, state, update)
+    case Actions.ADJUST_DIRECTION:
+      update.direction = state.direction == 'forward' ? 'backward' : 'forward'
+      return Object.assign({}, state, update)
     default:
       return state
   }
 }
 
-const rootReducer = combineReducers({  switchReducer, powerReducer })
+const rootReducer = combineReducers({ switchReducer, powerReducer })
 export default rootReducer

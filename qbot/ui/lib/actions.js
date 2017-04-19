@@ -2,6 +2,7 @@ export const GET_POWER = 'GET_POWER'
 export const SET_POWER = 'SET_POWER'
 export const SET_POWER_OFF = 'SET_POWER_OFF'
 export const ADJUST_SPEED = 'ADJUST_SPEED'
+export const ADJUST_DIRECTION = 'ADJUST_DIRECTION'
 
 export const GET_TURN = 'GET_TURN'
 export const SET_TURN = 'SET_TURN'
