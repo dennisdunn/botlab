@@ -6,7 +6,7 @@ class Motor:
     def __init__(self):
         self.speed = 0
         self.min = 50
-        self.max = 50
+        self.max = 100
         self.direction = 1
 
     def forward(self,speed):
