@@ -4,61 +4,10 @@
 <head>
 	<title>Robot Controller 0.1.0</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="lib/css/jquery.mobile-1.4.5.min.css">
-	<link rel="stylesheet" type="text/css" href="css/gui.css">
-	<script type="text/javascript" src="/libjs/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="lib/js/jquery.mobile-1.4.5.min.js"></script>
-	<script type="text/javascript" src="js/gui.js"></script>
 </head>
 
 <body>
-	<div data-role="page">
-
-		<div data-role="header">
-			<h1>Robot Controller 0.1.0</h1>
-		</div>
-		<!-- /header -->
-
-		<div role="main" class="ui-content">
-			<h3 class="ui-bar ui-bar-a ui-corner-all">Options</h3>
-
-			<div class="ui-body">
-				<form>
-					<input type="checkbox" class="led" data-led="blue" data-role="flipswitch" name="flip-checkbox-0" id="flip-checkbox-0">
-					<input type="checkbox" class="led" data-led="yellow" data-role="flipswitch" name="flip-checkbox-1" id="flip-checkbox-1">
-					<input type="checkbox" class="led" data-led="red" data-role="flipswitch" name="flip-checkbox-2" id="flip-checkbox-2">
-					<input type="checkbox" class="led" data-led="green" data-role="flipswitch" name="flip-checkbox-3" id="flip-checkbox-3">
-					<div data-role="fieldcontain">
-						<label for="minPower">Min Power</label>
-						<input type="number" id="minPower" max="255" value="100">
-					</div>
-					<div data-role="fieldcontain">
-						<label for="maxPower">Max Power</label>
-						<input type="number" id="maxPower" max="255" value="150">
-					</div>
-				</form>
-			</div>
-
-			<h3 class="ui-bar ui-bar-a ui-corner-all">Navigation</h3>
-
-			<div class="ui-body">
-				<form>
-					<a data-role="button" data-inline="true" data-icon="delete" data-mini="true" id="reset-speed">Stop</a>
-					<a data-role="button" data-inline="true" data-icon="refresh" data-mini="true" id="reset-turn-rate">Reset</a>
-					<div class="ui-field-contain">
-						<label for="slider-1">Power</label>
-						<input type="range" name="slider-1" id="power-slider" min="0" max="255" value="0" step="1">
-					</div>
-					<div class="ui-field-contain">
-						<label for="slider-1">Turn Rate</label>
-						<input type="range" name="slider-2" id="turn-rate-slider" min="-255" max="255" value="0" step="1">
-					</div>
-				</form>
-			</div>
-		</div>
-		<!-- /content -->
-	</div>
-	<!-- /page -->
+<div id="root"></div>
 </body>
 
 </html>
