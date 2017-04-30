@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AppContainer from './components/appContainer';
+import NavControl from './components/nav';
+import PowerControl from './components/power';
 import rootReducer from './lib/reducers';
 import { Provider } from 'react-redux';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -13,7 +14,10 @@ injectTapEventPlugin();
 
 ReactDOM.render(
   <Provider store={store}>
-    <AppContainer></AppContainer>
+    <div>
+      <NavControl></NavControl>
+      <PowerControl></PowerControl>
+    </div>
   </Provider>,
   document.getElementById('root')
 );
