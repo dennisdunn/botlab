@@ -10,9 +10,11 @@ class Motor:
         self.direction = 1 # 1 = forward, -1 = backwards
 
     def forward(self,speed=0):
+        print speed
         self.direction = 1
         self.speed = speed
         self.setPower()
+        print "exit motor.forward"
 
     def backward(self, speed=0):
         self.direction = -1

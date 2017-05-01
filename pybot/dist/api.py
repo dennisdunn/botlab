@@ -1,14 +1,15 @@
 from flask import Flask, request, redirect
-import Motor
+from Motor import Motor
+import json
 
 app = Flask(__name__)
-motor = Motor.Motor()
+motor = Motor()
 
-@app.route("/")
+@app.route("/", methods=['GET'])
 def index():
     return redirect("/static/index.html", code=302)
 
-@app.route("/api/v1/nav/<cmd>")
+@app.route("/api/v1/nav/<cmd>", methods=['POST'])
 def turn(cmd):
     if cmd == "left":
         motor.left(request.values["timeout"])
@@ -18,14 +19,17 @@ def turn(cmd):
         motor.straight()
     return cmd
 
-@app.route("/api/v1/motor/<cmd>")
+@app.route("/api/v1/motor/<cmd>", methods=['POST'])
 def motors(cmd):
+    print request.data
     if cmd == "forward":
-        motor.forward(request.values["speed"])
+        print "enter forward"
+        motor.forward(request.data["speed"])
+        print "exit forward"
     elif cmd == "reverse":
-        motor.reverse(request.values["speed"])
+        motor.reverse(request.data["speed"])
     elif cmd == "throttle":
-        motor.throttle(request.values["speed"])
+        motor.throttle(request.data["speed"])
     elif cmd == "stop":
         motor.stop()
     return cmd
