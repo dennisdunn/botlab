@@ -121,7 +121,6 @@ const motorUrl = 'http://192.168.0.13:8080/api/v1/motor/'
 
 factory[Actions.FORWARD] = (speed) => {
     return (dispatch, getstate) => {
-
         let action = {
             type: Action.FORWARD,
             payload: { speed: speed }
@@ -132,7 +131,6 @@ factory[Actions.FORWARD] = (speed) => {
 
 factory[Actions.REVERSE] = (speed) => {
     return (dispatch, getstate) => {
-
         let action = {
             type: Action.REVERSE,
             payload: { speed: speed }
@@ -143,7 +141,6 @@ factory[Actions.REVERSE] = (speed) => {
 
 factory[Actions.THROTTLE] = (speed) => {
     return (dispatch, getstate) => {
-
         let action = {
             type: Action.THROTTLE,
             payload: { speed: speed }
