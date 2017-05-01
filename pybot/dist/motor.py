@@ -9,7 +9,7 @@ class Motor:
         self.max = 100
         self.direction = 1 # 1 = forward, -1 = backwards
 
-    def forward(self,speed=0):
+    def forward(self, speed=0):
         self.direction = 1
         self.speed = speed
         self.setPower()
@@ -29,7 +29,7 @@ class Motor:
 
     def left(self, timeout=0):
         explorerhat.motor[1].speed(0)
-        time.sleep(seconds)
+        time.sleep(timeout)
         self.setPower()
 
     def right(self, timeout=0):
