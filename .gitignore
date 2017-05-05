@@ -20,20 +20,19 @@ tags
 !.vscode/launch.json
 
 # NQC
-.bak
-.sym
-.rcx
+*.bak
+*.sym
+*.rcx
 
 # Python
-.pyc
+*.pyc
 
 # node
 node_modules/
 bower_components/
 dist/
+__pycache__/
 
 !pybot/dist
-
-bundle.js
 
 .log
