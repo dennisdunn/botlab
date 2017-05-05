@@ -6,6 +6,7 @@ from motor import Motor
 app = Flask(__name__)
 motorCtl = Motor()
 
+
 @app.route("/", methods=['GET'])
 def index():
     return redirect("/static/index.html", code=302)

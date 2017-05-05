@@ -15,6 +15,9 @@ class PowerControl extends React.Component {
     }
 
     onForwardClicked() {
+        console.log(Actions.FORWARD)
+        console.log(ActionFactory)
+        console.log(ActionFactory[Actions.FORWARD])
         ActionFactory[Actions.FORWARD](50)
     }
 
