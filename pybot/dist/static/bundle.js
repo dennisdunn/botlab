@@ -3472,15 +3472,17 @@ module.exports = ReactInstanceMap;
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
-var FORWARD = exports.FORWARD = 'forward';
-var REVERSE = exports.REVERSE = 'reverse';
-var THROTTLE = exports.THROTTLE = 'throttle';
-var STOP = exports.STOP = 'stop';
-var LEFT = exports.LEFT = 'left';
-var RIGHT = exports.RIGHT = 'right';
-var STRAIGHT = exports.STRAIGHT = 'straight';
+exports.default = {
+    FORWARD: 'forward',
+    REVERSE: 'reverse',
+    THROTTLE: 'throttle',
+    STOP: 'stop',
+    LEFT: 'left',
+    RIGHT: 'right',
+    STRAIGHT: 'straight'
+};
 
 /***/ }),
 /* 27 */
