@@ -4,6 +4,16 @@ export default class CoordinateTransforms {
         this.offset = offset
     }
 
+    /**
+     * Convert a poloar coordinate to
+     * canvas coordinates.
+     */
+    toCanvas(point) {
+        if (point.unit === 'd') point.theta = CoordinateTransforms.toRadian(point.theta)
+        var p = this.polarToCartesian(point)
+        return this.cartesianToCanvas(p)
+    }
+
     canvasToCartesian(point) {
         return CoordinateTransforms.canvasToCartesian(point, this.offset)
     }
@@ -20,12 +30,12 @@ export default class CoordinateTransforms {
         return CoordinateTransforms.polarToCartesian(point)
     }
 
-    polarToCanvaspolar(point) {
-        return CoordinateTransforms.polarToCanvas(point)
+    static toDegrees(radian) {
+        return radian * 57.2958
     }
 
-    canvaspolarToPolar(point) {
-        return CoordinateTransforms.polarToCanvas(point)
+    static toRadian(degree) {
+        return degree / 57.2958
     }
 
     static canvasToCartesian(point, offset) {
@@ -56,20 +66,5 @@ export default class CoordinateTransforms {
             x: point.r * Math.cos(point.theta),
             y: point.r * Math.sin(point.theta)
         }
-    }
-
-    static polarToCanvas(point) {
-        return {
-            r: point.r,
-            theta: 2 * Math.PI - point.theta
-        }
-    }
-
-    static eventToCanvas(e) {
-        var rect = document.getElementById(e.target.id).getBoundingClientRect();
-        return {
-            x: e.clientX - rect.left,
-            y: e.clientY - rect.top
-        };
     }
 }

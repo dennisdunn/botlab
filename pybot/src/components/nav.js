@@ -1,5 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import Coord from '../lib/coordinateTransforms'
+import Wedge from './wedge'
 
 class NavControl extends React.Component {
     constructor(props) {
@@ -22,11 +24,16 @@ class NavControl extends React.Component {
     }
 
     render() {
-        return <div>
+        return <g>
+            <Wedge onClick={this.onLeftClicked} origin={{ x: 150, y: 150 }} upperLeft={{ r: 150, theta: Math.PI }} lowerRight={{ r: 100, theta: Math.PI/2}}></Wedge>
+        </g>
+
+
+        {/*<div>
             <button onClick={this.onLeftClicked}>left</button>
             <button onClick={this.onStraightClicked}>straight</button>
             <button onClick={this.onRightClicked}>right</button>
-        </div>
+        </div>*/}
     }
 }
 

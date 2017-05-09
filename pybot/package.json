@@ -9,7 +9,6 @@
   "author": "Dennis Dunn <ansofive@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "es6-promise": "^4.1.0",
     "isomorphic-fetch": "^2.2.1",
     "path": "^0.12.7",
     "react": "^15.4.2",
@@ -25,6 +24,7 @@
     "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "css-loader": "^0.26.2",
+    "libcoord": "github:dennisdunn/libcoord",
     "style-loader": "^0.13.2",
     "webpack": "^2.2.1"
   }

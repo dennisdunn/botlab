@@ -1,5 +1,4 @@
 import * as Actions from './actions'
-require('es6-promise').polyfill()
 require('isomorphic-fetch')
 /**
  * 
