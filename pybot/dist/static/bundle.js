@@ -11163,7 +11163,7 @@ var NavControl = function (_React$Component) {
             return _react2.default.createElement(
                 'g',
                 null,
-                _react2.default.createElement(_wedge2.default, { onClick: this.onLeftClicked, origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI }, lowerRight: { r: 100, theta: Math.PI / 2 } })
+                _react2.default.createElement(_wedge2.default, { onClick: this.onLeftClicked, color: 'lightgreen', origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI }, lowerRight: { r: 100, theta: Math.PI / 2 } })
             );
 
             {/*<div>
@@ -11503,9 +11503,10 @@ var Wedge = function (_React$Component) {
             var ur = this.coord.polarToCanvas({ r: this.props.upperLeft.r, theta: this.props.lowerRight.theta });
             var lr = this.coord.polarToCanvas(this.props.lowerRight);
             var ll = this.coord.polarToCanvas({ r: this.props.lowerRight.r, theta: this.props.upperLeft.theta });
-            var pathData = 'M ' + ul.x + ',' + ul.y + ' A ' + ur.x + ',' + ur.y + ' 0 0,1 ' + this.props.upperLeft.r + ',' + this.props.upperLeft.r + ' L ' + lr.x + ',' + lr.y + ' A ' + ll.x + ',' + ll.y + ' 0 0,0 ' + this.props.lowerRight.r + ',' + this.props.lowerRight.r + ' Z';
-            console.log(pathData);
-            return _react2.default.createElement('path', { onClick: this.props.onClick, d: pathData });
+
+            var pathData = 'M ' + ul.x + ' ' + ul.y + ' A ' + this.props.upperLeft.r + ' ' + this.props.upperLeft.r + ' 0 0 1 ' + ur.x + ' ' + ur.y + ' L ' + lr.x + ',' + lr.y + ' A ' + this.props.lowerRight.r + ' ' + this.props.lowerRight.r + ' 0 0 0 ' + ll.x + ' ' + ll.y + ' Z';
+
+            return _react2.default.createElement('path', { onClick: this.props.onClick, d: pathData, fill: this.props.color });
         }
     }]);
 

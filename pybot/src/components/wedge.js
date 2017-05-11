@@ -12,8 +12,9 @@ export default class Wedge extends React.Component {
         let ur = this.coord.polarToCanvas({ r: this.props.upperLeft.r, theta: this.props.lowerRight.theta })
         let lr = this.coord.polarToCanvas(this.props.lowerRight)
         let ll = this.coord.polarToCanvas({ r: this.props.lowerRight.r, theta: this.props.upperLeft.theta })
-        let pathData = `M ${ul.x},${ul.y} A ${ur.x},${ur.y} 0 0,1 ${this.props.upperLeft.r},${this.props.upperLeft.r} L ${lr.x},${lr.y} A ${ll.x},${ll.y} 0 0,0 ${this.props.lowerRight.r},${this.props.lowerRight.r} Z`
-       console.log(pathData)
-        return <path onClick={this.props.onClick} d={pathData}></path>
+     
+        let pathData = `M ${ul.x} ${ul.y} A ${this.props.upperLeft.r} ${this.props.upperLeft.r} 0 0 1 ${ur.x} ${ur.y} L ${lr.x},${lr.y} A ${this.props.lowerRight.r} ${this.props.lowerRight.r} 0 0 0 ${ll.x} ${ll.y} Z`
+
+        return <path onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
     }
 }
