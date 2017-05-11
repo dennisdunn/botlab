@@ -1,5 +1,5 @@
 // button reducer
-import * as Actions from './actions'
+import * as Actions from '../actions/actions'
 import { combineReducers } from 'redux'
 
 const INITIAL_BUTTON_STATE = {
