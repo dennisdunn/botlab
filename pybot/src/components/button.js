@@ -29,10 +29,10 @@ class ButtonControl extends React.Component {
 
     render() {
         return <g id={this.props.id}>
-            <Wedge onClick={this.on_0_Clicked} color="red" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI *9/8}} upperLeft={{ r: 150, theta: Math.PI*21/16}}></Wedge>
-            <Wedge onClick={this.on_1_Clicked} color="green" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI *21/16}} upperLeft={{ r: 150, theta: Math.PI*3/2}}></Wedge>
-            <Wedge onClick={this.on_2_Clicked} color="orange" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI *3/2}} upperLeft={{ r: 150, theta: Math.PI*27/16}}></Wedge>
-            <Wedge onClick={this.on_3_Clicked} color="blue" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI *27/16}} upperLeft={{ r: 150, theta: Math.PI*15/8}}></Wedge>
+            <Wedge onClick={this.on_0_Clicked} color="red" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI * 9 / 8 }} upperLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
+            <Wedge onClick={this.on_1_Clicked} color="green" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI * 21 / 16 }} upperLeft={{ r: 150, theta: Math.PI * 3 / 2 }}></Wedge>
+            <Wedge onClick={this.on_2_Clicked} color="orange" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI * 3 / 2 }} upperLeft={{ r: 150, theta: Math.PI * 27 / 16 }}></Wedge>
+            <Wedge onClick={this.on_3_Clicked} color="blue" origin={{ x: 150, y: 150 }} lowerRight={{ r: 90, theta: Math.PI * 27 / 16 }} upperLeft={{ r: 150, theta: Math.PI * 15 / 8 }}></Wedge>
         </g>
     }
 }

@@ -31,8 +31,8 @@ class PowerControl extends React.Component {
 
     render() {
         return <g id={this.props.id}>
-            <Semi onClick={this.onForwardClicked} color="lightblue" origin={{ x: 150, y: 150 }} fat='true' start={{r:90, theta:Math.PI * 9/8}} end={{r:90, theta:Math.PI * 15/8}}></Semi>
-            <Semi onClick={this.onStopClicked} color="blue" origin={{ x: 150, y: 150 }} start={{r:90, theta:Math.PI * 15/8}} end={{r:90, theta:Math.PI * 9/8}}></Semi>
+            <Semi onClick={this.onForwardClicked} color="lightblue" origin={{ x: 150, y: 150 }} fat='true' start={{ r: 80, theta: Math.PI * 9 / 8 }} end={{ r: 80, theta: Math.PI * 15 / 8 }}></Semi>
+            <Semi onClick={this.onStopClicked} color="blue" origin={{ x: 150, y: 150 }} start={{ r: 80, theta: Math.PI * 15 / 8 }} end={{ r: 80, theta: Math.PI * 9 / 8 }}></Semi>
         </g>
     }
 }
