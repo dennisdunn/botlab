@@ -15,6 +15,6 @@ export default class Wedge extends React.Component {
      
         let pathData = `M ${ul.x} ${ul.y} A ${this.props.upperLeft.r} ${this.props.upperLeft.r} 0 0 1 ${ur.x} ${ur.y} L ${lr.x},${lr.y} A ${this.props.lowerRight.r} ${this.props.lowerRight.r} 0 0 0 ${ll.x} ${ll.y} Z`
 
-        return <path onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
+        return <path className='ripple' onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
     }
 }

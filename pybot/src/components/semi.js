@@ -16,6 +16,6 @@ export default class Semi extends React.Component {
         let isFat = this.props.fat ? 1 : 0;
         let pathData = `M ${start.x} ${start.y} A ${this.props.start.r} ${this.props.start.r} 0 ${isFat} 1 ${end.x} ${end.y} Z`
 
-        return <path onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
+        return <path className='ripple' onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
     }
 }

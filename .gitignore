@@ -35,4 +35,4 @@ __pycache__/
 
 !pybot/dist
 
-.log
+*.log

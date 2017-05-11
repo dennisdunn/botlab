@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 import { createStore, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import coord from './lib/coordinateTransforms'
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
 
