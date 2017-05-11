@@ -11112,10 +11112,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(35);
 
-var _coordinateTransforms = __webpack_require__(57);
-
-var _coordinateTransforms2 = _interopRequireDefault(_coordinateTransforms);
-
 var _wedge = __webpack_require__(105);
 
 var _wedge2 = _interopRequireDefault(_wedge);
@@ -11162,15 +11158,11 @@ var NavControl = function (_React$Component) {
         value: function render() {
             return _react2.default.createElement(
                 'g',
-                null,
-                _react2.default.createElement(_wedge2.default, { onClick: this.onLeftClicked, color: 'lightgreen', origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI }, lowerRight: { r: 100, theta: Math.PI / 2 } })
+                { id: this.props.id },
+                _react2.default.createElement(_wedge2.default, { onClick: this.onLeftClicked, color: 'lightgreen', origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI * 10 / 8 }, lowerRight: { r: 90, theta: Math.PI * 5 / 8 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.onStraightClicked, color: 'green', origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI * 5 / 8 }, lowerRight: { r: 90, theta: Math.PI * 3 / 8 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.onRightClicked, color: 'lightgreen', origin: { x: 150, y: 150 }, upperLeft: { r: 150, theta: Math.PI * 3 / 8 }, lowerRight: { r: 90, theta: Math.PI * 14 / 8 } })
             );
-
-            {/*<div>
-                   <button onClick={this.onLeftClicked}>left</button>
-                   <button onClick={this.onStraightClicked}>straight</button>
-                   <button onClick={this.onRightClicked}>right</button>
-                </div>*/}
         }
     }]);
 
@@ -11208,6 +11200,10 @@ var _actions = __webpack_require__(26);
 
 var _actions2 = _interopRequireDefault(_actions);
 
+var _semi = __webpack_require__(243);
+
+var _semi2 = _interopRequireDefault(_semi);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -11228,17 +11224,12 @@ var PowerControl = function (_React$Component) {
         _this.onForwardClicked.bind(_this);
         _this.onThrottleClicked.bind(_this);
         _this.onStopClicked.bind(_this);
-
-        console.log(_actionCreators2.default);
         return _this;
     }
 
     _createClass(PowerControl, [{
         key: 'onForwardClicked',
         value: function onForwardClicked() {
-            console.log(_actions2.default.FORWARD);
-            console.log(_actionCreators2.default);
-            console.log(_actionCreators2.default[_actions2.default.FORWARD]);
             _actionCreators2.default[_actions2.default.FORWARD](50);
         }
     }, {
@@ -11260,28 +11251,10 @@ var PowerControl = function (_React$Component) {
         key: 'render',
         value: function render() {
             return _react2.default.createElement(
-                'div',
-                null,
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.onReverseClicked },
-                    'reverse'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.onForwardClicked },
-                    'forward'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.onThrottleClicked },
-                    'throttle'
-                ),
-                _react2.default.createElement(
-                    'button',
-                    { onClick: this.onStopClicked },
-                    'stop'
-                )
+                'g',
+                { id: this.props.id },
+                _react2.default.createElement(_semi2.default, { onClick: this.onForwardClicked, color: 'lightblue', origin: { x: 150, y: 150 }, fat: 'true', start: { r: 90, theta: Math.PI * 9 / 8 }, end: { r: 90, theta: Math.PI * 15 / 8 } }),
+                _react2.default.createElement(_semi2.default, { onClick: this.onStopClicked, color: 'blue', origin: { x: 150, y: 150 }, start: { r: 90, theta: Math.PI * 15 / 8 }, end: { r: 90, theta: Math.PI * 9 / 8 } })
             );
         }
     }]);
@@ -11418,6 +11391,10 @@ var _power = __webpack_require__(99);
 
 var _power2 = _interopRequireDefault(_power);
 
+var _button = __webpack_require__(244);
+
+var _button2 = _interopRequireDefault(_button);
+
 var _reducers = __webpack_require__(100);
 
 var _reducers2 = _interopRequireDefault(_reducers);
@@ -11450,8 +11427,9 @@ _reactDom2.default.render(_react2.default.createElement(
   _react2.default.createElement(
     'svg',
     { width: '300', height: '300' },
-    _react2.default.createElement(_nav2.default, null),
-    _react2.default.createElement(_power2.default, null)
+    _react2.default.createElement(_nav2.default, { id: 'navpanel' }),
+    _react2.default.createElement(_power2.default, { id: 'powerpanel' }),
+    _react2.default.createElement(_button2.default, { id: 'buttonpanel' })
   )
 ), document.getElementById('root'));
 
@@ -26064,6 +26042,154 @@ module.exports = function(module) {
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
+
+/***/ }),
+/* 243 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(17);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _libcoord = __webpack_require__(128);
+
+var _libcoord2 = _interopRequireDefault(_libcoord);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * A semi-circle
+ */
+var Semi = function (_React$Component) {
+    _inherits(Semi, _React$Component);
+
+    function Semi(props) {
+        _classCallCheck(this, Semi);
+
+        var _this = _possibleConstructorReturn(this, (Semi.__proto__ || Object.getPrototypeOf(Semi)).call(this, props));
+
+        _this.coord = new _libcoord2.default(props.origin);
+        return _this;
+    }
+
+    _createClass(Semi, [{
+        key: 'render',
+        value: function render() {
+            var start = this.coord.polarToCanvas(this.props.start);
+            var end = this.coord.polarToCanvas(this.props.end);
+            var isFat = this.props.fat ? 1 : 0;
+            var pathData = 'M ' + start.x + ' ' + start.y + ' A ' + this.props.start.r + ' ' + this.props.start.r + ' 0 ' + isFat + ' 1 ' + end.x + ' ' + end.y + ' Z';
+
+            return _react2.default.createElement('path', { onClick: this.props.onClick, d: pathData, fill: this.props.color });
+        }
+    }]);
+
+    return Semi;
+}(_react2.default.Component);
+
+exports.default = Semi;
+
+/***/ }),
+/* 244 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(17);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(35);
+
+var _wedge = __webpack_require__(105);
+
+var _wedge2 = _interopRequireDefault(_wedge);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ButtonControl = function (_React$Component) {
+    _inherits(ButtonControl, _React$Component);
+
+    function ButtonControl(props) {
+        _classCallCheck(this, ButtonControl);
+
+        var _this = _possibleConstructorReturn(this, (ButtonControl.__proto__ || Object.getPrototypeOf(ButtonControl)).call(this, props));
+
+        _this.on_0_Clicked.bind(_this);
+        _this.on_1_Clicked.bind(_this);
+        _this.on_2_Clicked.bind(_this);
+        _this.on_3_Clicked.bind(_this);
+        return _this;
+    }
+
+    _createClass(ButtonControl, [{
+        key: 'on_0_Clicked',
+        value: function on_0_Clicked() {
+            alert('button 0');
+        }
+    }, {
+        key: 'on_1_Clicked',
+        value: function on_1_Clicked() {
+            alert('button 1');
+        }
+    }, {
+        key: 'on_2_Clicked',
+        value: function on_2_Clicked() {
+            alert('button 2');
+        }
+    }, {
+        key: 'on_3_Clicked',
+        value: function on_3_Clicked() {
+            alert('button 3');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'g',
+                { id: this.props.id },
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_0_Clicked, color: 'red', origin: { x: 150, y: 150 }, lowerRight: { r: 90, theta: Math.PI * 9 / 8 }, upperLeft: { r: 150, theta: Math.PI * 21 / 16 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_1_Clicked, color: 'green', origin: { x: 150, y: 150 }, lowerRight: { r: 90, theta: Math.PI * 21 / 16 }, upperLeft: { r: 150, theta: Math.PI * 3 / 2 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_2_Clicked, color: 'orange', origin: { x: 150, y: 150 }, lowerRight: { r: 90, theta: Math.PI * 3 / 2 }, upperLeft: { r: 150, theta: Math.PI * 27 / 16 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_3_Clicked, color: 'blue', origin: { x: 150, y: 150 }, lowerRight: { r: 90, theta: Math.PI * 27 / 16 }, upperLeft: { r: 150, theta: Math.PI * 15 / 8 } })
+            );
+        }
+    }]);
+
+    return ButtonControl;
+}(_react2.default.Component);
+
+exports.default = (0, _reactRedux.connect)(function (state) {
+    return state.button || {};
+})(ButtonControl);
 
 /***/ })
 /******/ ]);

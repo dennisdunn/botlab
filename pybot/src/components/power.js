@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import ActionFactory from '../lib/actions/actionCreators'
 import Actions from '../lib/actions/actions'
+import Semi from './semi'
 
 class PowerControl extends React.Component {
     constructor(props) {
@@ -10,14 +11,9 @@ class PowerControl extends React.Component {
         this.onForwardClicked.bind(this)
         this.onThrottleClicked.bind(this)
         this.onStopClicked.bind(this)
-
-        console.log(ActionFactory)
     }
 
     onForwardClicked() {
-        console.log(Actions.FORWARD)
-        console.log(ActionFactory)
-        console.log(ActionFactory[Actions.FORWARD])
         ActionFactory[Actions.FORWARD](50)
     }
 
@@ -34,12 +30,10 @@ class PowerControl extends React.Component {
     }
 
     render() {
-        return <div>
-            <button onClick={this.onReverseClicked}>reverse</button>
-            <button onClick={this.onForwardClicked}>forward</button>
-            <button onClick={this.onThrottleClicked}>throttle</button>
-            <button onClick={this.onStopClicked}>stop</button>
-        </div>
+        return <g id={this.props.id}>
+            <Semi onClick={this.onForwardClicked} color="lightblue" origin={{ x: 150, y: 150 }} fat='true' start={{r:90, theta:Math.PI * 9/8}} end={{r:90, theta:Math.PI * 15/8}}></Semi>
+            <Semi onClick={this.onStopClicked} color="blue" origin={{ x: 150, y: 150 }} start={{r:90, theta:Math.PI * 15/8}} end={{r:90, theta:Math.PI * 9/8}}></Semi>
+        </g>
     }
 }
 

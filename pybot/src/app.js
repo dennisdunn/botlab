@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import NavControl from './components/nav'
 import PowerControl from './components/power'
+import ButtonControl from './components/button'
 import rootReducer from './lib/reducers'
 import { Provider } from 'react-redux'
 import injectTapEventPlugin from 'react-tap-event-plugin'
@@ -16,8 +17,9 @@ injectTapEventPlugin();
 ReactDOM.render(
   <Provider store={store}>
     <svg width='300' height='300'>
-      <NavControl></NavControl>
-      <PowerControl></PowerControl>
+      <NavControl id='navpanel'></NavControl>
+      <PowerControl id='powerpanel'></PowerControl>
+      <ButtonControl id='buttonpanel'></ButtonControl>
     </svg>
   </Provider>,
   document.getElementById('root')
