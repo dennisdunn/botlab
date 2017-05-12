@@ -16,6 +16,6 @@ export default class Slice extends React.Component {
         let center = this.coord.polarToCanvas({r:0, theta:0})
         let pathData = `M ${start.x} ${start.y} A ${this.props.start.r} ${this.props.start.r} 0 0 1 ${snd.x} ${end.y} L ${center.x},${center.y} Z`
 
-        return <path onClick={this.props.onClick} d={pathData} fill={this.props.color}></path>
+        return <path onClick={this.props.onClick} d={pathData} {...this.props.styles}></path>
     }
 }
