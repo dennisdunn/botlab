@@ -24,9 +24,9 @@ class NavControl extends React.Component {
 
     render() {
         return <g id={this.props.id}>
-            <Wedge onClick={this.onLeftClicked} color="lightgreen" origin={{ x: 150, y: 150 }} upperLeft={{ r: 150, theta: Math.PI *10/8}} lowerRight={{ r: 90, theta: Math.PI*5/8}}></Wedge>
-            <Wedge onClick={this.onStraightClicked} color="green" origin={{ x: 150, y: 150 }} upperLeft={{ r: 150, theta: Math.PI *5/8}} lowerRight={{ r: 90, theta: Math.PI*3/8}}></Wedge>
-            <Wedge onClick={this.onRightClicked} color="lightgreen" origin={{ x: 150, y: 150 }} upperLeft={{ r: 150, theta: Math.PI *3/8}} lowerRight={{ r: 90, theta: Math.PI*14/8}}></Wedge>
+            <Wedge onClick={this.onLeftClicked} color="lightgreen" origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *1.1}} innerRight={{ r: 90, theta: Math.PI*5/8}}></Wedge>
+            <Wedge onClick={this.onStraightClicked} color="green" origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *5/8}} innerRight={{ r: 90, theta: Math.PI*3/8}}></Wedge>
+            <Wedge onClick={this.onRightClicked} color="lightgreen" origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *3/8}} innerRight={{ r: 90, theta: Math.PI*1.9}}></Wedge>
         </g>
     }
 }
