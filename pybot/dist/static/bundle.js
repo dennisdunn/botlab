@@ -11133,7 +11133,6 @@ var ButtonControl = function (_React$Component) {
     _createClass(ButtonControl, [{
         key: 'on_0_Clicked',
         value: function on_0_Clicked(e) {
-            console.log(this.props.button);
             this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'blue');
         }
     }, {
@@ -11154,13 +11153,17 @@ var ButtonControl = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
+            var bluestyle = { fill: this.props.button.blue ? 'blue' : 'darkblue' };
+            var greenstyle = { fill: this.props.button.green ? 'green' : 'darkgreen' };
+            var yellowstyle = { fill: this.props.button.yellow ? 'yellow' : 'darkyellow' };
+            var redstyle = { fill: this.props.button.red ? 'red' : 'darkred' };
             return _react2.default.createElement(
                 'g',
                 { id: this.props.id },
-                _react2.default.createElement(_wedge2.default, { onClick: this.on_0_Clicked, styles: { fill: "blue" }, innerRight: { r: 90, theta: Math.PI * 9 / 8 }, outerLeft: { r: 150, theta: Math.PI * 21 / 16 } }),
-                _react2.default.createElement(_wedge2.default, { onClick: this.on_1_Clicked, styles: { fill: "green" }, innerRight: { r: 90, theta: Math.PI * 21 / 16 }, outerLeft: { r: 150, theta: Math.PI * 3 / 2 } }),
-                _react2.default.createElement(_wedge2.default, { onClick: this.on_2_Clicked, styles: { fill: "yellow" }, innerRight: { r: 90, theta: Math.PI * 3 / 2 }, outerLeft: { r: 150, theta: Math.PI * 27 / 16 } }),
-                _react2.default.createElement(_wedge2.default, { onClick: this.on_3_Clicked, styles: { fill: "red" }, innerRight: { r: 90, theta: Math.PI * 27 / 16 }, outerLeft: { r: 150, theta: Math.PI * 15 / 8 } })
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_0_Clicked, styles: bluestyle, innerRight: { r: 90, theta: Math.PI * 9 / 8 }, outerLeft: { r: 150, theta: Math.PI * 21 / 16 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_1_Clicked, styles: greenstyle, innerRight: { r: 90, theta: Math.PI * 21 / 16 }, outerLeft: { r: 150, theta: Math.PI * 3 / 2 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_2_Clicked, styles: yellowstyle, innerRight: { r: 90, theta: Math.PI * 3 / 2 }, outerLeft: { r: 150, theta: Math.PI * 27 / 16 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.on_3_Clicked, styles: redstyle, innerRight: { r: 90, theta: Math.PI * 27 / 16 }, outerLeft: { r: 150, theta: Math.PI * 15 / 8 } })
             );
         }
     }]);

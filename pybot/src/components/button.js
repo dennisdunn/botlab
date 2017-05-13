@@ -14,7 +14,6 @@ class ButtonControl extends React.Component {
     }
 
     on_0_Clicked(e) {
-        console.log(this.props.button)
         this.props.executeSwitch(Actions.TOGGLE_SWITCH,'blue')
     }
 
@@ -31,11 +30,15 @@ class ButtonControl extends React.Component {
     }
 
     render() {
+        let bluestyle={fill:this.props.button.blue ? 'blue':'darkblue'}
+        let greenstyle={fill:this.props.button.green ? 'green':'darkgreen'}
+        let yellowstyle={fill:this.props.button.yellow ? 'yellow':'darkyellow'}
+        let redstyle={fill:this.props.button.red ? 'red':'darkred'}
         return <g id={this.props.id}>
-            <Wedge onClick={this.on_0_Clicked} styles={{fill:"blue"}} innerRight={{ r: 90, theta: Math.PI * 9 / 8 }} outerLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
-            <Wedge onClick={this.on_1_Clicked} styles={{fill:"green"}} innerRight={{ r: 90, theta: Math.PI * 21 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 3 / 2 }}></Wedge>
-            <Wedge onClick={this.on_2_Clicked} styles={{fill:"yellow"}} innerRight={{ r: 90, theta: Math.PI * 3 / 2 }} outerLeft={{ r: 150, theta: Math.PI * 27 / 16 }}></Wedge>
-            <Wedge onClick={this.on_3_Clicked} styles={{fill:"red"}} innerRight={{ r: 90, theta: Math.PI * 27 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 15 / 8 }}></Wedge>
+            <Wedge onClick={this.on_0_Clicked} styles={bluestyle} innerRight={{ r: 90, theta: Math.PI * 9 / 8 }} outerLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
+            <Wedge onClick={this.on_1_Clicked} styles={greenstyle} innerRight={{ r: 90, theta: Math.PI * 21 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 3 / 2 }}></Wedge>
+            <Wedge onClick={this.on_2_Clicked} styles={yellowstyle} innerRight={{ r: 90, theta: Math.PI * 3 / 2 }} outerLeft={{ r: 150, theta: Math.PI * 27 / 16 }}></Wedge>
+            <Wedge onClick={this.on_3_Clicked} styles={redstyle} innerRight={{ r: 90, theta: Math.PI * 27 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 15 / 8 }}></Wedge>
         </g>
     }
 }
