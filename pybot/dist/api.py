@@ -11,29 +11,25 @@ motorCtl = Motor()
 def index():
     return redirect("/static/index.html", code=302)
 
-@app.route("/api/v1/nav/<cmd>", methods=['POST'])
+
+@app.route("/api/v1/steering/<cmd>", methods=['POST'])
 def turn(cmd):
-    data = json.loads(request.data) 
+    data = json.loads(request.data)
     if cmd == "left":
-        motorCtl.left(data["timeout"])
+        motorCtl.left(data)
     elif cmd == "right":
-        motorCtl.right(data["timeout"])
+        motorCtl.right(data)
     elif cmd == "straight":
         motorCtl.straight()
-    return cmd
+    return data
 
-@app.route("/api/v1/motor/<cmd>", methods=['POST'])
+
+@app.route("/api/v1/throttle", methods=['POST'])
 def motors(cmd):
-    data = json.loads(request.data) 
-    if cmd == "forward":
-        motorCtl.forward(data["speed"])
-    elif cmd == "reverse":
-        motorCtl.reverse(data["speed"])
-    elif cmd == "throttle":
-        motorCtl.throttle(data["speed"])
-    elif cmd == "stop":
-        motorCtl.stop()
-    return cmd
+    data = json.loads(request.data)
+    motorCtl.throttle(data)
+    return data
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")

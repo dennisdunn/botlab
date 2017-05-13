@@ -13,11 +13,11 @@ class NavControl extends React.Component {
     }
 
     onLeftClicked(e) {
-        this.props.executeTurn(Actions.TURN_LEFT)
+        this.props.executeTurn(Actions.TURN_LEFT ,1)
     }
 
     onRightClicked(e) {
-        this.props.executeTurn(Actions.TURN_RIGHT)
+        this.props.executeTurn(Actions.TURN_RIGHT, 1)
     }
 
     onStraightClicked(e) {
@@ -39,8 +39,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        executeTurn: (action) => {
-            dispatch(ActionCreator[action]())
+        executeTurn: (action, timeout) => {
+            dispatch(ActionCreator[action](timeout))
         }
     }
 }
