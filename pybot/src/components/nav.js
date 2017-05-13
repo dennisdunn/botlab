@@ -1,6 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Wedge from './wedge'
+import Actions from '../lib/actions/actions'
+import ActionCreator from '../lib/actions/actionCreators'
 
 class NavControl extends React.Component {
     constructor(props) {
@@ -8,25 +10,25 @@ class NavControl extends React.Component {
         this.onLeftClicked.bind(this)
         this.onRightClicked.bind(this)
         this.onStraightClicked.bind(this)
-    }
+}
 
     onLeftClicked() {
-        alert('left')
+        ActionCreator[Actions.TURN_LEFT]()
     }
 
     onRightClicked() {
-        alert('right')
+        ActionCreator[Actions.TURN_RIGHT]()
     }
 
     onStraightClicked() {
-        alert('straight')
+        ActionCreator[Actions.TURN_STRAIGHT]()
     }
 
     render() {
         return <g id={this.props.id}>
-            <Wedge onClick={this.onLeftClicked} styles={{fill:"lightgreen"}} origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *1.1}} innerRight={{ r: 90, theta: Math.PI*5/8}}></Wedge>
-            <Wedge onClick={this.onStraightClicked} styles={{fill:"green"}} origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *5/8}} innerRight={{ r: 90, theta: Math.PI*3/8}}></Wedge>
-            <Wedge onClick={this.onRightClicked} styles={{fill:"lightgreen"}} origin={{ x: 150, y: 150 }} outerLeft={{ r: 150, theta: Math.PI *3/8}} innerRight={{ r: 90, theta: Math.PI*1.9}}></Wedge>
+            <Wedge onClick={this.onLeftClicked} styles={{fill:"lightgreen"}} outerLeft={{ r: 150, theta: Math.PI *1.1}} innerRight={{ r: 90, theta: Math.PI*5/8}}></Wedge>
+            <Wedge onClick={this.onStraightClicked} styles={{fill:"green"}} outerLeft={{ r: 150, theta: Math.PI *5/8}} innerRight={{ r: 90, theta: Math.PI*3/8}}></Wedge>
+            <Wedge onClick={this.onRightClicked} styles={{fill:"lightgreen"}} outerLeft={{ r: 150, theta: Math.PI *3/8}} innerRight={{ r: 90, theta: Math.PI*1.9}}></Wedge>
         </g>
     }
 }

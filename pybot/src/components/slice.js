@@ -1,5 +1,5 @@
 import React from 'react'
-import Coord from 'libcoord'
+import Coord from '../lib/coordService'
 
 /**
  * A slice of the pie.
@@ -7,13 +7,12 @@ import Coord from 'libcoord'
 export default class Slice extends React.Component {
     constructor(props) {
         super(props)
-        this.coord = new Coord(props.origin)
     }
 
     render() {
-        let start = this.coord.polarToCanvas(this.props.start)
-        let end = this.coord.polarToCanvas(this.props.end)
-        let center = this.coord.polarToCanvas({r:0, theta:0})
+        let start = Coord.polarToCanvas(this.props.start)
+        let end = Coord.polarToCanvas(this.props.end)
+        let center = Coord.polarToCanvas({r:0, theta:0})
         let pathData = `M ${start.x} ${start.y} A ${this.props.start.r} ${this.props.start.r} 0 0 1 ${snd.x} ${end.y} L ${center.x},${center.y} Z`
 
         return <path onClick={this.props.onClick} d={pathData} {...this.props.styles}></path>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import ActionFactory from '../lib/actions/actionCreators'
+import ActionCreator from '../lib/actions/actionCreators'
 import Actions from '../lib/actions/actions'
 import Semi from './semi'
 
@@ -14,25 +14,25 @@ class PowerControl extends React.Component {
     }
 
     onForwardClicked() {
-        ActionFactory[Actions.FORWARD](50)
+        ActionCreator[Actions.SET_DIRECTION_FORWARD](50)
     }
 
     onReverseClicked() {
-        ActionFactory[Actions.REVERSE](50)
+        ActionCreator[Actions.SET_DIRECTION_FORWARD](50)
     }
 
     onThrottleClicked() {
-        ActionFactory[Actions.THROTTLE](50)
+        ActionCreator[Actions.SET_THROTTLE](50)
     }
 
     onStopClicked() {
-        ActionFactory[Actions.STOP]()
+        ActionCreator[Actions.SET_THROTTLE_ZERO]()
     }
 
     render() {
         return <g id={this.props.id}>
-            <Semi onClick={this.onForwardClicked} styles={{fill:"lightblue"}} origin={{ x: 150, y: 150 }} fat='true' start={{ r: 80, theta: Math.PI * 9 / 8 }} end={{ r: 80, theta: Math.PI * 15 / 8 }}></Semi>
-            <Semi onClick={this.onStopClicked} styles={{fill:"blue"}} origin={{ x: 150, y: 150 }} start={{ r: 80, theta: Math.PI * 15 / 8 }} end={{ r: 80, theta: Math.PI * 9 / 8 }}></Semi>
+            <Semi onClick={this.onForwardClicked} styles={{fill:"lightblue"}} fat='true' start={{ r: 80, theta: Math.PI * 9 / 8 }} end={{ r: 80, theta: Math.PI * 15 / 8 }}></Semi>
+            <Semi onClick={this.onStopClicked} styles={{fill:"blue"}} start={{ r: 80, theta: Math.PI * 15 / 8 }} end={{ r: 80, theta: Math.PI * 9 / 8 }}></Semi>
         </g>
     }
 }

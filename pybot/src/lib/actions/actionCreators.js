@@ -1,11 +1,18 @@
-import * as Actions from './actions'
-require('isomorphic-fetch')
 /**
  * 
  */
+import Actions from './actions'
+require('isomorphic-fetch')
+
 let factory = {}
 const navUrl = 'http://192.168.0.13:8080/api/v1/nav/'
 const motorUrl = 'http://192.168.0.13:8080/api/v1/motor/'
+
+Object.keys(Actions).forEach(actionType => factory[actionType] = (payload) => {
+    let action = { type: actionType, payload: payload }
+    console.log(JSON.stringify(action, null, 4))
+    return action
+})
 
 // factory[Actions.SWITCH_ON] = (eventArgs) => {
 //     return {
@@ -118,75 +125,75 @@ const motorUrl = 'http://192.168.0.13:8080/api/v1/motor/'
 //     }
 // }
 
-factory[Actions.FORWARD] = (speed) => {
-    return (dispatch, getstate) => {
-        let action = {
-            type: Action.FORWARD,
-            payload: { speed: speed }
-        }
-        send(dispatch, motorUrl, action)
-    }
-}
+// factory[Actions.FORWARD] = (speed) => {
+//     return (dispatch, getstate) => {
+//         let action = {
+//             type: Action.FORWARD,
+//             payload: { speed: speed }
+//         }
+//         send(dispatch, motorUrl, action)
+//     }
+// }
 
-factory[Actions.REVERSE] = (speed) => {
-    return (dispatch, getstate) => {
-        let action = {
-            type: Action.REVERSE,
-            payload: { speed: speed }
-        }
-        send(dispatch, motorUrl, action)
-    }
-}
+// factory[Actions.REVERSE] = (speed) => {
+//     return (dispatch, getstate) => {
+//         let action = {
+//             type: Action.REVERSE,
+//             payload: { speed: speed }
+//         }
+//         send(dispatch, motorUrl, action)
+//     }
+// }
 
-factory[Actions.THROTTLE] = (speed) => {
-    return (dispatch, getstate) => {
-        let action = {
-            type: Action.THROTTLE,
-            payload: { speed: speed }
-        }
-        send(dispatch, motorUrl, action)
-    }
-}
+// factory[Actions.THROTTLE] = (speed) => {
+//     return (dispatch, getstate) => {
+//         let action = {
+//             type: Action.THROTTLE,
+//             payload: { speed: speed }
+//         }
+//         send(dispatch, motorUrl, action)
+//     }
+// }
 
-factory[Actions.STOP] = () => {
-    return (dispatch, getstate) => {
-        let action = {
-            type: Action.STOP,
-            payload: { speed: 0 }
-        }
-        send(dispatch, motorUrl, action)
-    }
-}
+// factory[Actions.STOP] = () => {
+//     return (dispatch, getstate) => {
+//         let action = {
+//             type: Action.STOP,
+//             payload: { speed: 0 }
+//         }
+//         send(dispatch, motorUrl, action)
+//     }
+// }
 
 
 
-function send(dispatch, endpoint, action) {
-    fetch(endpoint + '/' + action.type, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(action.payload)
-    })
-        .then(checkStatus)
-        .then(parseJSON)
-        .then(data => {
-            dispatch(Object.assign(action, data))
-        })
-}
+// function send(dispatch, endpoint, action) {
+//     fetch(endpoint + '/' + action.type, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(action.payload)
+//     })
+//         .then(checkStatus)
+//         .then(parseJSON)
+//         .then(data => {
+//             dispatch(Object.assign(action, data))
+//         })
+// }
 
-function checkStatus(response) {
-    if (response.status >= 200 && response.status < 300) {
-        return response
-    } else {
-        var error = new Error(response.statusText)
-        error.response = response
-        throw error
-    }
-}
+// function checkStatus(response) {
+//     if (response.status >= 200 && response.status < 300) {
+//         return response
+//     } else {
+//         var error = new Error(response.statusText)
+//         error.response = response
+//         throw error
+//     }
+// }
 
-function parseJSON(response) {
-    return response.json()
-}
+// function parseJSON(response) {
+//     return response.json()
+// }
 
 export default factory
