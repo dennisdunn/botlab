@@ -31,8 +31,8 @@ class ButtonControl extends React.Component {
 
     render() {
         let bluestyle={fill:this.props.button.blue ? 'blue':'darkblue'}
-        let greenstyle={fill:this.props.button.green ? 'green':'darkgreen'}
-        let yellowstyle={fill:this.props.button.yellow ? 'yellow':'darkyellow'}
+        let greenstyle={fill:this.props.button.green ? 'limegreen':'darkgreen'}
+        let yellowstyle={fill:this.props.button.yellow ? 'yellow':'goldenrod'}
         let redstyle={fill:this.props.button.red ? 'red':'darkred'}
         return <g id={this.props.id}>
             <Wedge onClick={this.on_0_Clicked} styles={bluestyle} innerRight={{ r: 90, theta: Math.PI * 9 / 8 }} outerLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
