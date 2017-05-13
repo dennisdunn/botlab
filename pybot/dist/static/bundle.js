@@ -11153,7 +11153,7 @@ var ButtonControl = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var bluestyle = { fill: this.props.button.blue ? 'blue' : 'darkblue' };
+            var bluestyle = { fill: this.props.button.blue ? 'royalblue' : 'darkblue' };
             var greenstyle = { fill: this.props.button.green ? 'limegreen' : 'darkgreen' };
             var yellowstyle = { fill: this.props.button.yellow ? 'yellow' : 'goldenrod' };
             var redstyle = { fill: this.props.button.red ? 'red' : 'darkred' };

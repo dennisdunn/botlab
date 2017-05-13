@@ -30,7 +30,7 @@ class ButtonControl extends React.Component {
     }
 
     render() {
-        let bluestyle={fill:this.props.button.blue ? 'blue':'darkblue'}
+        let bluestyle={fill:this.props.button.blue ? 'royalblue':'darkblue'}
         let greenstyle={fill:this.props.button.green ? 'limegreen':'darkgreen'}
         let yellowstyle={fill:this.props.button.yellow ? 'yellow':'goldenrod'}
         let redstyle={fill:this.props.button.red ? 'red':'darkred'}
