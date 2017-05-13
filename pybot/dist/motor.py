@@ -9,19 +9,16 @@ class Motor:
         self.max = 100
         self.direction = 1 # 1 = forward, -1 = backwards
 
-    def forward(self, speed=0):
+    def forward(self):
         self.direction = 1
-        self.speed = speed
         self.setPower()
 
-    def reverse(self, speed=0):
+    def reverse(self):
         self.direction = -1
-        self.speed = speed
         self.setPower()
 
     def stop(self):
-        self.speed = 0
-        self.setPower()
+        self.throttle(0)
 
     def throttle(self, speed=0):
         self.speed = speed

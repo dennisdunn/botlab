@@ -25,7 +25,7 @@ def turn(cmd):
 
 
 @app.route("/api/v1/throttle", methods=['POST'])
-def motors(cmd):
+def motors():
     data = json.loads(request.data)
     motorCtl.throttle(data)
     return data
