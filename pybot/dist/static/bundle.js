@@ -4963,7 +4963,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * 
  */
 var factory = {};
-var uri = 'http://192.168.0.13:8080/api/v1/nav/';
+var uri = 'http://192.168.0.13:5000/api/v1/';
 
 // The default action creator simply dispatches the action with the arguments.
 Object.keys(_actions2.default).forEach(function (actionType) {
@@ -11866,8 +11866,10 @@ var RestClient = function () {
             return {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json,text/html,text/plain'
                 },
+                mode: 'no-cors',
                 body: JSON.stringify(payload)
             };
         }

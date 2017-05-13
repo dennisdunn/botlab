@@ -13,8 +13,10 @@ export default class RestClient {
         return {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Accept': 'application/json,text/html,text/plain'
             },
+            mode: 'no-cors',
             body: JSON.stringify(payload)
         }
     }

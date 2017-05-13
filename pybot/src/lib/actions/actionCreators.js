@@ -5,7 +5,7 @@ import Actions from './actions'
 import Client from '../restClient'
 
 let factory = {}
-const uri = 'http://192.168.0.13:8080/api/v1/nav/'
+const uri = 'http://192.168.0.13:5000/api/v1/'
 
 // The default action creator simply dispatches the action with the arguments.
 Object.keys(Actions).forEach(actionType => {

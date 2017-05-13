@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, request, redirect, json
+from flask import Flask, request, redirect, json, jsonify
 from motor import Motor
 
 app = Flask(__name__)
@@ -11,7 +11,6 @@ motorCtl = Motor()
 def index():
     return redirect("/static/index.html", code=302)
 
-
 @app.route("/api/v1/steering/<cmd>", methods=['POST'])
 def turn(cmd):
     data = json.loads(request.data)
@@ -21,14 +20,21 @@ def turn(cmd):
         motorCtl.right(data)
     elif cmd == "straight":
         motorCtl.straight()
-    return data
+    return jsonify(data)
 
+@app.route("/api/v1/motor/<cmd>", methods=['POST'])
+def turn(cmd):
+    if cmd == "forward":
+        motorCtl.forward()
+    elif cmd == "reverse":
+        motorCtl.reverse()
+    return jsonify(data)
 
 @app.route("/api/v1/throttle", methods=['POST'])
 def motors():
     data = json.loads(request.data)
     motorCtl.throttle(data)
-    return data
+    return jsonify(data)
 
 
 if __name__ == "__main__":
