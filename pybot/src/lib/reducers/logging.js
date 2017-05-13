@@ -1,6 +1,8 @@
 // logging reducer
-export default (state = {}, action) => {
-  console.log(action);
+export default (state={}, action) => {
+  if(action.type.charAt(0) != '@')
+  {
+    console.log(action)
+  }
   return state
 }
-

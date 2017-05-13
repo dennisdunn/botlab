@@ -7,26 +7,26 @@ import ActionCreator from '../lib/actions/actionCreators'
 class ButtonControl extends React.Component {
     constructor(props) {
         super(props)
-        this.on_0_Clicked.bind(this)
-        this.on_1_Clicked.bind(this)
-        this.on_2_Clicked.bind(this)
-        this.on_3_Clicked.bind(this)
+        this.on_0_Clicked=this.on_0_Clicked.bind(this)
+        this.on_1_Clicked=  this.on_1_Clicked.bind(this)
+        this.on_2_Clicked=  this.on_2_Clicked.bind(this)
+        this.on_3_Clicked=  this.on_3_Clicked.bind(this)
     }
 
-    on_0_Clicked() {
-        ActionCreator[Actions.TOGGLE_SWITCH]('blue')
+    on_0_Clicked(e) {
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'blue')
     }
 
-    on_1_Clicked() {
-        ActionCreator[Actions.TOGGLE_SWITCH]('green')
+    on_1_Clicked(e) {
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'green')
     }
 
-    on_2_Clicked() {
-        ActionCreator[Actions.TOGGLE_SWITCH]('yellow')
+    on_2_Clicked(e) {
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'yellow')
     }
 
-    on_3_Clicked() {
-        ActionCreator[Actions.TOGGLE_SWITCH]('red')
+    on_3_Clicked(e) {
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'red')
     }
 
     render() {
@@ -39,4 +39,16 @@ class ButtonControl extends React.Component {
     }
 }
 
-export default connect(state => state.button || {})(ButtonControl)
+const mapStateToProps = (state) => {
+    return { button: state.button }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        executeSwitch: (action, button) => {
+            dispatch(ActionCreator[action](button))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ButtonControl)

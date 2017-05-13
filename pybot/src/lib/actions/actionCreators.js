@@ -8,10 +8,16 @@ let factory = {}
 const navUrl = 'http://192.168.0.13:8080/api/v1/nav/'
 const motorUrl = 'http://192.168.0.13:8080/api/v1/motor/'
 
-Object.keys(Actions).forEach(actionType => factory[actionType] = (payload) => {
-    let action = { type: actionType, payload: payload }
-    console.log(JSON.stringify(action, null, 4))
-    return action
+Object.keys(Actions).forEach(actionType => {
+    factory[actionType] = (args) => {
+        return (dispatch, getstate) => {
+            let action = {
+                type: actionType,
+                payload: args
+            }
+            dispatch(action)
+        }
+    }
 })
 
 // factory[Actions.SWITCH_ON] = (eventArgs) => {

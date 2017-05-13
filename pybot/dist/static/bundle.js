@@ -11122,32 +11122,32 @@ var ButtonControl = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (ButtonControl.__proto__ || Object.getPrototypeOf(ButtonControl)).call(this, props));
 
-        _this.on_0_Clicked.bind(_this);
-        _this.on_1_Clicked.bind(_this);
-        _this.on_2_Clicked.bind(_this);
-        _this.on_3_Clicked.bind(_this);
+        _this.on_0_Clicked = _this.on_0_Clicked.bind(_this);
+        _this.on_1_Clicked = _this.on_1_Clicked.bind(_this);
+        _this.on_2_Clicked = _this.on_2_Clicked.bind(_this);
+        _this.on_3_Clicked = _this.on_3_Clicked.bind(_this);
         return _this;
     }
 
     _createClass(ButtonControl, [{
         key: 'on_0_Clicked',
-        value: function on_0_Clicked() {
-            _actionCreators2.default[_actions2.default.TOGGLE_SWITCH]('blue');
+        value: function on_0_Clicked(e) {
+            this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'blue');
         }
     }, {
         key: 'on_1_Clicked',
-        value: function on_1_Clicked() {
-            _actionCreators2.default[_actions2.default.TOGGLE_SWITCH]('green');
+        value: function on_1_Clicked(e) {
+            this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'green');
         }
     }, {
         key: 'on_2_Clicked',
-        value: function on_2_Clicked() {
-            _actionCreators2.default[_actions2.default.TOGGLE_SWITCH]('yellow');
+        value: function on_2_Clicked(e) {
+            this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'yellow');
         }
     }, {
         key: 'on_3_Clicked',
-        value: function on_3_Clicked() {
-            _actionCreators2.default[_actions2.default.TOGGLE_SWITCH]('red');
+        value: function on_3_Clicked(e) {
+            this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'red');
         }
     }, {
         key: 'render',
@@ -11166,9 +11166,19 @@ var ButtonControl = function (_React$Component) {
     return ButtonControl;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(function (state) {
-    return state.button || {};
-})(ButtonControl);
+var mapStateToProps = function mapStateToProps(state) {
+    return { button: state.button };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        executeSwitch: function executeSwitch(action, button) {
+            dispatch(_actionCreators2.default[action](button));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(ButtonControl);
 
 /***/ }),
 /* 100 */
@@ -11217,26 +11227,26 @@ var NavControl = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (NavControl.__proto__ || Object.getPrototypeOf(NavControl)).call(this, props));
 
-        _this.onLeftClicked.bind(_this);
-        _this.onRightClicked.bind(_this);
-        _this.onStraightClicked.bind(_this);
+        _this.onLeftClicked = _this.onLeftClicked.bind(_this);
+        _this.onRightClicked = _this.onRightClicked.bind(_this);
+        _this.onStraightClicked = _this.onStraightClicked.bind(_this);
         return _this;
     }
 
     _createClass(NavControl, [{
         key: 'onLeftClicked',
-        value: function onLeftClicked() {
-            _actionCreators2.default[_actions2.default.TURN_LEFT]();
+        value: function onLeftClicked(e) {
+            this.props.executeTurn(_actions2.default.TURN_LEFT);
         }
     }, {
         key: 'onRightClicked',
-        value: function onRightClicked() {
-            _actionCreators2.default[_actions2.default.TURN_RIGHT]();
+        value: function onRightClicked(e) {
+            this.props.executeTurn(_actions2.default.TURN_RIGHT);
         }
     }, {
         key: 'onStraightClicked',
-        value: function onStraightClicked() {
-            _actionCreators2.default[_actions2.default.TURN_STRAIGHT]();
+        value: function onStraightClicked(e) {
+            this.props.executeTurn(_actions2.default.TURN_STRAIGHT);
         }
     }, {
         key: 'render',
@@ -11254,9 +11264,19 @@ var NavControl = function (_React$Component) {
     return NavControl;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(function (state) {
-    return state.nav || {};
-})(NavControl);
+var mapStateToProps = function mapStateToProps(state) {
+    return { nav: state.nav };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        executeTurn: function executeTurn(action) {
+            dispatch(_actionCreators2.default[action]());
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(NavControl);
 
 /***/ }),
 /* 101 */
@@ -11277,17 +11297,17 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(27);
 
-var _actionCreators = __webpack_require__(108);
+var _semi = __webpack_require__(107);
 
-var _actionCreators2 = _interopRequireDefault(_actionCreators);
+var _semi2 = _interopRequireDefault(_semi);
 
 var _actions = __webpack_require__(24);
 
 var _actions2 = _interopRequireDefault(_actions);
 
-var _semi = __webpack_require__(107);
+var _actionCreators = __webpack_require__(108);
 
-var _semi2 = _interopRequireDefault(_semi);
+var _actionCreators2 = _interopRequireDefault(_actionCreators);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11305,32 +11325,20 @@ var PowerControl = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (PowerControl.__proto__ || Object.getPrototypeOf(PowerControl)).call(this, props));
 
-        _this.onReverseClicked.bind(_this);
-        _this.onForwardClicked.bind(_this);
-        _this.onThrottleClicked.bind(_this);
-        _this.onStopClicked.bind(_this);
+        _this.onThrottleClicked = _this.onThrottleClicked.bind(_this);
+        _this.onStopClicked = _this.onStopClicked.bind(_this);
         return _this;
     }
 
     _createClass(PowerControl, [{
-        key: 'onForwardClicked',
-        value: function onForwardClicked() {
-            _actionCreators2.default[_actions2.default.SET_DIRECTION_FORWARD](50);
-        }
-    }, {
-        key: 'onReverseClicked',
-        value: function onReverseClicked() {
-            _actionCreators2.default[_actions2.default.SET_DIRECTION_FORWARD](50);
-        }
-    }, {
         key: 'onThrottleClicked',
-        value: function onThrottleClicked() {
-            _actionCreators2.default[_actions2.default.SET_THROTTLE](50);
+        value: function onThrottleClicked(e) {
+            this.props.executeThrottle(_actions2.default.SET_THROTTLE, 50);
         }
     }, {
         key: 'onStopClicked',
-        value: function onStopClicked() {
-            _actionCreators2.default[_actions2.default.SET_THROTTLE_ZERO]();
+        value: function onStopClicked(e) {
+            this.props.executeThrottle(_actions2.default.SET_THROTTLE, 0);
         }
     }, {
         key: 'render',
@@ -11338,7 +11346,7 @@ var PowerControl = function (_React$Component) {
             return _react2.default.createElement(
                 'g',
                 { id: this.props.id },
-                _react2.default.createElement(_semi2.default, { onClick: this.onForwardClicked, styles: { fill: "lightblue" }, fat: 'true', start: { r: 80, theta: Math.PI * 9 / 8 }, end: { r: 80, theta: Math.PI * 15 / 8 } }),
+                _react2.default.createElement(_semi2.default, { onClick: this.onThrottleClicked, styles: { fill: "lightblue" }, fat: 'true', start: { r: 80, theta: Math.PI * 9 / 8 }, end: { r: 80, theta: Math.PI * 15 / 8 } }),
                 _react2.default.createElement(_semi2.default, { onClick: this.onStopClicked, styles: { fill: "blue" }, start: { r: 80, theta: Math.PI * 15 / 8 }, end: { r: 80, theta: Math.PI * 9 / 8 } })
             );
         }
@@ -11347,45 +11355,22 @@ var PowerControl = function (_React$Component) {
     return PowerControl;
 }(_react2.default.Component);
 
-exports.default = (0, _reactRedux.connect)(function (state) {
-    return state.power || {};
-})(PowerControl);
+var mapStateToProps = function mapStateToProps(state) {
+    return { power: state.power };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return {
+        executeThrottle: function executeThrottle(action, power) {
+            dispatch(_actionCreators2.default[action](power));
+        }
+    };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(PowerControl);
 
 /***/ }),
-/* 102 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _redux = __webpack_require__(36);
-
-var _logging = __webpack_require__(110);
-
-var _logging2 = _interopRequireDefault(_logging);
-
-var _navigation = __webpack_require__(111);
-
-var _navigation2 = _interopRequireDefault(_navigation);
-
-var _power = __webpack_require__(112);
-
-var _power2 = _interopRequireDefault(_power);
-
-var _button = __webpack_require__(109);
-
-var _button2 = _interopRequireDefault(_button);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var rootReducer = (0, _redux.combineReducers)({ Logging: _logging2.default, Nav: _navigation2.default, Power: _power2.default, Button: _button2.default });
-exports.default = rootReducer;
-
-/***/ }),
+/* 102 */,
 /* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11484,9 +11469,9 @@ var _button = __webpack_require__(99);
 
 var _button2 = _interopRequireDefault(_button);
 
-var _reducers = __webpack_require__(102);
+var _root = __webpack_require__(246);
 
-var _reducers2 = _interopRequireDefault(_reducers);
+var _root2 = _interopRequireDefault(_root);
 
 var _reactRedux = __webpack_require__(27);
 
@@ -11502,7 +11487,7 @@ var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var store = (0, _redux.createStore)(_reducers2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var store = (0, _redux.createStore)(_root2.default, (0, _redux.applyMiddleware)(_reduxThunk2.default));
 
 (0, _reactTapEventPlugin2.default)();
 
@@ -11605,10 +11590,14 @@ var navUrl = 'http://192.168.0.13:8080/api/v1/nav/';
 var motorUrl = 'http://192.168.0.13:8080/api/v1/motor/';
 
 Object.keys(_actions2.default).forEach(function (actionType) {
-    return factory[actionType] = function (payload) {
-        var action = { type: actionType, payload: payload };
-        console.log(JSON.stringify(action, null, 4));
-        return action;
+    factory[actionType] = function (args) {
+        return function (dispatch, getstate) {
+            var action = {
+                type: actionType,
+                payload: args
+            };
+            dispatch(action);
+        };
     };
 });
 
@@ -11855,51 +11844,14 @@ exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
   var action = arguments[1];
 
-  console.log(action);
+  if (action.type.charAt(0) != '@') {
+    console.log(action);
+  }
   return state;
 };
 
 /***/ }),
-/* 111 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _actions = __webpack_require__(24);
-
-var Actions = _interopRequireWildcard(_actions);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-var INITIAL_STATE = {
-    direction: Actions.FORWARD,
-    turn: Actions.STRAIGHT,
-    timeout: 0
-}; // navigation reducer
-
-exports.default = function () {
-    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
-    var action = arguments[1];
-
-    var update = { direction: action.type, timeout: 0 };
-    switch (action.type) {
-        case Actions.LEFT:
-        case Actions.RIGHT:
-            update.timeout = action.value;
-            return Object.assign({}, state, update);
-        case Actions.STRAIGHT:
-            return Object.assign({}, state, update);
-        default:
-            return state;
-    }
-};
-
-/***/ }),
+/* 111 */,
 /* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -26184,6 +26136,80 @@ module.exports = function(module) {
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _redux = __webpack_require__(36);
+
+var _logging = __webpack_require__(110);
+
+var _logging2 = _interopRequireDefault(_logging);
+
+var _nav = __webpack_require__(247);
+
+var _nav2 = _interopRequireDefault(_nav);
+
+var _power = __webpack_require__(112);
+
+var _power2 = _interopRequireDefault(_power);
+
+var _button = __webpack_require__(109);
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var rootReducer = (0, _redux.combineReducers)({ Logging: _logging2.default, Nav: _nav2.default, Power: _power2.default, Button: _button2.default });
+exports.default = rootReducer;
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _actions = __webpack_require__(24);
+
+var _actions2 = _interopRequireDefault(_actions);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var INITIAL_STATE = {
+    turn: _actions2.default.TURN_STRAIGHT,
+    timeout: 0
+}; // navigation reducer
+
+exports.default = function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
+    var action = arguments[1];
+
+    var update = {
+        turn: action.type,
+        timeout: action.payload || 0
+    };
+    switch (action.type) {
+        case _actions2.default.TURN_LEFT:
+        case _actions2.default.TURN_RIGHT:
+        case _actions2.default.TURN_STRAIGHT:
+            return Object.assign({}, state, update);
+        default:
+            return state;
+    }
+};
 
 /***/ })
 /******/ ]);
