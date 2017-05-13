@@ -14,6 +14,7 @@ class ButtonControl extends React.Component {
     }
 
     on_0_Clicked(e) {
+        console.log(this.props.button)
         this.props.executeSwitch(Actions.TOGGLE_SWITCH,'blue')
     }
 
@@ -40,7 +41,7 @@ class ButtonControl extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { button: state.button }
+    return { button: state.Button }
 }
 
 const mapDispatchToProps = (dispatch) => {

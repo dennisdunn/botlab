@@ -1,5 +1,5 @@
 // power reducer
-import * as Actions from '../actions/actions'
+import Actions from '../actions/actions'
 
 const INITIAL_STATE = {
   power: 0,

@@ -1,5 +1,5 @@
 // button reducer
-import * as Actions from '../actions/actions'
+import Actions from '../actions/actions'
 
 const INITIAL_BUTTON_STATE = {
   blue: false,
@@ -11,14 +11,14 @@ const INITIAL_BUTTON_STATE = {
 export default (state = INITIAL_BUTTON_STATE, action) => {
   let update = {}
   switch (action.type) {
-    case Actions.TOGGLE_BUTTON:
-      update[action.key] = !state[action.key]
+    case Actions.TOGGLE_SWITCH:
+      update[action.payload] = !state[action.payload]
       return Object.assign({}, state, update)
-    case Actions.BUTTON_ON:
-      update[action.key] = true
+    case Actions.SET_SWITCH:
+      update[action.payload] = true
       return Object.assign({}, state, update)
-    case Actions.BUTTON_OFF:
-      update[action.key] = false
+    case Actions.CLEAR_SWITCH:
+      update[action.payload] = false
       return Object.assign({}, state, update)
     default:
       return state

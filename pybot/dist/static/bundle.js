@@ -3404,6 +3404,7 @@ exports.default = {
     TURN_RIGHT: 'TURN_RIGHT',
     TURN_STRAIGHT: 'TURN_STRAIGHT',
     SET_SWITCH: 'SET_SWITCH',
+    CLEAR_SWITCH: 'CLEAR_SWITCH',
     TOGGLE_SWITCH: 'TOGGLE_SWITCH'
 };
 
@@ -11132,6 +11133,7 @@ var ButtonControl = function (_React$Component) {
     _createClass(ButtonControl, [{
         key: 'on_0_Clicked',
         value: function on_0_Clicked(e) {
+            console.log(this.props.button);
             this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'blue');
         }
     }, {
@@ -11167,7 +11169,7 @@ var ButtonControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { button: state.button };
+    return { button: state.Button };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -11265,7 +11267,7 @@ var NavControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { nav: state.nav };
+    return { nav: state.Nav };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -11356,7 +11358,7 @@ var PowerControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { power: state.power };
+    return { power: state.Power };
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -11797,9 +11799,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _actions = __webpack_require__(24);
 
-var Actions = _interopRequireWildcard(_actions);
+var _actions2 = _interopRequireDefault(_actions);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var INITIAL_BUTTON_STATE = {
   blue: false,
@@ -11814,14 +11816,14 @@ exports.default = function () {
 
   var update = {};
   switch (action.type) {
-    case Actions.TOGGLE_BUTTON:
-      update[action.key] = !state[action.key];
+    case _actions2.default.TOGGLE_SWITCH:
+      update[action.payload] = !state[action.payload];
       return Object.assign({}, state, update);
-    case Actions.BUTTON_ON:
-      update[action.key] = true;
+    case _actions2.default.SET_SWITCH:
+      update[action.payload] = true;
       return Object.assign({}, state, update);
-    case Actions.BUTTON_OFF:
-      update[action.key] = false;
+    case _actions2.default.CLEAR_SWITCH:
+      update[action.payload] = false;
       return Object.assign({}, state, update);
     default:
       return state;
@@ -11864,13 +11866,13 @@ Object.defineProperty(exports, "__esModule", {
 
 var _actions = __webpack_require__(24);
 
-var Actions = _interopRequireWildcard(_actions);
+var _actions2 = _interopRequireDefault(_actions);
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var INITIAL_STATE = {
   power: 0,
-  direction: Actions.FORWARD
+  direction: _actions2.default.FORWARD
 }; // power reducer
 
 exports.default = function () {
@@ -11879,11 +11881,11 @@ exports.default = function () {
 
   var update = { power: action.value || 0 };
   switch (action.type) {
-    case Actions.FORWARD:
-    case Actions.BACKWARD:
+    case _actions2.default.FORWARD:
+    case _actions2.default.BACKWARD:
       update.direction = action.type;
       return Object.assign({}, state, update);
-    case Actions.STOP:
+    case _actions2.default.STOP:
       update.power = 0;
       return Object.assign({}, state, update);
     default:

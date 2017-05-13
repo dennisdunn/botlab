@@ -34,7 +34,7 @@ class NavControl extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { nav: state.nav }
+    return { nav: state.Nav }
 }
 
 const mapDispatchToProps = (dispatch) => {
