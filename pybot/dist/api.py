@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from flask import Flask, request, redirect, json
+from flask import Flask, request, redirect, json, jsonify
 
 from flask_cors import CORS
 from motor import Motor
@@ -25,7 +25,7 @@ def steering(cmd):
         motorCtl.right(data)
     elif cmd == "straight":
         motorCtl.straight()
-    return cmd
+    return jsonify(cmd)
 
 
 @app.route("/api/v1/motor/<cmd>", methods=['POST'])
@@ -34,15 +34,15 @@ def motor(cmd):
         motorCtl.forward()
     elif cmd == "reverse":
         motorCtl.reverse()
-    return cmd
+    return jsonify(cmd)
+
 
 
 @app.route("/api/v1/throttle", methods=['POST'])
 def throttle():
     data = json.loads(request.data)
     motorCtl.throttle(data)
-    return str(data)
-
+    return jsonify(data)
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0")
