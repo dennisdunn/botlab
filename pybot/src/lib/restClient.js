@@ -14,7 +14,7 @@ export default class RestClient {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Accept': 'application/json,text/html,text/plain'
+                'Accept': 'application/json'
             },
             mode: 'no-cors',
             body: JSON.stringify(payload)
