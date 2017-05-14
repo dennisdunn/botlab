@@ -11,32 +11,28 @@ class Motor:
 
     def forward(self):
         self.direction = 1
-        self.setPower()
+        self.applyPowerSettings()
 
     def reverse(self):
         self.direction = -1
-        self.setPower()
+        self.applyPowerSettings()
 
     def stop(self):
         self.throttle(0)
 
     def throttle(self, speed=0):
         self.speed = speed
-        self.setPower()
+        self.applyPowerSettings()
 
     def left(self, timeout=0):
         explorerhat.motor[1].speed(0)
-        time.sleep(timeout)
-        self.setPower()
 
     def right(self, timeout=0):
         explorerhat.motor[0].speed(0)
-        time.sleep(timeout)
-        self.setPower()
 
     def straight(self):
-        self.setPower()
+        self.applyPowerSettings()
 
-    def setPower(self):
+    def applyPowerSettings(self):
         explorerhat.motor.speed(self.speed * self.direction)
 
