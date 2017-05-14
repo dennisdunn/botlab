@@ -25,9 +25,7 @@ def steering(cmd):
         motorCtl.right(data)
     elif cmd == "straight":
         motorCtl.straight()
-    response = cmd
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return cmd
 
 
 @app.route("/api/v1/motor/<cmd>", methods=['POST'])
@@ -36,18 +34,14 @@ def motor(cmd):
         motorCtl.forward()
     elif cmd == "reverse":
         motorCtl.reverse()
-    response = cmd
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return cmd
 
 
 @app.route("/api/v1/throttle", methods=['POST'])
 def throttle():
     data = json.loads(request.data)
     motorCtl.throttle(data)
-    response = str(data)
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    return str(data)
 
 
 if __name__ == "__main__":
