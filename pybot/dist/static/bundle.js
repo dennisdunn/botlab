@@ -4982,8 +4982,8 @@ factory[_actions2.default.SET_THROTTLE] = function (speed) {
     return function (dispatch) {
         _restClient2.default.send(uri + 'throttle', speed).then(function (data) {
             dispatch({
-                type: Action.SET_THROTTLE,
-                payload: { speed: data }
+                type: _actions2.default.SET_THROTTLE,
+                payload: data
             });
         });
     };
@@ -4993,7 +4993,7 @@ factory[_actions2.default.TURN_LEFT] = function (timeout) {
     return function (dispatch) {
         _restClient2.default.send(uri + 'steering/left', timeout).then(function (data) {
             dispatch({
-                type: Action.TURN_LEFT,
+                type: _actions2.default.TURN_LEFT,
                 payload: data
             });
         });
@@ -5004,7 +5004,7 @@ factory[_actions2.default.TURN_STRAIGHT] = function () {
     return function (dispatch) {
         _restClient2.default.send(uri + 'steering/straight').then(function (data) {
             dispatch({
-                type: Action.TURN_STRAIGHT,
+                type: _actions2.default.TURN_STRAIGHT,
                 payload: data
             });
         });
@@ -5015,7 +5015,7 @@ factory[_actions2.default.TURN_RIGHT] = function (timeout) {
     return function (dispatch) {
         _restClient2.default.send(uri + 'steering/right', timeout).then(function (data) {
             dispatch({
-                type: Action.TURN_RIGHT,
+                type: _actions2.default.TURN_RIGHT,
                 payload: data
             });
         });

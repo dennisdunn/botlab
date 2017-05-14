@@ -25,8 +25,8 @@ factory[Actions.SET_THROTTLE] = (speed) => {
         Client.send(uri + 'throttle', speed)
             .then(data => {
                 dispatch({
-                    type: Action.SET_THROTTLE,
-                    payload: { speed: data }
+                    type: Actions.SET_THROTTLE,
+                    payload: data
                 })
             })
     }
@@ -37,7 +37,7 @@ factory[Actions.TURN_LEFT] = (timeout) => {
         Client.send(uri + 'steering/left', timeout)
             .then(data => {
                 dispatch({
-                    type: Action.TURN_LEFT,
+                    type: Actions.TURN_LEFT,
                     payload: data
                 })
             })
@@ -49,7 +49,7 @@ factory[Actions.TURN_STRAIGHT] = () => {
         Client.send(uri + 'steering/straight')
             .then(data => {
                 dispatch({
-                    type: Action.TURN_STRAIGHT,
+                    type: Actions.TURN_STRAIGHT,
                     payload: data
                 })
             })
@@ -61,7 +61,7 @@ factory[Actions.TURN_RIGHT] = (timeout) => {
         Client.send(uri + 'steering/right', timeout)
             .then(data => {
                 dispatch({
-                    type: Action.TURN_RIGHT,
+                    type: Actions.TURN_RIGHT,
                     payload: data
                 })
             })
