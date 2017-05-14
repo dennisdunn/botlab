@@ -12,7 +12,7 @@ def index():
     return redirect("/static/index.html", code=302)
 
 @app.route("/api/v1/steering/<cmd>", methods=['POST'])
-def turn(cmd):
+def steering(cmd):
     data = json.loads(request.data)
     if cmd == "left":
         motorCtl.left(data)
@@ -23,15 +23,15 @@ def turn(cmd):
     return jsonify(data)
 
 @app.route("/api/v1/motor/<cmd>", methods=['POST'])
-def turn(cmd):
+def motor(cmd):
     if cmd == "forward":
         motorCtl.forward()
     elif cmd == "reverse":
         motorCtl.reverse()
-    return jsonify(data)
+    return jsonify(cmd)
 
 @app.route("/api/v1/throttle", methods=['POST'])
-def motors():
+def throttle():
     data = json.loads(request.data)
     motorCtl.throttle(data)
     return jsonify(data)
