@@ -16,7 +16,6 @@ export default class RestClient {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json,text/plain,text/html'
             },
-            mode: 'no-cors',
             body: JSON.stringify(payload)
         }
     }
@@ -28,7 +27,7 @@ export default class RestClient {
     }
 
     static checkStatus(response) {
-        if (response.status >= 200 && response.status < 300) {
+        if (response.status >= 0 && response.status < 300) {
             return response
         } else {
             var error = new Error(response.statusText)

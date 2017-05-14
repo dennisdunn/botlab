@@ -50,7 +50,7 @@ factory[Actions.TURN_STRAIGHT] = () => {
             .then(data => {
                 dispatch({
                     type: Action.TURN_STRAIGHT,
-                    payload:data
+                    payload: data
                 })
             })
     }
@@ -63,6 +63,24 @@ factory[Actions.TURN_RIGHT] = (timeout) => {
                 dispatch({
                     type: Action.TURN_RIGHT,
                     payload: data
+                })
+            })
+    }
+}
+
+factory[Actions.TOGGLE_DIRECTION] = (key) => {
+    return (dispatch, getstate) => {
+        let currentState = getstate().Button[key]
+        let direction = (currentState) ? 'forward' : 'reverse'
+        Client.send(uri + 'motor/' + direction)
+            .then(data => {
+                dispatch({
+                    type: Actions.SET_DIRECTION,
+                    payload: direction
+                })
+                dispatch({
+                    type: Actions.TOGGLE_SWITCH,
+                    payload: key
                 })
             })
     }

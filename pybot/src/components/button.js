@@ -7,33 +7,33 @@ import ActionCreator from '../lib/actions/actionCreators'
 class ButtonControl extends React.Component {
     constructor(props) {
         super(props)
-        this.on_0_Clicked=this.on_0_Clicked.bind(this)
-        this.on_1_Clicked=  this.on_1_Clicked.bind(this)
-        this.on_2_Clicked=  this.on_2_Clicked.bind(this)
-        this.on_3_Clicked=  this.on_3_Clicked.bind(this)
+        this.on_0_Clicked = this.on_0_Clicked.bind(this)
+        this.on_1_Clicked = this.on_1_Clicked.bind(this)
+        this.on_2_Clicked = this.on_2_Clicked.bind(this)
+        this.on_3_Clicked = this.on_3_Clicked.bind(this)
     }
 
     on_0_Clicked(e) {
-        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'blue')
+        this.props.executeSwitch(Actions.TOGGLE_DIRECTION, 'blue')
     }
 
     on_1_Clicked(e) {
-        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'green')
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'green')
     }
 
     on_2_Clicked(e) {
-        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'yellow')
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'yellow')
     }
 
     on_3_Clicked(e) {
-        this.props.executeSwitch(Actions.TOGGLE_SWITCH,'red')
+        this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'red')
     }
 
     render() {
-        let bluestyle={fill:this.props.button.blue ? 'royalblue':'darkblue'}
-        let greenstyle={fill:this.props.button.green ? 'limegreen':'darkgreen'}
-        let yellowstyle={fill:this.props.button.yellow ? 'yellow':'goldenrod'}
-        let redstyle={fill:this.props.button.red ? 'red':'darkred'}
+        let bluestyle = { fill: this.props.button.blue ? 'royalblue' : 'darkblue' }
+        let greenstyle = { fill: this.props.button.green ? 'limegreen' : 'darkgreen' }
+        let yellowstyle = { fill: this.props.button.yellow ? 'yellow' : 'goldenrod' }
+        let redstyle = { fill: this.props.button.red ? 'red' : 'darkred' }
         return <g id={this.props.id}>
             <Wedge onClick={this.on_0_Clicked} styles={bluestyle} innerRight={{ r: 90, theta: Math.PI * 9 / 8 }} outerLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
             <Wedge onClick={this.on_1_Clicked} styles={greenstyle} innerRight={{ r: 90, theta: Math.PI * 21 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 3 / 2 }}></Wedge>

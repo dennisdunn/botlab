@@ -1992,15 +1992,15 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.default = {
-    SET_DIRECTION_FORWARD: 'SET_DIRECTION_FORWARD',
-    SET_DIRECTION_REVERSE: 'SET_DIRECTION_REVERSE',
+    SET_DIRECTION: 'SET_DIRECTION',
     SET_THROTTLE: 'SET_THROTTLE',
     TURN_LEFT: 'TURN_LEFT',
     TURN_RIGHT: 'TURN_RIGHT',
     TURN_STRAIGHT: 'TURN_STRAIGHT',
     SET_SWITCH: 'SET_SWITCH',
     CLEAR_SWITCH: 'CLEAR_SWITCH',
-    TOGGLE_SWITCH: 'TOGGLE_SWITCH'
+    TOGGLE_SWITCH: 'TOGGLE_SWITCH',
+    TOGGLE_DIRECTION: 'TOGGLE_DIRECTION'
 };
 
 /***/ }),
@@ -5017,6 +5017,23 @@ factory[_actions2.default.TURN_RIGHT] = function (timeout) {
             dispatch({
                 type: Action.TURN_RIGHT,
                 payload: data
+            });
+        });
+    };
+};
+
+factory[_actions2.default.TOGGLE_DIRECTION] = function (key) {
+    return function (dispatch, getstate) {
+        var currentState = getstate().Button[key];
+        var direction = currentState ? 'forward' : 'reverse';
+        _restClient2.default.send(uri + 'motor/' + direction).then(function (data) {
+            dispatch({
+                type: _actions2.default.SET_DIRECTION,
+                payload: direction
+            });
+            dispatch({
+                type: _actions2.default.TOGGLE_SWITCH,
+                payload: key
             });
         });
     };
@@ -11218,7 +11235,7 @@ var ButtonControl = function (_React$Component) {
     _createClass(ButtonControl, [{
         key: 'on_0_Clicked',
         value: function on_0_Clicked(e) {
-            this.props.executeSwitch(_actions2.default.TOGGLE_SWITCH, 'blue');
+            this.props.executeSwitch(_actions2.default.TOGGLE_DIRECTION, 'blue');
         }
     }, {
         key: 'on_1_Clicked',
@@ -11811,22 +11828,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var INITIAL_STATE = {
   power: 0,
-  direction: _actions2.default.FORWARD
+  direction: 'forward'
 }; // power reducer
 
 exports.default = function () {
   var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : INITIAL_STATE;
   var action = arguments[1];
 
-  var update = { power: action.value || 0 };
   switch (action.type) {
-    case _actions2.default.FORWARD:
-    case _actions2.default.BACKWARD:
-      update.direction = action.type;
-      return Object.assign({}, state, update);
-    case _actions2.default.STOP:
-      update.power = 0;
-      return Object.assign({}, state, update);
+    case _actions2.default.SET_DIRECTION:
+      return Object.assign({}, state, { direction: action.payload });
+    case _actions2.default.SET_THROTTLE:
+      return Object.assign({}, state, { power: action.payload });
     default:
       return state;
   }
@@ -11867,9 +11880,8 @@ var RestClient = function () {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json,text/html,text/plain'
+                    'Accept': 'application/json,text/plain,text/html'
                 },
-                mode: 'no-cors',
                 body: JSON.stringify(payload)
             };
         }
@@ -11881,7 +11893,7 @@ var RestClient = function () {
     }, {
         key: 'checkStatus',
         value: function checkStatus(response) {
-            if (response.status >= 200 && response.status < 300) {
+            if (response.status >= 0 && response.status < 300) {
                 return response;
             } else {
                 var error = new Error(response.statusText);
