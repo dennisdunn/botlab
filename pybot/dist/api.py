@@ -1,9 +1,13 @@
 #!/usr/bin/env python
 
-from flask import Flask, request, response, redirect, json, jsonify
+from flask import Flask, request, redirect, json
+
+from flask_cors import CORS
 from motor import Motor
 
 app = Flask(__name__)
+CORS(app)
+
 motorCtl = Motor()
 
 
