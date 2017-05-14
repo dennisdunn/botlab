@@ -24,10 +24,10 @@ class Motor:
         self.speed = speed
         self.applyPowerSettings()
 
-    def left(self, timeout=0):
+    def left(self):
         explorerhat.motor[1].speed(0)
 
-    def right(self, timeout=0):
+    def right(self):
         explorerhat.motor[0].speed(0)
 
     def straight(self):

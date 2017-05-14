@@ -7,22 +7,22 @@ import ActionCreator from '../lib/actions/actionCreators'
 class PowerControl extends React.Component {
     constructor(props) {
         super(props)
-        this.onThrottleClicked = this.onThrottleClicked.bind(this)
-        this.onStopClicked = this.onStopClicked.bind(this)
+        this.handleSetThrottle = this.handleSetThrottle.bind(this)
+        this.handleStop = this.handleStop.bind(this)
     }
 
-    onThrottleClicked(e) {
+    handleSetThrottle(e) {
         this.props.executeThrottle(Actions.SET_THROTTLE, 50)
     }
 
-    onStopClicked(e) {
+    handleStop(e) {
         this.props.executeThrottle(Actions.SET_THROTTLE, 0)
     }
 
     render() {
         return <g id={this.props.id}>
-            <Semi onClick={this.onThrottleClicked} styles={{ fill: "lightblue" }} fat='true' start={{ r: 80, theta: Math.PI * 9 / 8 }} end={{ r: 80, theta: Math.PI * 15 / 8 }}></Semi>
-            <Semi onClick={this.onStopClicked} styles={{ fill: "blue" }} start={{ r: 80, theta: Math.PI * 15 / 8 }} end={{ r: 80, theta: Math.PI * 9 / 8 }}></Semi>
+            <Semi onClick={this.handleSetThrottle} styles={{ fill: "lightblue" }} fat='true' start={{ r: 80, theta: Math.PI * 9 / 8 }} end={{ r: 80, theta: Math.PI * 15 / 8 }}></Semi>
+            <Semi onClick={this.handleStop} styles={{ fill: "blue" }} start={{ r: 80, theta: Math.PI * 15 / 8 }} end={{ r: 80, theta: Math.PI * 9 / 8 }}></Semi>
         </g>
     }
 }

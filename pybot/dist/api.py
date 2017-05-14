@@ -18,11 +18,10 @@ def index():
 
 @app.route("/api/v1/steering/<cmd>", methods=['POST'])
 def steering(cmd):
-    data = json.loads(request.data)
     if cmd == "left":
-        motorCtl.left(data)
+        motorCtl.left()
     elif cmd == "right":
-        motorCtl.right(data)
+        motorCtl.right()
     elif cmd == "straight":
         motorCtl.straight()
     return jsonify(cmd)
