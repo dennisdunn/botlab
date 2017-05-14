@@ -7010,6 +7010,10 @@ var _coordService = __webpack_require__(59);
 
 var _coordService2 = _interopRequireDefault(_coordService);
 
+var _mappedHandlerComponent = __webpack_require__(247);
+
+var _mappedHandlerComponent2 = _interopRequireDefault(_mappedHandlerComponent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -7018,8 +7022,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Wedge = function (_React$Component) {
-    _inherits(Wedge, _React$Component);
+var Wedge = function (_MappedHandler) {
+    _inherits(Wedge, _MappedHandler);
 
     function Wedge(props) {
         _classCallCheck(this, Wedge);
@@ -7030,13 +7034,6 @@ var Wedge = function (_React$Component) {
     _createClass(Wedge, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
-            var handlers = {};
-            Object.keys(this.props).forEach(function (key) {
-                if (key.startsWith('on')) handlers[key] = _this2.props[key];
-            });
-
             var ul = _coordService2.default.polarToCanvas(this.props.outerLeft);
             var ur = _coordService2.default.polarToCanvas({ r: this.props.outerLeft.r, theta: this.props.innerRight.theta });
             var lr = _coordService2.default.polarToCanvas(this.props.innerRight);
@@ -7044,12 +7041,12 @@ var Wedge = function (_React$Component) {
 
             var pathData = 'M ' + ul.x + ' ' + ul.y + ' A ' + this.props.outerLeft.r + ' ' + this.props.outerLeft.r + ' 0 0 1 ' + ur.x + ' ' + ur.y + ' L ' + lr.x + ',' + lr.y + ' A ' + this.props.innerRight.r + ' ' + this.props.innerRight.r + ' 0 0 0 ' + ll.x + ' ' + ll.y + ' Z';
 
-            return _react2.default.createElement('path', _extends({}, handlers, { d: pathData }, this.props.styles));
+            return _react2.default.createElement('path', _extends({}, this.handlers, { d: pathData }, this.props.styles));
         }
     }]);
 
     return Wedge;
-}(_react2.default.Component);
+}(_mappedHandlerComponent2.default);
 
 exports.default = Wedge;
 
@@ -11673,19 +11670,23 @@ var _coordService = __webpack_require__(59);
 
 var _coordService2 = _interopRequireDefault(_coordService);
 
+var _mappedHandlerComponent = __webpack_require__(247);
+
+var _mappedHandlerComponent2 = _interopRequireDefault(_mappedHandlerComponent);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * A semi-circle
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
 
-/**
- * A semi-circle
- */
-var Semi = function (_React$Component) {
-    _inherits(Semi, _React$Component);
+
+var Semi = function (_MappedHandler) {
+    _inherits(Semi, _MappedHandler);
 
     function Semi(props) {
         _classCallCheck(this, Semi);
@@ -11696,24 +11697,17 @@ var Semi = function (_React$Component) {
     _createClass(Semi, [{
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
-            var handlers = {};
-            Object.keys(this.props).forEach(function (key) {
-                if (key.startsWith('on')) handlers[key] = _this2.props[key];
-            });
-
             var start = _coordService2.default.polarToCanvas(this.props.start);
             var end = _coordService2.default.polarToCanvas(this.props.end);
             var isFat = this.props.fat ? 1 : 0;
             var pathData = 'M ' + start.x + ' ' + start.y + ' A ' + this.props.start.r + ' ' + this.props.start.r + ' 0 ' + isFat + ' 1 ' + end.x + ' ' + end.y + ' Z';
 
-            return _react2.default.createElement('path', _extends({}, handlers, { d: pathData }, this.props.styles));
+            return _react2.default.createElement('path', _extends({}, this.handlers, { d: pathData }, this.props.styles));
         }
     }]);
 
     return Semi;
-}(_react2.default.Component);
+}(_mappedHandlerComponent2.default);
 
 exports.default = Semi;
 
@@ -26172,6 +26166,58 @@ module.exports = function(module) {
   self.fetch.polyfill = true
 })(typeof self !== 'undefined' ? self : this);
 
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(13);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Automatically maps event handlers on props to the
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * rendered component. Use the spread operator on
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * this.handlers in the child component.
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * 
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * render(){
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                *      <div {...this.handlers}></div>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+
+
+var MappedHandlerComponent = function (_React$Component) {
+    _inherits(MappedHandlerComponent, _React$Component);
+
+    function MappedHandlerComponent(props) {
+        _classCallCheck(this, MappedHandlerComponent);
+
+        var _this = _possibleConstructorReturn(this, (MappedHandlerComponent.__proto__ || Object.getPrototypeOf(MappedHandlerComponent)).call(this, props));
+
+        _this.handlers = {};
+        Object.keys(_this.props).forEach(function (key) {
+            if (key.startsWith('on')) _this.handlers[key] = props[key];
+        });
+        return _this;
+    }
+
+    return MappedHandlerComponent;
+}(_react2.default.Component);
+
+exports.default = MappedHandlerComponent;
 
 /***/ })
 /******/ ]);
