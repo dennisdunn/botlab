@@ -30,10 +30,10 @@ class ButtonControl extends React.Component {
     }
 
     render() {
-        let bluestyle = { fill: this.props.button.blue ? 'royalblue' : 'darkblue' }
-        let greenstyle = { fill: this.props.button.green ? 'limegreen' : 'darkgreen' }
-        let yellowstyle = { fill: this.props.button.yellow ? 'yellow' : 'goldenrod' }
-        let redstyle = { fill: this.props.button.red ? 'red' : 'darkred' }
+        let bluestyle = { fill: this.props.blue ? 'royalblue' : 'darkblue' }
+        let greenstyle = { fill: this.props.green ? 'limegreen' : 'darkgreen' }
+        let yellowstyle = { fill: this.props.yellow ? 'yellow' : 'goldenrod' }
+        let redstyle = { fill: this.props.red ? 'red' : 'darkred' }
         return <g id={this.props.id}>
             <Wedge onClick={this.on_0_Clicked} styles={bluestyle} innerRight={{ r: 90, theta: Math.PI * 9 / 8 }} outerLeft={{ r: 150, theta: Math.PI * 21 / 16 }}></Wedge>
             <Wedge onClick={this.on_1_Clicked} styles={greenstyle} innerRight={{ r: 90, theta: Math.PI * 21 / 16 }} outerLeft={{ r: 150, theta: Math.PI * 3 / 2 }}></Wedge>
@@ -44,7 +44,7 @@ class ButtonControl extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { button: state.Button }
+    return Object.assign({}, state.Button)
 }
 
 const mapDispatchToProps = (dispatch) => {

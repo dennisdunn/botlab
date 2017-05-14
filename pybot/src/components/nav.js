@@ -26,21 +26,21 @@ class NavControl extends React.Component {
 
     render() {
         return <g id={this.props.id}>
-            <Wedge onmousedown={this.handleLeftTurn} onmouseup={this.handleCancelTurn} styles={{ fill: "lightgreen" }} outerLeft={{ r: 150, theta: Math.PI * 1.1 }} innerRight={{ r: 90, theta: Math.PI * 5 / 8 }}></Wedge>
+            <Wedge onMouseDown={this.handleLeftTurn} onMouseUp={this.handleCancelTurn} styles={{ fill: "lightgreen" }} outerLeft={{ r: 150, theta: Math.PI * 1.1 }} innerRight={{ r: 90, theta: Math.PI * 5 / 8 }}></Wedge>
             <Wedge onClick={this.handleCancelTurn} styles={{ fill: "green" }} outerLeft={{ r: 150, theta: Math.PI * 5 / 8 }} innerRight={{ r: 90, theta: Math.PI * 3 / 8 }}></Wedge>
-            <Wedge onmousedown={this.handleLeftTurn} onmouseup={this.handleCancelTurn}styles={{ fill: "lightgreen" }} outerLeft={{ r: 150, theta: Math.PI * 3 / 8 }} innerRight={{ r: 90, theta: Math.PI * 1.9 }}></Wedge>
+            <Wedge onMouseDown={this.handleRightTurn} onMouseUp={this.handleCancelTurn}styles={{ fill: "lightgreen" }} outerLeft={{ r: 150, theta: Math.PI * 3 / 8 }} innerRight={{ r: 90, theta: Math.PI * 1.9 }}></Wedge>
         </g>
     }
 }
 
 const mapStateToProps = (state) => {
-    return { nav: state.Nav }
+    return Object.assign({}, state.Nav )
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        executeTurn: (action, timeout) => {
-            dispatch(ActionCreator[action](timeout))
+        executeTurn: (action) => {
+            dispatch(ActionCreator[action]())
         }
     }
 }

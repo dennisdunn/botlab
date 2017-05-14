@@ -7030,6 +7030,13 @@ var Wedge = function (_React$Component) {
     _createClass(Wedge, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
+            var handlers = {};
+            Object.keys(this.props).forEach(function (key) {
+                if (key.startsWith('on')) handlers[key] = _this2.props[key];
+            });
+
             var ul = _coordService2.default.polarToCanvas(this.props.outerLeft);
             var ur = _coordService2.default.polarToCanvas({ r: this.props.outerLeft.r, theta: this.props.innerRight.theta });
             var lr = _coordService2.default.polarToCanvas(this.props.innerRight);
@@ -7037,7 +7044,7 @@ var Wedge = function (_React$Component) {
 
             var pathData = 'M ' + ul.x + ' ' + ul.y + ' A ' + this.props.outerLeft.r + ' ' + this.props.outerLeft.r + ' 0 0 1 ' + ur.x + ' ' + ur.y + ' L ' + lr.x + ',' + lr.y + ' A ' + this.props.innerRight.r + ' ' + this.props.innerRight.r + ' 0 0 0 ' + ll.x + ' ' + ll.y + ' Z';
 
-            return _react2.default.createElement('path', _extends({ onClick: this.props.onClick, d: pathData }, this.props.styles));
+            return _react2.default.createElement('path', _extends({}, handlers, { d: pathData }, this.props.styles));
         }
     }]);
 
@@ -11255,10 +11262,10 @@ var ButtonControl = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var bluestyle = { fill: this.props.button.blue ? 'royalblue' : 'darkblue' };
-            var greenstyle = { fill: this.props.button.green ? 'limegreen' : 'darkgreen' };
-            var yellowstyle = { fill: this.props.button.yellow ? 'yellow' : 'goldenrod' };
-            var redstyle = { fill: this.props.button.red ? 'red' : 'darkred' };
+            var bluestyle = { fill: this.props.blue ? 'royalblue' : 'darkblue' };
+            var greenstyle = { fill: this.props.green ? 'limegreen' : 'darkgreen' };
+            var yellowstyle = { fill: this.props.yellow ? 'yellow' : 'goldenrod' };
+            var redstyle = { fill: this.props.red ? 'red' : 'darkred' };
             return _react2.default.createElement(
                 'g',
                 { id: this.props.id },
@@ -11274,7 +11281,7 @@ var ButtonControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { button: state.Button };
+    return Object.assign({}, state.Button);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -11334,25 +11341,25 @@ var NavControl = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (NavControl.__proto__ || Object.getPrototypeOf(NavControl)).call(this, props));
 
-        _this.onLeftClicked = _this.onLeftClicked.bind(_this);
-        _this.onRightClicked = _this.onRightClicked.bind(_this);
-        _this.onStraightClicked = _this.onStraightClicked.bind(_this);
+        _this.handleLeftTurn = _this.handleLeftTurn.bind(_this);
+        _this.handleRightTurn = _this.handleRightTurn.bind(_this);
+        _this.handleCancelTurn = _this.handleCancelTurn.bind(_this);
         return _this;
     }
 
     _createClass(NavControl, [{
-        key: 'onLeftClicked',
-        value: function onLeftClicked(e) {
-            this.props.executeTurn(_actions2.default.TURN_LEFT, 1);
+        key: 'handleLeftTurn',
+        value: function handleLeftTurn(e) {
+            this.props.executeTurn(_actions2.default.TURN_LEFT);
         }
     }, {
-        key: 'onRightClicked',
-        value: function onRightClicked(e) {
-            this.props.executeTurn(_actions2.default.TURN_RIGHT, 1);
+        key: 'handleRightTurn',
+        value: function handleRightTurn(e) {
+            this.props.executeTurn(_actions2.default.TURN_RIGHT);
         }
     }, {
-        key: 'onStraightClicked',
-        value: function onStraightClicked(e) {
+        key: 'handleCancelTurn',
+        value: function handleCancelTurn(e) {
             this.props.executeTurn(_actions2.default.TURN_STRAIGHT);
         }
     }, {
@@ -11361,9 +11368,9 @@ var NavControl = function (_React$Component) {
             return _react2.default.createElement(
                 'g',
                 { id: this.props.id },
-                _react2.default.createElement(_wedge2.default, { onClick: this.onLeftClicked, styles: { fill: "lightgreen" }, outerLeft: { r: 150, theta: Math.PI * 1.1 }, innerRight: { r: 90, theta: Math.PI * 5 / 8 } }),
-                _react2.default.createElement(_wedge2.default, { onClick: this.onStraightClicked, styles: { fill: "green" }, outerLeft: { r: 150, theta: Math.PI * 5 / 8 }, innerRight: { r: 90, theta: Math.PI * 3 / 8 } }),
-                _react2.default.createElement(_wedge2.default, { onClick: this.onRightClicked, styles: { fill: "lightgreen" }, outerLeft: { r: 150, theta: Math.PI * 3 / 8 }, innerRight: { r: 90, theta: Math.PI * 1.9 } })
+                _react2.default.createElement(_wedge2.default, { onMouseDown: this.handleLeftTurn, onMouseUp: this.handleCancelTurn, styles: { fill: "lightgreen" }, outerLeft: { r: 150, theta: Math.PI * 1.1 }, innerRight: { r: 90, theta: Math.PI * 5 / 8 } }),
+                _react2.default.createElement(_wedge2.default, { onClick: this.handleCancelTurn, styles: { fill: "green" }, outerLeft: { r: 150, theta: Math.PI * 5 / 8 }, innerRight: { r: 90, theta: Math.PI * 3 / 8 } }),
+                _react2.default.createElement(_wedge2.default, { onMouseDown: this.handleRightTurn, onMouseUp: this.handleCancelTurn, styles: { fill: "lightgreen" }, outerLeft: { r: 150, theta: Math.PI * 3 / 8 }, innerRight: { r: 90, theta: Math.PI * 1.9 } })
             );
         }
     }]);
@@ -11372,13 +11379,13 @@ var NavControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { nav: state.Nav };
+    return Object.assign({}, state.Nav);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     return {
-        executeTurn: function executeTurn(action, timeout) {
-            dispatch(_actionCreators2.default[action](timeout));
+        executeTurn: function executeTurn(action) {
+            dispatch(_actionCreators2.default[action]());
         }
     };
 };
@@ -11432,19 +11439,19 @@ var PowerControl = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (PowerControl.__proto__ || Object.getPrototypeOf(PowerControl)).call(this, props));
 
-        _this.onThrottleClicked = _this.onThrottleClicked.bind(_this);
-        _this.onStopClicked = _this.onStopClicked.bind(_this);
+        _this.handleSetThrottle = _this.handleSetThrottle.bind(_this);
+        _this.handleStop = _this.handleStop.bind(_this);
         return _this;
     }
 
     _createClass(PowerControl, [{
-        key: 'onThrottleClicked',
-        value: function onThrottleClicked(e) {
+        key: 'handleSetThrottle',
+        value: function handleSetThrottle(e) {
             this.props.executeThrottle(_actions2.default.SET_THROTTLE, 50);
         }
     }, {
-        key: 'onStopClicked',
-        value: function onStopClicked(e) {
+        key: 'handleStop',
+        value: function handleStop(e) {
             this.props.executeThrottle(_actions2.default.SET_THROTTLE, 0);
         }
     }, {
@@ -11453,8 +11460,8 @@ var PowerControl = function (_React$Component) {
             return _react2.default.createElement(
                 'g',
                 { id: this.props.id },
-                _react2.default.createElement(_semi2.default, { onClick: this.onThrottleClicked, styles: { fill: "lightblue" }, fat: 'true', start: { r: 80, theta: Math.PI * 9 / 8 }, end: { r: 80, theta: Math.PI * 15 / 8 } }),
-                _react2.default.createElement(_semi2.default, { onClick: this.onStopClicked, styles: { fill: "blue" }, start: { r: 80, theta: Math.PI * 15 / 8 }, end: { r: 80, theta: Math.PI * 9 / 8 } })
+                _react2.default.createElement(_semi2.default, { onClick: this.handleSetThrottle, styles: { fill: "lightblue" }, fat: 'true', start: { r: 80, theta: Math.PI * 9 / 8 }, end: { r: 80, theta: Math.PI * 15 / 8 } }),
+                _react2.default.createElement(_semi2.default, { onClick: this.handleStop, styles: { fill: "blue" }, start: { r: 80, theta: Math.PI * 15 / 8 }, end: { r: 80, theta: Math.PI * 9 / 8 } })
             );
         }
     }]);
@@ -11463,7 +11470,7 @@ var PowerControl = function (_React$Component) {
 }(_react2.default.Component);
 
 var mapStateToProps = function mapStateToProps(state) {
-    return { power: state.Power };
+    return Object.assign({}, state.Power);
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
@@ -11689,12 +11696,19 @@ var Semi = function (_React$Component) {
     _createClass(Semi, [{
         key: 'render',
         value: function render() {
+            var _this2 = this;
+
+            var handlers = {};
+            Object.keys(this.props).forEach(function (key) {
+                if (key.startsWith('on')) handlers[key] = _this2.props[key];
+            });
+
             var start = _coordService2.default.polarToCanvas(this.props.start);
             var end = _coordService2.default.polarToCanvas(this.props.end);
             var isFat = this.props.fat ? 1 : 0;
             var pathData = 'M ' + start.x + ' ' + start.y + ' A ' + this.props.start.r + ' ' + this.props.start.r + ' 0 ' + isFat + ' 1 ' + end.x + ' ' + end.y + ' Z';
 
-            return _react2.default.createElement('path', _extends({ onClick: this.props.onClick, d: pathData }, this.props.styles));
+            return _react2.default.createElement('path', _extends({}, handlers, { d: pathData }, this.props.styles));
         }
     }]);
 
@@ -12907,18 +12921,6 @@ var libCoord = function () {
                 x: point.r * Math.cos(point.theta),
                 y: point.r * Math.sin(point.theta)
             };
-        }
-    }, {
-        key: "degreeToRadian",
-        value: function degreeToRadian(point) {
-            point.theta *= 57.2958;
-            return point;
-        }
-    }, {
-        key: "radianToDegree",
-        value: function radianToDegree(point) {
-            point.theta /= 57.2958;
-            return point;
         }
     }]);
 

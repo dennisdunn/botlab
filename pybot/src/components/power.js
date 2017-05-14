@@ -28,7 +28,7 @@ class PowerControl extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    return { power: state.Power }
+    return Object.assign({}, state.Power)
 }
 
 const mapDispatchToProps = (dispatch) => {
