@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+var pid = require('./pid.js');
+var p = new pid(23,20,10, 170);
+p.start();
+
+

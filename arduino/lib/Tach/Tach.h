@@ -5,12 +5,15 @@
 
 class Tach
 {
-    public:
-        Tach(int pin);
-        int get_rpm();
-    private:
-        int _prev_t;
-}
+  public:
+    Tach(int pin, void (*dispatcher)(void));
+    void isr();
+    unsigned int get_rpm();
 
+  private:
+    volatile unsigned long _then;
+    volatile unsigned int _n;
+    int _irq;
+};
 
 #endif

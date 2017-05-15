@@ -14,4 +14,4 @@ int Sonar::get_range()
     int echo = _sensor.ping_median(MEDIAN);
     int range = _sensor.convert_cm(echo);
     return range > 0 ? range : INVALID_DATA;
-};
+}
