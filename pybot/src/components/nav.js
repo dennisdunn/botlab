@@ -13,14 +13,20 @@ class NavControl extends React.Component {
     }
 
     handleLeftTurn(e) {
+        e.stopPropagation()
+        e.preventDefault()
         this.props.executeTurn(Actions.TURN_LEFT)
     }
 
     handleRightTurn(e) {
+        e.stopPropagation()
+        e.preventDefault()
         this.props.executeTurn(Actions.TURN_RIGHT)
     }
 
     handleCancelTurn(e) {
+        e.stopPropagation()
+        e.preventDefault()
         this.props.executeTurn(Actions.TURN_STRAIGHT)
     }
 
