@@ -12,14 +12,10 @@ class PowerControl extends React.Component {
     }
 
     handleSetThrottle(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeThrottle(Actions.SET_THROTTLE, 50)
     }
 
     handleStop(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeThrottle(Actions.SET_THROTTLE, 0)
     }
 

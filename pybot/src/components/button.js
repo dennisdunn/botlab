@@ -14,26 +14,18 @@ class ButtonControl extends React.Component {
     }
 
     on_0_Clicked(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeSwitch(Actions.TOGGLE_DIRECTION, 'blue')
     }
 
     on_1_Clicked(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'green')
     }
 
     on_2_Clicked(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'yellow')
     }
 
     on_3_Clicked(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeSwitch(Actions.TOGGLE_SWITCH, 'red')
     }
 
