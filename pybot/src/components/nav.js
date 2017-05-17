@@ -13,28 +13,25 @@ class NavControl extends React.Component {
     }
 
     handleLeftTurn(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeTurn(Actions.TURN_LEFT)
+        e.nativeEvent.preventDefault()
     }
 
     handleRightTurn(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeTurn(Actions.TURN_RIGHT)
+        e.nativeEvent.preventDefault()
     }
 
     handleCancelTurn(e) {
-        e.stopPropagation()
-        e.preventDefault()
         this.props.executeTurn(Actions.TURN_STRAIGHT)
+        e.nativeEvent.preventDefault()
     }
 
     render() {
         return <g id={this.props.id}>
             <Wedge onMouseDown={this.handleLeftTurn} onMouseUp={this.handleCancelTurn} onTouchStart={this.handleLeftTurn} onTouchEnd={this.handleCancelTurn} styles={{ fill: "lightgreen" }} outerLeft={{ r: 150, theta: Math.PI * 1.1 }} innerRight={{ r: 90, theta: Math.PI * 5 / 8 }}></Wedge>
-            <Wedge onClick={this.handleCancelTurn} onTouchTap={this.handleCancelTurn} styles={{ fill: "green" }} outerLeft={{ r: 150, theta: Math.PI * 5 / 8 }} innerRight={{ r: 90, theta: Math.PI * 3 / 8 }}></Wedge>
-            <Wedge onMouseDown={this.handleRightTurn} onMouseUp={this.handleCancelTurn}styles={{ fill: "lightgreen" }} onTouchStart={this.handleRightTurn} onTouchEnd={this.handleCancelTurn} outerLeft={{ r: 150, theta: Math.PI * 3 / 8 }} innerRight={{ r: 90, theta: Math.PI * 1.9 }}></Wedge>
+            <Wedge onClick={this.handleCancelTurn} styles={{ fill: "green" }} outerLeft={{ r: 150, theta: Math.PI * 5 / 8 }} innerRight={{ r: 90, theta: Math.PI * 3 / 8 }}></Wedge>
+            <Wedge onMouseDown={this.handleRightTurn} onMouseUp={this.handleCancelTurn} styles={{ fill: "lightgreen" }} onTouchStart={this.handleRightTurn} onTouchEnd={this.handleCancelTurn} outerLeft={{ r: 150, theta: Math.PI * 3 / 8 }} innerRight={{ r: 90, theta: Math.PI * 1.9 }}></Wedge>
         </g>
     }
 }
