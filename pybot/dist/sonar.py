@@ -10,29 +10,29 @@
 
 import multiprocessing as mp
 import explorerhat as hw
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 import time
 
 class Sonar:
 
-    def __init__(self):
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(self.ECHO,GPIO.IN)
-        GPIO.setup(self.TRIG,GPIO.OUT)
-    
     def ping(self):
-        GPIO.output(TRIG, False)
+#        GPIO.output(self.TRIG, False)
+        hw.output.one.off()
         time.sleep(.001)
 
-        GPIO.output(TRIG, True)
+#        GPIO.output(self.TRIG, True)
+        hw.output.one.on()
         time.sleep(0.00001)
-        GPIO.output(TRIG, False)
+#        GPIO.output(self.TRIG, False)
+        hw.output.one.off()
 
-        while GPIO.input(ECHO)==0:
-        pulse_start = time.time()
+#        while GPIO.input(self.ECHO)==0:
+        while hw.input.one.read() == 0:
+            pulse_start = time.time()
 
-        while GPIO.input(ECHO)==1:
-        pulse_end = time.time()
+#        while GPIO.input(self.ECHO)==1:
+        while hw.input.one.read() == 1:
+            pulse_end = time.time()
 
         pulse_duration = pulse_end - pulse_start
         distance = pulse_duration * 17150
@@ -41,9 +41,7 @@ class Sonar:
 
 if __name__ == "__main__":
     app = Sonar()
-    app.ECHO = 23
-    app.TRIG = 6
-    while:
+    while True:
         distance = app.ping()
-        print distance, " cm"
+        print ("{0} cm".format(distance))
         time.sleep(1)
