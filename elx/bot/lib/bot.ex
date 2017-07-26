@@ -1,2 +1,0 @@
-defmodule Bot do
-end

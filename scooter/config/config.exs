@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :bot, key: :value
+#     config :scooter, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:bot, :key)
+#     Application.get_env(:scooter, :key)
 #
 # Or configure a 3rd-party app:
 #
