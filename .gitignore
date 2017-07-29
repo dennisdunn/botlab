@@ -33,6 +33,10 @@ bower_components/
 dist/
 __pycache__/
 
+# elixir
+_build/
+
+
 !pybot/dist
 
 *.log
