@@ -22,6 +22,9 @@ defmodule Pigpio do
   end
 
   defp chars_to_integer(chars) do
-    String.to_integer(String.trim(to_string(chars)))
+    chars
+    |> to_string 
+    |> String.trim
+    |> String.to_integer
   end
 end
