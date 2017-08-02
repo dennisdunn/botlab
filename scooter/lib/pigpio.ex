@@ -1,6 +1,6 @@
 defmodule Pigpio do
 
-  def init() do
+  def init(options \\ []) do
     io = Port.open '/dev/pigpio', [:eof]
     Process.register io, :pigpio
 
