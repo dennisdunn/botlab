@@ -1,6 +1,6 @@
-defmodule Scooter do
+defmodule Explorer do
   @moduledoc """
-  Documentation for Scooter.
+  Documentation for Explorer.
   """
 
   @doc """
@@ -8,7 +8,7 @@ defmodule Scooter do
 
   ## Examples
 
-      iex> Scooter.hello
+      iex> Explorer.hello
       :world
 
   """
