@@ -12,7 +12,7 @@ defmodule Pigpio do
   """
   def start_link() do
     fn -> %{
-      io: Port.open('/dev/pigpio', [:eof]),
+      pio: Port.open('/dev/pigpio', [:eof]),
       out: Port.open('/dev/pigout', [:eof]),
       err: Port.open('/dev/pigerr', [:eof])
     } end
@@ -34,38 +34,37 @@ def write(pin, level) do
 end
 
 @doc """
-Execute a pigpiod command by sending the command
+Apply a PWM signal to a specified GPIO pin.
+"""
+def pwm(pin, duty_cycle) do
+  command "p #{pin} #{duty_cycle}\n"
+end
+
+
+@doc """
+Execute a pigpiod command by sending the command to
 the daemon via the input pipe and reading the output pipe.
 If an error occurred, also read the error pipe.
 """
 defp command(cmd) do
-  get_port(:io)
-  |> Port.command(cmd)
-  out = get_port :out
+
+   %{:pio => pio,:out => out} =
+  Agent.get(__MODULE__, fn m -> m end)
+
+  Port.connect pio, self()
+  Port.connect out, self()
+
+  Port.command pio, cmd
+
   receive do
     {^out, {:data, data}} ->
-      errcode = reply_to_integer data
-      if errcode < 0 do
-        err = get_port :err
-        receive do
-          {^err, {:data, msg}} ->
-            {:error, errcode, msg}
-        after 1_000 ->
-          :timeout
-        end
+      exit_code = reply_to_integer data
+      if exit_code >= 0 do
+        {:ok, exit_code}
       else
-        {:ok, errcode}
-      end        
-  after 1_000 ->
-    :timeout
+        {:error, exit_code}
+      end
   end
-end
-
-@doc """
-Get the indicated port from the agent state.
-"""
-defp get_port(key) do
-  Agent.get __MODULE__, fn ports -> ports[key] end
 end
 
 @doc """
