@@ -40,6 +40,13 @@ def pwm(pin, duty_cycle) do
   command "p #{pin} #{duty_cycle}\n"
 end
 
+@doc """
+Apply pulses to the servo on the given pin.
+"""
+def servo(pin, pulse_width) do
+  command "s #{pin} #{pulse_width}\n"
+end
+
 
 @doc """
 Execute a pigpiod command by sending the command to
