@@ -18,15 +18,19 @@ defmodule PigpioTest do
 
   test "starts PWM on a GPIO pin" do
     Pigpio.start_link()
-    {:ok, result} = Pigpio.pwm(19, 200)
+     {:ok, result} = Pigpio.pwm(19, 200)
     :timer.sleep(1000)
-    assert Pigpio.pwm(19, 0)
+    Pigpio.pwm(19, 0)
     assert result == 0
-  end
+ end
 
   test "positions a servo on a GPIO pin" do
     Pigpio.start_link()
-    assert Pigpio.servo(4, 1000) == {:ok, 0}
+    {:ok, result} = Pigpio.servo(4, 1500)
+    :timer.sleep(1000)
+    Pigpio.servo(4, 0)
+    Pigpio.write(4, 1)
+    assert result == 0
   end
 
   test "monitors the state of a pin" do
