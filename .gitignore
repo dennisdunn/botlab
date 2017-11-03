@@ -40,3 +40,5 @@ _build/
 !pybot/dist
 
 *.log
+
+*.orig
