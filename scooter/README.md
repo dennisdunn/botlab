@@ -1,4 +1,0 @@
-# Scooter
-
-**TODO: Add description**
-
