@@ -8,8 +8,7 @@
 #include <NewPing.h>
 
 #define SENSOR_CNT 4
-#define RANGE_THRESHOLD 10
-#define MAX_DISTANCE 300
+#define MAX_DISTANCE 400
 #define LED13 13
 #define ADDR_DEFAULT 0x20
 #define ADDR_ALT 0x2F
@@ -22,13 +21,12 @@
 #define PIN_SENSOR_3 10
 #define COMMAND_BUF_SIZE 2
 #define REGISTER_MAP_SIZE 11
-#define REGISTER_BUF_SIZE 9
 #define INITIAL_STATUS 0x00
-#define DEFAULT_CONFIG 0x01
-#define DEVICE_ID 0x01
+#define DEFAULT_CONFIG 0x00
+#define DEVICE_ID 0x42
 #define REGISTER_STATUS 0
-#define REGISTER_CONFIG 9
-#define REGISTER_DEVICE_ID 10
+#define REGISTER_CONFIG 0x09
+#define REGISTER_DEVICE_ID 0x0A
 
 // Register map
 // 0x00 Status LSB = sensor 0 has data, bit 2 = sensor 1 has data, etc
@@ -56,6 +54,8 @@ NewPing sensors[SENSOR_CNT] = {
 
 void setup()
 {
+  Serial.begin(115200);
+
   registers[REGISTER_DEVICE_ID] = DEVICE_ID;
   registers[REGISTER_CONFIG] = DEFAULT_CONFIG;
 
@@ -73,7 +73,6 @@ void setup()
 
 void loop()
 {
-  registers[REGISTER_STATUS] = INITIAL_STATUS;
   for (int i = 0; i < SENSOR_CNT; i++)
   {
     if (bitRead(registers[REGISTER_CONFIG], i))
@@ -87,6 +86,8 @@ void loop()
         registers[REGISTER_STATUS] = bitSet(registers[REGISTER_STATUS], i);
         interrupts();
         digitalWrite(PIN_IRQ, 1); // raise the IRQ
+      } else {
+        bitClear(registers[REGISTER_STATUS], i);
       }
     }
   }
@@ -94,7 +95,7 @@ void loop()
 
 void requestEvent()
 {
-  Wire.send(registers, REGISTER_BUF_SIZE);
+  Wire.write(registers + commands[0], REGISTER_MAP_SIZE);
   digitalWrite(PIN_IRQ, 0); // clear the IRQ
 }
 
@@ -102,16 +103,20 @@ void receiveEvent(int length)
 {
   for (int i = 0; i < length; i++) {
     if (i < COMMAND_BUF_SIZE) {
-      commands[i] = Wire.receive();
+      commands[i] = Wire.read();
     } else {
-      Wire.receive();
+      Wire.read();
     }
+  }
+
+  if (length == 2 && commands[0] == REGISTER_CONFIG) {
+    registers[commands[0]] = commands[1];
   }
 }
 
 // Save the sensor data into the appropriate big-endian register.
 void saveSensorData(int sensor_number, int data)
 {
-  registers[sensor_number + 1] = highByte(data);
-  registers[sensor_number + 2] = lowByte(data);
+  registers[2 * sensor_number + 1] = lowByte(data);
+  registers[2 * sensor_number + 2] = highByte(data);
 }
