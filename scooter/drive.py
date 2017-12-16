@@ -25,6 +25,15 @@ class Drive:
         elif direction == "right":
             self._right.set_power(0)
 
+    def left(self, duration):
+        self.turn("left")
+        sleep(duration)
+
+    def right(self, duration):
+        self.turn("right")
+        sleep(duration)
+
+
     def forward(self):
         self._setDirection("fwd")
 

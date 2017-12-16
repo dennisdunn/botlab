@@ -14,9 +14,12 @@ class Sonar:
             distance = -1
         return distance
 
-    def set_bearing(self, bearing = 1600):
+    def bearing(self, bearing = 1600):
         self._bearing = bearing
         self._pi.set_servo_pulsewidth(self._pin, self._bearing)
+
+    def configure(self, config):
+        self._pi.i2c_write_byte_data(self._i2c, config)
 
 if __name__ == "__main__":
     import pigpio
@@ -24,11 +27,12 @@ if __name__ == "__main__":
         
     pi = pigpio.pi()
     sonar = Sonar(pi)
+    sonar.configure(0x01);
     bearing = 1600
     pause = 0.2
     delta = 150
     while True:
-        sonar.set_bearing(bearing)
+        sonar.bearing(bearing)
         print(bearing, sonar.ping())
         sleep(pause)
         delta = 150 if bearing <= 1200 else -150 if bearing >=2080 else delta
